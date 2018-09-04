@@ -17,12 +17,12 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    {{ html()->label(__('validation.attributes.frontend.email'))->for('email') }}
+                                    {{ html()->label(__('validation.attributes.frontend.username'))->for('username') }}
 
-                                    {{ html()->email('email')
+                                    {{ html()->text('username')
                                         ->class('form-control')
-                                        ->placeholder(__('validation.attributes.frontend.email'))
-                                        ->attribute('maxlength', 191)
+                                        ->placeholder(__('validation.attributes.frontend.username'))
+                                        ->attribute('maxlength', 50)
                                         ->required() }}
                                 </div><!--form-group-->
                             </div><!--col-->

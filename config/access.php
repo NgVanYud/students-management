@@ -58,7 +58,7 @@ return [
         /*
          * Login username to be used by the controller.
          */
-        'username' => 'email',
+        'username' => 'username',
 
         /*
          * Session Database Driver Only
