@@ -45,6 +45,26 @@ return [
         'admin_role' => 'administrator',
 
         /*
+         * The proctor role
+         */
+        'proctor_role' => 'protor_role',
+
+        /*
+         * The test_maker role
+         */
+        'quiz_maker_role' => 'quiz_maker',
+
+        /*
+         * The curator role
+         */
+        'curator_role' => 'curator',
+
+        /*
+         * The student role
+         */
+        'student_role' => 'student',
+
+        /*
          * The default role all new registered users get added to
          */
         'default_role' => 'user',
@@ -89,6 +109,20 @@ return [
          * Whether a role must contain a permission or can be used standalone as a label
          */
         'role_must_contain_permission' => false,
+    ],
+
+    /*
+     * Permissions
+     */
+
+    'permissions' => [
+        'permissions_list' => [
+            'export_result'     => 'export result',
+            'modify_quizs'       => 'modify quizs',
+            'set_quiz_num'      => 'set quiz number',
+            'join_quizs'        => 'join quizs',
+            'view_backend'      => 'view backend'
+        ],
     ],
 
     /*

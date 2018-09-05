@@ -22,22 +22,29 @@ class PermissionRoleTableSeeder extends Seeder
 
         // Create Roles
         $admin = Role::create(['name' => config('access.users.admin_role')]);
-        $executive = Role::create(['name' => 'executive']);
+//        $executive = Role::create(['name' => 'executive']);
+        $proctor = Role::create(['name' => config('access.users.proctor_role')]);
+        $quiz_maker = Role::create(['name' => config('access.users.quiz_maker_role')]);
+        $curator = Role::create(['name' => config('access.users.curator_role')]);
+        $student = Role::create(['name' => config('access.users.student_role')]);
         $user = Role::create(['name' => config('access.users.default_role')]);
 
         // Create Permissions
-        $permissions = ['view backend'];
+        $permissions = config('access.permissions.permissions_list');
 
-        foreach ($permissions as $permission) {
-            Permission::create(['name' => $permission]);
+        foreach ($permissions as $permission => $name) {
+            Permission::create(['name' => $name]);
         }
 
         // ALWAYS GIVE ADMIN ROLE ALL PERMISSIONS
         $admin->givePermissionTo(Permission::all());
 
         // Assign Permissions to other Roles
-        $executive->givePermissionTo('view backend');
-
+//        $executive->givePermissionTo('view backend');
+        $proctor->givePermissionTo(config('access.permissions.permissions_list')['export_result']);
+        $quiz_maker->givePermissionTo(config('access.permissions.permissions_list')['modify_quizs']);
+        $curator->givePermissionTo(config('access.permissions.permissions_list')['set_quiz_num']);
+        $student->givePermissionTo(config('access.permissions.permissions_list')['join_quizs']);
         $this->enableForeignKeys();
     }
 }
