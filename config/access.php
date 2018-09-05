@@ -47,12 +47,12 @@ return [
         /*
          * The proctor role
          */
-        'proctor_role' => 'protor_role',
+        'proctor_role' => 'protor role',
 
         /*
          * The test_maker role
          */
-        'quiz_maker_role' => 'quiz_maker',
+        'quiz_maker_role' => 'quiz maker',
 
         /*
          * The curator role
