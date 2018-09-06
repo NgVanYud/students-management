@@ -161,6 +161,8 @@ return [
         /*
          * Package Service Providers that aren't auto-discover...
          */
+        Cviebrock\EloquentSluggable\ServiceProvider::class,
+
 
         /*
          * Application Service Providers...

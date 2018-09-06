@@ -11,6 +11,7 @@
         "arcanedev/no-captcha": "^5.0",
         "beyondcode/laravel-self-diagnosis": "^0.4.1",
         "creativeorange/gravatar": "~1.0",
+        "cviebrock/eloquent-sluggable": "4.5",
         "davejamesmiller/laravel-breadcrumbs": "^5.0",
         "divineomega/laravel-password-exposed-validation-rule": "^1.2",
         "fideloper/proxy": "^4.0",
