@@ -69,11 +69,11 @@
                     </div><!--form-group-->
 
                     <div class="form-group row">
-                        {{ html()->label(__('validation.attributes.backend.subjects.active'))->class('col-md-2 form-control-label')->for('active') }}
+                        {{ html()->label(__('validation.attributes.backend.subjects.active'))->class('col-md-2 form-control-label')->for('is_actived') }}
 
                         <div class="col-md-10">
                             <label class="switch switch-3d switch-primary">
-                                {{ html()->checkbox('active', true, '1')->class('switch-input') }}
+                                {{ html()->checkbox('is_actived', true, '1')->class('switch-input') }}
                                 <span class="switch-label"></span>
                                 <span class="switch-handle"></span>
                             </label>
