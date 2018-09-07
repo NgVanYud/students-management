@@ -31,7 +31,7 @@
 
         <main class="main">
             @include('includes.partials.logged-in-as')
-            {!! Breadcrumbs::render() !!}
+            {{--{!! Breadcrumbs::render() !!}--}}
 
             <div class="container-fluid">
                 <div class="animated fadeIn">

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Auth\User;
+use App\Models\Subject;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
@@ -38,6 +39,13 @@ class RouteServiceProvider extends ServiceProvider
             $user = new User;
 
             return User::withTrashed()->where($user->getRouteKeyName(), $value)->first();
+        });
+
+        $this->bind('subject', function ($value) {
+            $subject = new Subject();
+            return Subject::withTrashed()
+                ->where($subject->getRouteKeyName(), $value)
+                ->first();
         });
 
         parent::boot();

@@ -13,13 +13,39 @@
                 {{ __('menus.backend.sidebar.system') }}
             </li>
 
+            {{--Môn học--}}
+            <li class="nav-item nav-dropdown {{ active_class(Active::checkUriPattern('admin/subjects*'), 'open') }}">
+                <a class="nav-link nav-dropdown-toggle {{ active_class(Active::checkUriPattern('admin/subjects*')) }}" href="#">
+                    <i class="icon-user"></i> {{ __('menus.backend.subjects.title') }}
+                </a>
+
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link {{ active_class(Active::checkUriPattern('admin/subjects*')) }}" href="{{ route('admin.subject.index') }}">
+                            {{ __('labels.backend.subjects.all') }}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ active_class(Active::checkUriPattern('admin/subjects/create*')) }}" href="{{ route('admin.subject.create') }}">
+                            {{ __('labels.backend.subjects.create') }}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ active_class(Active::checkUriPattern('admin/subjects/deleted*')) }}" href="{{ route('admin.subject.deleted') }}">
+                            {{ __('labels.backend.subjects.deleted') }}
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            {{--Access--}}
             @if ($logged_in_user->isAdmin())
                 <li class="nav-item nav-dropdown {{ active_class(Active::checkUriPattern('admin/auth*'), 'open') }}">
                     <a class="nav-link nav-dropdown-toggle {{ active_class(Active::checkUriPattern('admin/auth*')) }}" href="#">
                         <i class="icon-user"></i> {{ __('menus.backend.access.title') }}
 
                         @if ($pending_approval > 0)
-                            <span class="badge badge-danger">{{ $pending_approval }}</span>
+                            <span class="badge badge-danger float-none">{{ $pending_approval }}</span>
                         @endif
                     </a>
 
