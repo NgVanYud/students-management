@@ -31,19 +31,20 @@
                                     ->class('form-control')
                                     ->placeholder(__('validation.attributes.backend.access.users.first_name'))
                                     ->attribute('maxlength', 191)
-                                    ->required()
-                                    ->autofocus() }}
+                                    ->autofocus()
+                                    ->required() }}
                             </div><!--col-->
                         </div><!--form-group-->
 
                         <div class="form-group row">
-                        {{ html()->label(__('validation.attributes.backend.access.users.last_name'))->class('col-md-2 form-control-label')->for('last_name') }}
+                            {{ html()->label(__('validation.attributes.backend.access.users.last_name'))->class('col-md-2 form-control-label')->for('last_name') }}
 
                             <div class="col-md-10">
                                 {{ html()->text('last_name')
                                     ->class('form-control')
                                     ->placeholder(__('validation.attributes.backend.access.users.last_name'))
                                     ->attribute('maxlength', 191)
+                                    ->autofocus()
                                     ->required() }}
                             </div><!--col-->
                         </div><!--form-group-->
@@ -56,6 +57,110 @@
                                     ->class('form-control')
                                     ->placeholder(__('validation.attributes.backend.access.users.email'))
                                     ->attribute('maxlength', 191)
+                                    ->autofocus()
+                                    ->required() }}
+                            </div><!--col-->
+                        </div><!--form-group-->
+
+                        <div class="form-group row">
+                            {{ html()->label(__('validation.attributes.backend.access.users.username'))->class('col-md-2 form-control-label')->for('username') }}
+
+                            <div class="col-md-10">
+                                {{ html()->text('username')
+                                    ->class('form-control')
+                                    ->placeholder(__('validation.attributes.backend.access.users.username'))
+                                    ->attribute('maxlength', 50)
+                                    ->autofocus()
+                                    ->required() }}
+                            </div><!--col-->
+                        </div><!--form-group-->
+
+                        <div class="form-group row">
+                            {{ html()->label(__('validation.attributes.backend.access.users.gender'))->class('col-md-2 form-control-label') }}
+
+                            <div class="col-md-10">
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    {{ html()->radio('gender')
+                                    ->class('custom-control-input')
+                                    ->value(UserModel::MALE_CODE)
+                                    ->checked(old('gender'))
+                                    ->id('male') }}
+
+                                    {{ html()->label(__('validation.attributes.backend.access.users.male'))
+                                    ->class('custom-control-label')->for('male') }}
+                                </div>
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    {{ html()->radio('gender')
+                                    ->class('custom-control-input')
+                                    ->value(UserModel::FEMALE_CODE)
+                                    ->checked(!old('gender'))
+                                    ->id('female') }}
+
+                                    {{ html()->label(__('validation.attributes.backend.access.users.female'))
+                                    ->class('custom-control-label')->for('female') }}
+                                </div>
+
+                            </div><!--col-->
+                        </div><!--form-group-->
+
+                        <div class="form-group row">
+                            {{ html()->label(__('validation.attributes.backend.access.users.identity'))->class('col-md-2 form-control-label')->for('identity') }}
+
+                            <div class="col-md-10">
+                                {{ html()->text('identity')
+                                    ->class('form-control')
+                                    ->placeholder(__('validation.attributes.backend.access.users.identity'))
+                                    ->attribute('maxlength', 20)
+                                    ->autofocus()
+                                    ->required() }}
+                            </div><!--col-->
+                        </div><!--form-group-->
+
+                        <div class="form-group row">
+                            {{ html()->label(__('validation.attributes.backend.access.users.nation'))->class('col-md-2 form-control-label')->for('nation') }}
+
+                            <div class="col-md-10">
+                                {{ html()->text('nation')
+                                    ->class('form-control')
+                                    ->placeholder(__('validation.attributes.backend.access.users.nation'))
+                                    ->autofocus()
+                                    ->attribute('maxlength', 20)}}
+                            </div><!--col-->
+                        </div><!--form-group-->
+
+                        {{ html()->hidden('ethnic')->attribute('maxlength', 20)}}
+
+                        <div class="form-group row">
+                            {{ html()->label(__('validation.attributes.backend.access.users.city'))->class('col-md-2 form-control-label')->for('city') }}
+
+                            <div class="col-md-10">
+                                {{ html()->text('city')
+                                    ->class('form-control')
+                                    ->placeholder(__('validation.attributes.backend.access.users.city'))
+                                    ->autofocus()
+                                    ->attribute('maxlength', 20)}}
+                            </div><!--col-->
+                        </div><!--form-group-->
+
+                        <div class="form-group row">
+                            {{ html()->label(__('validation.attributes.backend.access.users.phone_number'))->class('col-md-2 form-control-label')->for('phone_number') }}
+
+                            <div class="col-md-10">
+                                {{ html()->text('phone_number')
+                                    ->class('form-control')
+                                    ->placeholder(__('validation.attributes.backend.access.users.phone_number'))
+                                    ->autofocus()
+                                    ->attribute('maxlength', 11)}}
+                            </div><!--col-->
+                        </div><!--form-group-->
+
+                        <div class="form-group row">
+                            {{ html()->label(__('validation.attributes.backend.access.users.birthday'))->class('col-md-2 form-control-label')->for('birthday') }}
+
+                            <div class="col-md-10">
+                                {{ html()->date('birthday')
+                                    ->class('form-control')
+                                    ->placeholder(__('validation.attributes.backend.access.users.birthday'))
                                     ->required() }}
                             </div><!--col-->
                         </div><!--form-group-->

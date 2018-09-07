@@ -31,6 +31,10 @@ class UpdateUserRequest extends FormRequest
             'first_name'  => 'required|max:191',
             'last_name'  => 'required|max:191',
             'roles' => 'required|array',
+            'username' => 'required|min:2|max:50|unique:users,username,'.$this->user->id,
+            'gender' => 'required|digits_between:0,1',
+            'identity' => 'required|min:5|max:20|unique:users,identity,'.$this->user->id,
+            'birthday' => 'required|date',
         ];
     }
 }

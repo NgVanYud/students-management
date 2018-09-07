@@ -33,6 +33,10 @@ class StoreUserRequest extends FormRequest
             'email'    => ['required', 'email', 'max:191', Rule::unique('users')],
             'password' => 'required|min:6|confirmed',
             'roles' => 'required|array',
+            'username' => 'required|min:2|max:50|unique:users,username',
+            'gender' => 'required|digits_between:0,1',
+            'identity' => 'required|min:5|max:20|unique:users,identity',
+            'birthday' => 'required|date'
         ];
     }
 }
