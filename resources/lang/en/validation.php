@@ -184,6 +184,13 @@ return [
                     'language'                => 'Language',
                 ],
             ],
+
+            'subjects' => [
+                'name'          => 'Name',
+                'credit'        => 'Credit',
+                'abbreviation'  => 'Abbreviation',
+                'active'        => 'Active'
+            ],
         ],
 
         'frontend' => [

@@ -29,6 +29,13 @@ return [
                 'unlink' => 'Unlink',
             ],
         ],
+
+        'subjects' => [
+            'active'        => 'Active',
+            'inactive'      => 'Inactive',
+            'restore_subject'   => 'Restore Subject',
+            'delete_permanently' => 'Delete Permanently'
+        ],
     ],
 
     'emails' => [

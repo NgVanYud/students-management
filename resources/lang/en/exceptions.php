@@ -52,6 +52,16 @@ return [
                 'update_password_error' => 'There was a problem changing this users password. Please try again.',
             ],
         ],
+
+        'subjects' => [
+            'already_actived'       => 'This subject is already actived.',
+            'cant_active'           => 'There was a problem activing the subject.',
+            'not_actived'           => 'This subject is not actived.',
+            'cant_inactive'         => 'There was a problem inactiving the subject',
+            'delete_first'          => 'This subject must be deleted first before it can be destroyed permanently.',
+            'cant_restore'          => 'This subject is not deleted so it can not be restored.',
+            'restore_error'         => 'There was a problem restoring this subject. Please try again.',
+        ],
     ],
 
     'frontend' => [

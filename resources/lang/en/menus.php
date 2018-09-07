@@ -14,6 +14,14 @@ return [
     */
 
     'backend' => [
+
+        'subjects' => [
+            'title'     => 'Subjects',
+            'all'       => 'All Subjects',
+            'create'    => 'Create Subject',
+            'edit'      => 'Edit Subject',
+        ],
+
         'access' => [
             'title' => 'Access',
 

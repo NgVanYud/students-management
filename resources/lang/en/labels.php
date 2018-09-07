@@ -108,6 +108,22 @@ return [
                 'view' => 'View User',
             ],
         ],
+
+        'subjects' => [
+            'all'           => 'All Subjects',
+            'create'        => 'Create Subject',
+            'edit'          => 'Edit Subject',
+            'management'    => 'Subjects Management',
+            'deleted'       => 'Deleted Subjects',
+
+            'table' => [
+                'name'          => 'Name',
+                'actived'       => 'Actived',
+                'abbreviation'  => 'Abbreviation',
+                'credit'        => 'Credit',
+                'total'         => 'subject total|subjects total'
+            ],
+        ],
     ],
 
     'frontend' => [
