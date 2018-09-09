@@ -36,6 +36,7 @@ class RouteServiceProvider extends ServiceProvider
         /*
          * Allow this to select all users regardless of status
          */
+
         $this->bind('user', function ($value) {
             $user = new User;
 
@@ -54,6 +55,13 @@ class RouteServiceProvider extends ServiceProvider
             return Chapter::withTrashed()
                 ->where($chapter->getRouteKeyName(), $value)
                 ->first()?? abort(404);;
+        });
+
+        $this->bind('lecturer', function ($value) {
+            $lecturer = new User();
+            return User::withTrashed()
+                    ->where($lecturer->getRouteKeyName(), $value)
+                    ->first()?? abort(404);;
         });
 
         parent::boot();
