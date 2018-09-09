@@ -81,7 +81,6 @@ class UserController extends Controller
             'birthday',
             'password',
             'active',
-            'confirmed',
             'confirmation_email',
             'roles',
             'permissions'
