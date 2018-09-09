@@ -17,6 +17,12 @@ class Subject extends Model
 
     const ACTIVE_CODE = 1;
     const INACTIVE_CODE = 0;
+    const TAB_TYPES = [
+        'subjects'   => 'subjects',
+        'chapters'      => 'chapters',
+        'deleted_chapters'  => 'deleted_chapters'
+    ];
+
 
     protected $fillable = [
         'name',
@@ -37,6 +43,10 @@ class Subject extends Model
                 'source' => 'name'
             ]
         ];
+    }
+
+    public function chapters() {
+        return $this->hasMany(Chapter::class)->orderBy('name', 'asc')->paginate(25);
     }
 
     /**
