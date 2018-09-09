@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-{{ html()->modelForm($user, 'PATCH', route('admin.auth.user.update', $user->id))->class('form-horizontal')->open() }}
+{{ html()->modelForm($user, 'PATCH', route('admin.auth.user.update', $user))->class('form-horizontal')->open() }}
     <div class="card">
         <div class="card-body">
             <div class="row">
@@ -58,6 +58,102 @@
                                 ->required() }}
                         </div><!--col-->
                     </div><!--form-group-->
+
+                    <div class="form-group row">
+                        {{ html()->label(__('validation.attributes.backend.access.users.username'))->class('col-md-2 form-control-label')->for('username') }}
+
+                        <div class="col-md-10">
+                            {{ html()->text('username')
+                                ->class('form-control')
+                                ->placeholder(__('validation.attributes.backend.access.users.username'))
+                                ->attribute('maxlength', 50)
+                                ->required() }}
+                        </div><!--col-->
+                    </div><!--form-group-->
+
+                    <div class="form-group row">
+                        {{ html()->label(__('validation.attributes.backend.access.users.gender'))->class('col-md-2 form-control-label') }}
+
+                        <div class="col-md-10">
+                            <div class="custom-control custom-radio custom-control-inline">
+                                {{ html()->radio('gender')->class('custom-control-input')
+                                ->value(UserModel::MALE_CODE)->id('male')
+                                ->checked(old('gender', $user->gender === (integer)(UserModel::MALE_CODE))) }}
+
+                                {{ html()->label(__('validation.attributes.backend.access.users.male'))
+                                ->class('custom-control-label')->for('male') }}
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                {{ html()->radio('gender')
+                                ->class('custom-control-input')->value(UserModel::FEMALE_CODE)
+                                ->id('female')->checked(old('gender', $user->gender === (integer)(UserModel::FEMALE_CODE))) }}
+
+                                {{ html()->label(__('validation.attributes.backend.access.users.female'))
+                                ->class('custom-control-label')->for('female') }}
+                            </div>
+
+                        </div><!--col-->
+                    </div><!--form-group-->
+
+                    <div class="form-group row">
+                        {{ html()->label(__('validation.attributes.backend.access.users.identity'))->class('col-md-2 form-control-label')->for('identity') }}
+
+                        <div class="col-md-10">
+                            {{ html()->text('identity')
+                                ->class('form-control')
+                                ->placeholder(__('validation.attributes.backend.access.users.identity'))
+                                ->attribute('maxlength', 20)
+                                ->required() }}
+                        </div><!--col-->
+                    </div><!--form-group-->
+
+                    <div class="form-group row">
+                        {{ html()->label(__('validation.attributes.backend.access.users.nation'))->class('col-md-2 form-control-label')->for('nation') }}
+
+                        <div class="col-md-10">
+                            {{ html()->text('nation')
+                                ->class('form-control')
+                                ->placeholder(__('validation.attributes.backend.access.users.nation'))
+                                ->attribute('maxlength', 20)}}
+                        </div><!--col-->
+                    </div><!--form-group-->
+
+                    {{ html()->hidden('ethnic')->attribute('maxlength', 20)}}
+
+                    <div class="form-group row">
+                        {{ html()->label(__('validation.attributes.backend.access.users.city'))->class('col-md-2 form-control-label')->for('city') }}
+
+                        <div class="col-md-10">
+                            {{ html()->text('city')
+                                ->class('form-control')
+                                ->placeholder(__('validation.attributes.backend.access.users.city'))
+                                ->attribute('maxlength', 20)}}
+                        </div><!--col-->
+                    </div><!--form-group-->
+
+                    <div class="form-group row">
+                        {{ html()->label(__('validation.attributes.backend.access.users.phone_number'))->class('col-md-2 form-control-label')->for('phone_number') }}
+
+                        <div class="col-md-10">
+                            {{ html()->text('phone_number')
+                                ->class('form-control')
+                                ->placeholder(__('validation.attributes.backend.access.users.phone_number'))
+                                ->attribute('maxlength', 11)}}
+                        </div><!--col-->
+                    </div><!--form-group-->
+
+                    <div class="form-group row">
+                        {{ html()->label(__('validation.attributes.backend.access.users.birthday'))->class('col-md-2 form-control-label')->for('birthday') }}
+
+                        <div class="col-md-10">
+                            {{ html()->date('birthday')
+                                ->class('form-control')
+                                ->placeholder(__('validation.attributes.backend.access.users.birthday'))
+                                ->required() }}
+                        </div><!--col-->
+                    </div><!--form-group-->
+
+                    {{ html()->hidden('code')->attribute('maxlength', 30) }}
 
                     <div class="form-group row">
                         {{ html()->label('Abilities')->class('col-md-2 form-control-label') }}

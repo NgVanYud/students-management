@@ -28,6 +28,8 @@ class User extends Authenticatable
         UserScope,
         Uuid;
 
+    const MALE_CODE = 1;
+    const FEMALE_CODE = 0;
     /**
      * The attributes that are mass assignable.
      *
@@ -37,6 +39,7 @@ class User extends Authenticatable
         'first_name',
         'last_name',
         'email',
+        'uuid',
         'avatar_type',
         'avatar_location',
         'password',
@@ -47,7 +50,15 @@ class User extends Authenticatable
         'timezone',
         'last_login_at',
         'last_login_ip',
-        'username'
+        'username',
+        'gender',
+        'identity',
+        'code',
+        'city',
+        'ethnic',
+        'nation',
+        'phone_number',
+        'birthday'
     ];
 
     /**
@@ -77,4 +88,9 @@ class User extends Authenticatable
         'active' => 'boolean',
         'confirmed' => 'boolean',
     ];
+
+    public function getRouteKeyName()
+    {
+        return 'uuid';
+    }
 }

@@ -232,6 +232,11 @@ return [
         'Gravatar' => Creativeorange\Gravatar\Facades\Gravatar::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
 
+        /*
+         * Model Aliases
+         */
+        'UserModel' => \App\Models\Auth\User::class,
+
         'SubjectModel'  => \App\Models\Subject::class,
 
     ],

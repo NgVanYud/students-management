@@ -30,10 +30,10 @@
                             <th>{{ __('labels.backend.access.users.table.last_name') }}</th>
                             <th>{{ __('labels.backend.access.users.table.first_name') }}</th>
                             <th>{{ __('labels.backend.access.users.table.email') }}</th>
+                            <th>{{ __('labels.backend.access.users.table.username') }}</th>
                             <th>{{ __('labels.backend.access.users.table.confirmed') }}</th>
                             <th>{{ __('labels.backend.access.users.table.roles') }}</th>
                             <th>{{ __('labels.backend.access.users.table.other_permissions') }}</th>
-                            <th>{{ __('labels.backend.access.users.table.social') }}</th>
                             <th>{{ __('labels.backend.access.users.table.last_updated') }}</th>
                             <th>{{ __('labels.general.actions') }}</th>
                         </tr>
@@ -44,10 +44,10 @@
                                 <td>{{ $user->last_name }}</td>
                                 <td>{{ $user->first_name }}</td>
                                 <td>{{ $user->email }}</td>
+                                <td>{{ $user->username }}</td>
                                 <td>{!! $user->confirmed_label !!}</td>
                                 <td>{!! $user->roles_label !!}</td>
                                 <td>{!! $user->permissions_label !!}</td>
-                                <td>{!! $user->social_buttons !!}</td>
                                 <td>{{ $user->updated_at->diffForHumans() }}</td>
                                 <td>{!! $user->action_buttons !!}</td>
                             </tr>

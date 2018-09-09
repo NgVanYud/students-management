@@ -44,13 +44,15 @@ class UserController extends Controller
     }
 
     /**
-     * @param ManageUserRequest    $request
-     * @param RoleRepository       $roleRepository
+     * @param ManageUserRequest $request
+     * @param RoleRepository $roleRepository
      * @param PermissionRepository $permissionRepository
      *
      * @return mixed
      */
-    public function create(ManageUserRequest $request, RoleRepository $roleRepository, PermissionRepository $permissionRepository)
+    public function create(ManageUserRequest $request,
+                           RoleRepository $roleRepository,
+                           PermissionRepository $permissionRepository)
     {
         return view('backend.auth.user.create')
             ->withRoles($roleRepository->with('permissions')->get(['id', 'name']))
@@ -65,24 +67,32 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        $this->userRepository->create($request->only(
+        $this->userRepository->create(array_merge(['code' => $request->username], $request->only(
             'first_name',
             'last_name',
             'email',
+            'username',
+            'gender',
+            'identity',
+            'city',
+            'ethnic',
+            'nation',
+            'phone_number',
+            'birthday',
             'password',
             'active',
             'confirmed',
             'confirmation_email',
             'roles',
             'permissions'
-        ));
+        )));
 
         return redirect()->route('admin.auth.user.index')->withFlashSuccess(__('alerts.backend.users.created'));
     }
 
     /**
      * @param ManageUserRequest $request
-     * @param User              $user
+     * @param User $user
      *
      * @return mixed
      */
@@ -93,14 +103,17 @@ class UserController extends Controller
     }
 
     /**
-     * @param ManageUserRequest    $request
-     * @param RoleRepository       $roleRepository
+     * @param ManageUserRequest $request
+     * @param RoleRepository $roleRepository
      * @param PermissionRepository $permissionRepository
-     * @param User                 $user
+     * @param User $user
      *
      * @return mixed
      */
-    public function edit(ManageUserRequest $request, RoleRepository $roleRepository, PermissionRepository $permissionRepository, User $user)
+    public function edit(ManageUserRequest $request,
+                         RoleRepository $roleRepository,
+                         PermissionRepository $permissionRepository,
+                         User $user)
     {
         return view('backend.auth.user.edit')
             ->withUser($user)
@@ -112,7 +125,7 @@ class UserController extends Controller
 
     /**
      * @param UpdateUserRequest $request
-     * @param User              $user
+     * @param User $user
      *
      * @return mixed
      * @throws \App\Exceptions\GeneralException
@@ -120,20 +133,28 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        $this->userRepository->update($user, $request->only(
+        $this->userRepository->update($user, array_merge(['code' => $request->username], $request->only(
             'first_name',
             'last_name',
             'email',
             'roles',
-            'permissions'
-        ));
+            'permissions',
+            'username',
+            'gender',
+            'identity',
+            'city',
+            'nation',
+            'ethnic',
+            'phone_number',
+            'birthday'
+        )));
 
         return redirect()->route('admin.auth.user.index')->withFlashSuccess(__('alerts.backend.users.updated'));
     }
 
     /**
      * @param ManageUserRequest $request
-     * @param User              $user
+     * @param User $user
      *
      * @return mixed
      * @throws \Exception
