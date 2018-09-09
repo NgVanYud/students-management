@@ -17,7 +17,7 @@
                 </div><!--col-->
 
                 <div class="col-sm-7">
-                    @include('backend.subjects.includes.header-buttons')
+                    @include('backend.subjects.includes.subject-header-buttons')
                 </div><!--col-->
             </div><!--row-->
 
