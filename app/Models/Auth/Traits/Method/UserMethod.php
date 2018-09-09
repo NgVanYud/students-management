@@ -98,4 +98,8 @@ trait UserMethod
     {
         return config('access.users.requires_approval') && ! $this->confirmed;
     }
+
+    public function isQuizMaker() {
+        return $this->hasRole(config('access.users.quiz_maker_role'));
+    }
 }
