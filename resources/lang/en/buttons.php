@@ -31,10 +31,20 @@ return [
         ],
 
         'subjects' => [
-            'active'        => 'Active',
-            'inactive'      => 'Inactive',
-            'restore_subject'   => 'Restore Subject',
-            'delete_permanently' => 'Delete Permanently'
+            'active'                    => 'Active',
+            'inactive'                  => 'Inactive',
+            'restore_subject'           => 'Restore Subject',
+            'delete'                    => 'Delete',
+            'delete_permanently'        => 'Delete Permanently',
+
+            'chapters' => [
+                'delete'                => 'Delete',
+                'add'                   => 'Add Chapter',
+                'edit'                  => 'Edit Chapter',
+                'restore_chapter'       => 'Restore Chapter',
+                'active'                => 'Active',
+                'inactive'              => 'Inactive',
+            ],
         ],
     ],
 

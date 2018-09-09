@@ -189,7 +189,12 @@ return [
                 'name'          => 'Name',
                 'credit'        => 'Credit',
                 'abbreviation'  => 'Abbreviation',
-                'active'        => 'Active'
+                'active'        => 'Active',
+
+                'chapters' => [
+                    'name'          => 'Name',
+                    'active'        => 'Active',
+                ],
             ],
         ],
 

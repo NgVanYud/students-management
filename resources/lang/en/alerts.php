@@ -41,6 +41,15 @@ return [
             'actived' => 'The subject was successfully actived.',
             'inactived' => 'The subject was successfully inactived.',
             'restored' => 'The subject was successfully restored.',
+
+            'chapters' => [
+                'created' => 'The chapter was successfully created.',
+                'deleted' => 'The chapter was successfully deleted.',
+                'updated' => 'The chapter was successfully updated.',
+                'actived' => 'The chapter was successfully actived.',
+                'inactived' => 'The chapter was successfully inactived.',
+                'restored' => 'The chapter was successfully restored.',
+            ],
         ],
     ],
 

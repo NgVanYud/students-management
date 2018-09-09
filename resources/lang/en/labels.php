@@ -115,6 +115,7 @@ return [
             'edit'          => 'Edit Subject',
             'management'    => 'Subjects Management',
             'deleted'       => 'Deleted Subjects',
+            'view'          => 'View Subject',
 
             'table' => [
                 'name'          => 'Name',
@@ -123,6 +124,65 @@ return [
                 'credit'        => 'Credit',
                 'total'         => 'subject total|subjects total'
             ],
+
+            'tabs' => [
+                'titles' => [
+                    'subject' => 'Subject',
+                    'history'  => 'History',
+                    'chapters'   => 'Chapters',
+                    'deleted_chapters'  => 'Deleted Chapters'
+                ],
+
+                'content' => [
+
+                    'subject' => [
+                        'credit'        => 'Credit',
+                        'abbreviation'  => 'Abbreviation',
+                        'actived'       => 'Actived',
+                        'confirmed'    => 'Confirmed',
+                        'created_at'   => 'Created At',
+                        'deleted_at'   => 'Deleted At',
+                        'last_updated' => 'Last Updated',
+                        'name'         => 'Name',
+                        'status'       => 'Status',
+                        'timezone'     => 'Timezone',
+                    ],
+
+                    'chapters' => [
+                        'avatar'       => 'Avatar',
+                        'confirmed'    => 'Confirmed',
+                        'created_at'   => 'Created At',
+                        'deleted_at'   => 'Deleted At',
+                        'email'        => 'E-mail',
+                        'last_login_at' => 'Last Login At',
+                        'last_login_ip' => 'Last Login IP',
+                        'last_updated' => 'Last Updated',
+                        'name'         => 'Name',
+                        'first_name'   => 'First Name',
+                        'last_name'    => 'Last Name',
+                        'status'       => 'Status',
+                        'timezone'     => 'Timezone',
+                    ],
+                ],
+            ],
+
+            'chapters' => [
+                'all'               => 'All Chapters in Subject',
+                'add'               => 'Add Chapter',
+                'edit'              => 'Edit Chapter',
+                'management'        => 'Chapters Management',
+                'deleted'           => 'Deleted Chapter',
+                'view'              => 'View Chapter',
+
+                'table' => [
+                    'name'              => 'Name',
+                    'actived'           => 'Actived',
+                    'question_num'      => 'Number of questions',
+                    'total'             => 'chapter total|chapters total',
+                    'last_updated'      => 'Last Updated',
+                ],
+            ],
+
         ],
     ],
 

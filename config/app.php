@@ -232,6 +232,8 @@ return [
         'Gravatar' => Creativeorange\Gravatar\Facades\Gravatar::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
 
+        'SubjectModel'  => \App\Models\Subject::class,
+
     ],
 
 ];
