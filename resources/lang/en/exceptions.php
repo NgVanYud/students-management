@@ -61,6 +61,18 @@ return [
             'delete_first'          => 'This subject must be deleted first before it can be destroyed permanently.',
             'cant_restore'          => 'This subject is not deleted so it can not be restored.',
             'restore_error'         => 'There was a problem restoring this subject. Please try again.',
+
+            'chapters' => [
+                'already_actived'                           => 'This chapter is already actived.',
+                'cant_active'                               => 'There was a problem activing the chapter.',
+                'not_actived'                               => 'This chapter is not actived.',
+                'cant_inactive'                             => 'There was a problem inactiving the chapter',
+                'delete_first'                              => 'This chapter must be deleted first before it can be destroyed permanently.',
+                'cant_restore'                              => 'This chapter is not deleted so it can not be restored.',
+                'cant_restore_for_deleted_subject'          => 'The subject contain this chapter is deleted so it can not be restored.',
+                'restore_error'                             => 'There was a problem restoring this chapter. Please try again.',
+                'validate_error'                            => 'There was a problem validation this new chapter',
+            ],
         ],
     ],
 

@@ -26,7 +26,7 @@ class SubjectRepository extends BaseRepository
         if ($subject->isActived()) {
             throw new GeneralException(__('exceptions.backend.subjects.already_actived'));
         }
-        $subject->is_actived = 1;
+        $subject->is_actived = Subject::ACTIVE_CODE;
         $actived = $subject->save();
 
         if ($actived) {
@@ -40,7 +40,7 @@ class SubjectRepository extends BaseRepository
         if(!$subject->isActived()) {
             throw new GeneralException(__('exceptions.backend.subjects.not_actived'));
         }
-        $subject->is_actived = 0;
+        $subject->is_actived = Subject::INACTIVE_CODE;
         $inactived = $subject->save();
         if($inactived) {
             return $subject;
