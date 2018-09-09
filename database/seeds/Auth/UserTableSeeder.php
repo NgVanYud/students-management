@@ -63,6 +63,17 @@ class UserTableSeeder extends Seeder
             'username'          => 'CURATOR_01'
         ]);
 
+        //Giáo viên (chưa có vai trò)
+        User::create([
+            'first_name'        => 'Teacher',
+            'last_name'         => 'User',
+            'email'             => 'teacher@teacher.com',
+            'password'          => 'secret',
+            'confirmation_code' => md5(uniqid(mt_rand(), true)),
+            'confirmed'         => true,
+            'username'          => 'TEACHER_01'
+        ]);
+
         //Sinh viên
         User::create([
             'first_name'        => 'Student',

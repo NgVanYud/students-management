@@ -23,8 +23,9 @@ class UserRoleTableSeeder extends Seeder
         User::find(2)->assignRole(config('access.users.proctor_role'));
         User::find(3)->assignRole(config('access.users.quiz_maker_role'));
         User::find(4)->assignRole(config('access.users.curator_role'));
-        User::find(5)->assignRole(config('access.users.student_role'));
-        User::find(6)->assignRole(config('access.users.default_role'));
+        User::find(5)->assignRole(config('access.users.teacher_role'));
+        User::find(6)->assignRole(config('access.users.student_role'));
+        User::find(7)->assignRole(config('access.users.default_role'));
 
         $this->enableForeignKeys();
     }

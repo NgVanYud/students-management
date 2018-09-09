@@ -26,6 +26,7 @@ class PermissionRoleTableSeeder extends Seeder
         $proctor = Role::create(['name' => config('access.users.proctor_role')]);
         $quiz_maker = Role::create(['name' => config('access.users.quiz_maker_role')]);
         $curator = Role::create(['name' => config('access.users.curator_role')]);
+        $teacher = Role::create(['name' => config('access.users.teacher_role')]);
         $student = Role::create(['name' => config('access.users.student_role')]);
         $user = Role::create(['name' => config('access.users.default_role')]);
 
