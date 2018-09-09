@@ -60,6 +60,11 @@ return [
         'curator_role' => 'curator',
 
         /*
+         * The teacher role
+         */
+        'teacher_role' => 'teacher',
+
+        /*
          * The student role
          */
         'student_role' => 'student',
