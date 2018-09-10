@@ -79,6 +79,7 @@ return [
                     'social'            => 'Social',
                     'total'             => 'user total|users total',
                     'username'          => 'Username',
+                    'select'            => 'Select',
                 ],
 
                 'tabs' => [
@@ -125,6 +126,7 @@ return [
             'management'    => 'Subjects Management',
             'deleted'       => 'Deleted Subjects',
             'view'          => 'View Subject',
+            'add_lecturers'  => 'Add Lecturers',
 
             'table' => [
                 'name'          => 'Name',
@@ -193,6 +195,20 @@ return [
             ],
 
         ],
+
+        'lecturers' => [
+            'all'           => 'All Lecturers',
+            'add'        => 'Add Lecturers',
+            'edit'          => 'Edit Lecturers',
+            'management'    => 'Lecturers Management',
+            'deleted'       => 'Deleted Lecturers',
+            'view'          => 'View Lecturers',
+            'modify'        => 'Modify Lecturers',
+
+            'table' => [
+                'total'         => 'lecturer total|lecturers total'
+            ]
+        ]
     ],
 
     'frontend' => [

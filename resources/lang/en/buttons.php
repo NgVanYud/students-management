@@ -45,6 +45,11 @@ return [
                 'active'                => 'Active',
                 'inactive'              => 'Inactive',
             ],
+
+            'lecturers' => [
+                'list'            => 'Lecturers List',
+                'add'            => ' Add Lecturer',
+            ],
         ],
     ],
 
@@ -65,6 +70,7 @@ return [
             'edit'   => 'Edit',
             'update' => 'Update',
             'view'   => 'View',
+            'add'    => 'Add'
         ],
 
         'save' => 'Save',

@@ -207,6 +207,10 @@ return [
                     'active'        => 'Active',
                 ],
             ],
+            'lecturers' => [
+                'subjects' => 'Subjects',
+                'lecturers' => 'Lecturers',
+            ],
         ],
 
         'frontend' => [

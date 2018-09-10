@@ -50,6 +50,12 @@ return [
                 'inactived' => 'The chapter was successfully inactived.',
                 'restored' => 'The chapter was successfully restored.',
             ],
+
+            'lecturers' => [
+                'invalid_lecturers'     => 'The lecturers are selected not invalid.',
+                'added'                 => 'The lecturers was successfully added.',
+
+            ],
         ],
     ],
 

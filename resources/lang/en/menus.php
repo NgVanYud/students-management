@@ -15,6 +15,13 @@ return [
 
     'backend' => [
 
+        'lecturers' => [
+            'title'     => 'Lecturers',
+            'all'       => 'All Lecturers',
+            'add'    => 'Add Lecturer',
+            'edit'      => 'Edit Lecturer',
+        ],
+
         'subjects' => [
             'title'     => 'Subjects',
             'all'       => 'All Subjects',
