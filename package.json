@@ -48,5 +48,8 @@
       "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
       ".*\\.(vue)$": "<rootDir>/node_modules/jest-vue-preprocessor"
     }
+  },
+  "dependencies": {
+    "select2": "^4.0.6-rc.1"
   }
 }
