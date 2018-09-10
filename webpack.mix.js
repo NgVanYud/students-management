@@ -22,6 +22,8 @@ mix.sass('resources/assets/sass/frontend/app.scss', 'css/frontend.css')
         'resources/assets/js/backend/after.js'
     ], 'js/backend.js');
 
+mix.copyDirectory('resources/assets/plugins', 'public/plugins');
+
 if (mix.inProduction() || process.env.npm_lifecycle_event !== 'hot') {
     mix.version();
 }

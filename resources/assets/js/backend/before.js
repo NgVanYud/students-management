@@ -7,5 +7,4 @@
 // Loaded before CoreUI app.js
 require('../bootstrap');
 // require('pace');
-require('../plugins/select2.full.min');
 require('../plugins');
