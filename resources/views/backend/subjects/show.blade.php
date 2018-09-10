@@ -35,6 +35,10 @@
                         <li class="nav-item">
                             <a class="nav-link {{(isset($tab_type) && ($tab_type == SubjectModel::TAB_TYPES['deleted_chapters'])) ? 'active' : ''}}" data-toggle="tab" href="#deteled_chapter" role="tab" aria-controls="deleted_chapters" aria-expanded="{{(isset($tab_type) && ($tab_type == SubjectModel::TAB_TYPES['deleted_chapters']))}}"><i class="fas fa-book"></i> {{ __('labels.backend.subjects.tabs.titles.deleted_chapters') }}</a>
                         </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link {{(isset($tab_type) && ($tab_type == SubjectModel::TAB_TYPES['lecturers'])) ? 'active' : ''}}" data-toggle="tab" href="#lecturer" role="tab" aria-controls="lecturers" aria-expanded="{{(isset($tab_type) && ($tab_type == SubjectModel::TAB_TYPES['lecturers']))}}"><i class="fas fa-book"></i> {{ __('labels.backend.subjects.tabs.titles.lecturers') }}</a>
+                        </li>
                     </ul>
 
                     <div class="tab-content">
@@ -48,6 +52,10 @@
 
                         <div class="tab-pane {{(isset($tab_type) && ($tab_type == SubjectModel::TAB_TYPES['deleted_chapters'])) ? 'active' : ''}}" id="deteled_chapter" role="tabpanel" aria-expanded="{{(isset($tab_type) && ($tab_type == SubjectModel::TAB_TYPES['deleted_chapters']))}}">
                             @include('backend.subjects.show.tabs.deleted-chapter')
+                        </div><!--tab-->
+
+                        <div class="tab-pane {{(isset($tab_type) && ($tab_type == SubjectModel::TAB_TYPES['lecturers'])) ? 'active' : ''}}" id="lecturer" role="tabpanel" aria-expanded="{{(isset($tab_type) && ($tab_type == SubjectModel::TAB_TYPES['lecturers']))}}">
+                            @include('backend.subjects.show.tabs.lecturers')
                         </div><!--tab-->
                     </div><!--tab-content-->
                 </div><!--col-->

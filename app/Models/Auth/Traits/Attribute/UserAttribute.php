@@ -281,7 +281,7 @@ trait UserAttribute
         }
 
         return '
-    	<div class="btn-group" role="group" aria-label="User Actions">
+    	<div class="btn-group btn-group-sm" role="group" aria-label="User Actions">
 		  '.$this->show_button.'
 		  '.$this->edit_button.'
 		

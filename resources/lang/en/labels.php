@@ -141,7 +141,8 @@ return [
                     'subject' => 'Subject',
                     'history'  => 'History',
                     'chapters'   => 'Chapters',
-                    'deleted_chapters'  => 'Deleted Chapters'
+                    'deleted_chapters'  => 'Deleted Chapters',
+                    'lecturers' => 'Lecturers',
                 ],
 
                 'content' => [
@@ -194,6 +195,17 @@ return [
                 ],
             ],
 
+            'lecturers' => [
+                'table' => [
+                    'total'                     => 'lecturer total|lecturers total',
+                    'last_name'                 => 'Last Name',
+                    'actived'                   => 'Actived',
+                    'first_name'                => 'First Name',
+                    'last_updated'              => 'Last Updated',
+                    'username'                  => 'Username',
+                    'role'                      => 'Role',
+                ]
+            ]
         ],
 
         'lecturers' => [
@@ -206,7 +218,12 @@ return [
             'modify'        => 'Modify Lecturers',
 
             'table' => [
-                'total'         => 'lecturer total|lecturers total'
+                'total'         => 'lecturer total|lecturers total',
+                'name'              => 'Name',
+                'actived'           => 'Actived',
+                'question_num'      => 'Number of questions',
+                'total'             => 'chapter total|chapters total',
+                'last_updated'      => 'Last Updated',
             ]
         ]
     ],

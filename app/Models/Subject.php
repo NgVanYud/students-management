@@ -21,7 +21,8 @@ class Subject extends Model
     const TAB_TYPES = [
         'subjects'   => 'subjects',
         'chapters'      => 'chapters',
-        'deleted_chapters'  => 'deleted_chapters'
+        'deleted_chapters'  => 'deleted_chapters',
+        'lecturers'     => 'lecturers'
     ];
 
 
@@ -57,6 +58,15 @@ class Subject extends Model
             'subject_id',
             'lecturer_id'
         )->withTimestamps();
+    }
+
+    public function lecturersWithPaginate() {
+        return $this->belongsToMany(
+            User::class,
+            'lecturers',
+            'subject_id',
+            'lecturer_id'
+        )->withTimestamps()->orderBy('first_name', 'asc')->paginate(25);
     }
 
     /**

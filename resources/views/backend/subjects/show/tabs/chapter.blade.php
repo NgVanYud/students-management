@@ -16,9 +16,7 @@
             <tbody>
             @foreach($chapters as $chapter)
                 <tr>
-                    <td>
-                        <a class="text-dark" href="{{route('admin.subject.chapter.show', [$subject, $chapter])}}">{{ $chapter->name }}</a>
-                    </td>
+                    <td>{{ $chapter->name }}</td>
                     <td>{!! $chapter->actived_label !!}</td>
                     <td>{!! 0 !!}</td>
                     <td>{!! $chapter->updated_at->diffForHumans() !!}</td>
