@@ -30,9 +30,8 @@ class ChapterController extends Controller
      */
     public function index(ManageChapterRequest $request, Subject $subject)
     {
-        return view('backend.subjects.show')
-            ->with('is_chapter', true)
-            ->withSubject($subject);
+//        $tab_type = Subject::TAB_TYPES['chapters'];
+//        return redirect()->route('admin.subject.show', [$subject, $tab_type]);
     }
 
     /**
@@ -40,10 +39,9 @@ class ChapterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(ManageChapterRequest $request, Subject $subject, $is_chapter = null)
+    public function create(ManageChapterRequest $request, Subject $subject)
     {
         return view('backend.subjects.chapters.create')
-            ->with('is_chapter', isset($is_chapter))
             ->withSubject($subject);
     }
 

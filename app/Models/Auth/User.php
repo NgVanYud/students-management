@@ -30,6 +30,8 @@ class User extends Authenticatable
 
     const MALE_CODE = 1;
     const FEMALE_CODE = 0;
+    const ACTIVE_CODE = 1;
+    const INACTIVE_CODE = 0;
     /**
      * The attributes that are mass assignable.
      *

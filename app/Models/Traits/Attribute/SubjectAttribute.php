@@ -8,6 +8,8 @@
 
 namespace App\Models\Traits\Attribute;
 
+use function PHPSTORM_META\type;
+
 trait SubjectAttribute
 {
     /**
@@ -57,6 +59,27 @@ trait SubjectAttribute
         return '<a href="' . route('admin.subject.chapter.create', $this) . '" class="dropdown-item">' . __('buttons.backend.subjects.chapters.add') . '</a> ';
     }
 
+    public function getActivedLabelAttribute()
+    {
+        if ($this->isActived()) {
+            return '<a href="' . route('admin.subject.inactive',
+                    $this
+                ) . '" data-toggle="tooltip" data-placement="top" title="' . __('buttons.backend.subjects.inactive') . '" name="confirm_item"><span class="badge badge-success" style="cursor:pointer">' . __('labels.general.yes') . '</span></a>';
+
+        }
+
+        return '<a href="' . route('admin.subject.active', $this) . '" data-toggle="tooltip" data-placement="top" title="' . __('buttons.backend.subjects.active') . '" name="confirm_item"><span class="badge badge-danger" style="cursor:pointer">' . __('labels.general.no') . '</span></a>';
+    }
+
+    public function getLecturersButtonAttribute() {
+        return '<a href="' . route('admin.subject.lecturer.index', $this) . '"
+                 class="dropdown-item">' . __('buttons.backend.subjects.lecturers.list') . '</a> ';
+    }
+
+    public function getAddLecturerButtonAttribute() {
+        return '<a href="' . route('admin.subject.lecturer.create', $this) . '"
+                 class="dropdown-item">' . __('buttons.backend.subjects.lecturers.add') . '</a> ';
+    }
     /**
      * @return string
      */
@@ -80,21 +103,11 @@ trait SubjectAttribute
                 </button>
                 <div class="dropdown-menu" aria-labelledby="subjectActions">
                 ' . $this->add_chapter_button . '
+                ' . $this->lecturers_button . '
+                ' . $this->add_lecturer_button . '
                 ' . $this->delete_button . '
                 </div>
               </div>
 			</div>';
-    }
-
-    public function getActivedLabelAttribute()
-    {
-        if ($this->isActived()) {
-            return '<a href="' . route('admin.subject.inactive',
-                    $this
-                ) . '" data-toggle="tooltip" data-placement="top" title="' . __('buttons.backend.subjects.inactive') . '" name="confirm_item"><span class="badge badge-success" style="cursor:pointer">' . __('labels.general.yes') . '</span></a>';
-
-        }
-
-        return '<a href="' . route('admin.subject.active', $this) . '" data-toggle="tooltip" data-placement="top" title="' . __('buttons.backend.subjects.active') . '" name="confirm_item"><span class="badge badge-danger" style="cursor:pointer">' . __('labels.general.no') . '</span></a>';
     }
 }

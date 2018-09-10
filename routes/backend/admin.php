@@ -17,6 +17,9 @@ Route::group([
         'prefix' => 'subject',
         'as' => 'subject.'
     ], function () {
+        /*
+         * Status subject
+         */
         Route::get('{subject}/inactive', 'SubjectStatusController@inactive')->name('inactive');
         Route::get('{subject}/active', 'SubjectStatusController@active')->name('active');
         Route::get('{subject}/restore', 'SubjectStatusController@restore')->name('restore');
@@ -27,12 +30,24 @@ Route::group([
     /*
      * Subject CRUD
      */
-    Route::get('subject/{subject}/{tab_type?}', 'SubjectController@show')->name('subject.show');
     Route::resource('subject', 'SubjectController', [
         'parameters' => 'singular'
     ])->except(['show']);
+    Route::get('subject/{subject}/{tab_type?}', 'SubjectController@show')
+        ->name('subject.show');
 });
 
+/**
+ * Lecturer
+ */
+Route::group([
+    'namespace' => 'Subject',
+    'prefix'    => 'lecturer'
+], function () {
+
+    Route::get('total', 'LecturerController@total')->name('lecturer.total');
+    Route::resource('subject.lecturer', 'LecturerController')->except(['show']);
+});
 
 /*
  * Chapter
@@ -56,10 +71,5 @@ Route::group([
     /*
      * CRUD
      */
-    Route::get('subject/{subject}/chapter/create/{is_chapter?}', 'ChapterController@create')
-        ->name('subject.chapter.create');
-
-    Route::resource('subject.chapter', 'ChapterController')->except([
-        'create'
-    ]);
+    Route::resource('subject.chapter', 'ChapterController')->except(['index']);
 });

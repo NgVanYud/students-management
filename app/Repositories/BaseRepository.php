@@ -467,4 +467,31 @@ abstract class BaseRepository implements RepositoryContract
 
         return $this;
     }
+
+    /**
+     * Get all items vs condition
+     */
+    public function getAllWithCondition($condition=[]){
+        $data_width_condition = $this->model;
+        if (!empty($condition)){
+
+            foreach ($condition as $key => $value) {
+                if ($value == ''){
+                    unset($condition[$key]);
+                }
+                //Trường hợp nếu param truyền vào dạng ['column' => ['operator'=>'>','value'=> 1]]
+                if(is_array($value)){
+                    $op     = array_get($value, 'operator');
+                    $val    = array_get($value, 'value');
+                    $column = $key;
+                    $data_width_condition = $data_width_condition->where($column, $op, $val);
+                } else {
+
+                    //Trường hợp truyền vào simple ['column'=>'value']
+                    $data_width_condition = $data_width_condition->where($key,$value);
+                }
+            }
+            return $data_width_condition->get();
+        }
+    }
 }

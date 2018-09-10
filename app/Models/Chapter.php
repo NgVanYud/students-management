@@ -32,7 +32,7 @@ class Chapter extends Model
         return [
             //Tên cot luu slug
             'slug' => [
-                'source' => 'name'
+                'source' => ['subject.name', 'name']
             ]
         ];
     }

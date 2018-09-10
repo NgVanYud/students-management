@@ -2,6 +2,7 @@
 
 namespace App\Models\Auth\Traits\Relationship;
 
+use App\Models\Subject;
 use App\Models\System\Session;
 use App\Models\Auth\SocialAccount;
 use App\Models\Auth\PasswordHistory;
@@ -33,5 +34,14 @@ trait UserRelationship
     public function passwordHistories()
     {
         return $this->hasMany(PasswordHistory::class);
+    }
+
+    public function subjects() {
+        return $this->belongsToMany(
+            Subject::class,
+            'lecturers',
+            'lecturer_id',
+            'subject_id'
+        )->withTimestamps();
     }
 }

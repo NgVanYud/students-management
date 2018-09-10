@@ -60,11 +60,7 @@
         <div class="card-footer">
             <div class="row">
                 <div class="col">
-                    @if(isset($is_chapter))
-                    {{ form_cancel(route('admin.subject.chapter.index', $subject), __('buttons.general.cancel')) }}
-                    @else
-                    {{ form_cancel(route('admin.subject.index'), __('buttons.general.cancel')) }}
-                    @endif
+                    {{ form_cancel(route('admin.subject.show', [$subject, SubjectModel::TAB_TYPES['chapters']]), __('buttons.general.cancel')) }}
                 </div><!--col-->
 
                 <div class="col text-right">

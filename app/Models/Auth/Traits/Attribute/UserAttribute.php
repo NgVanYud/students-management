@@ -5,7 +5,7 @@ namespace App\Models\Auth\Traits\Attribute;
 use Illuminate\Support\Facades\Hash;
 
 /**
- * Trait UserAttribute.
+ * Traits UserAttribute.
  */
 trait UserAttribute
 {

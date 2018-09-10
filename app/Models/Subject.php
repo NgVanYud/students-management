@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Auth\User;
 use App\Models\Traits\Method\SubjectMethod;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
@@ -47,6 +48,15 @@ class Subject extends Model
 
     public function chapters() {
         return $this->hasMany(Chapter::class)->orderBy('name', 'asc')->paginate(25);
+    }
+
+    public function lecturers() {
+        return $this->belongsToMany(
+            User::class,
+            'lecturers',
+            'subject_id',
+            'lecturer_id'
+        )->withTimestamps();
     }
 
     /**
