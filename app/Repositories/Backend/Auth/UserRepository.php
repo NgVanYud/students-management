@@ -376,10 +376,7 @@ class UserRepository extends BaseRepository
 
     public function getByRole($role_name)
     {
-        $users = $this->get()->where('active', '=', User::ACTIVE_CODE);
-        $lecturers = $users->reject(function ($user, $key) use ($role_name) {
-            return !$user->hasRole($role_name);
-        });
+        $lecturers = $this->model->role($role_name)->active()->get();
         return $lecturers;
     }
 }

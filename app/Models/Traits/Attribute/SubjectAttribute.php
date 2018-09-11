@@ -8,6 +8,8 @@
 
 namespace App\Models\Traits\Attribute;
 
+use App\Models\Auth\User;
+use App\Models\Subject;
 use function PHPSTORM_META\type;
 
 trait SubjectAttribute
@@ -71,8 +73,8 @@ trait SubjectAttribute
         return '<a href="' . route('admin.subject.active', $this) . '" data-toggle="tooltip" data-placement="top" title="' . __('buttons.backend.subjects.active') . '" name="confirm_item"><span class="badge badge-danger" style="cursor:pointer">' . __('labels.general.no') . '</span></a>';
     }
 
-    public function getLecturersButtonAttribute() {
-        return '<a href="' . route('admin.subject.lecturer.index', $this) . '"
+    public function getLecturersListButtonAttribute() {
+        return '<a href="' . route('admin.subject.show', [$this, Subject::TAB_TYPES['lecturers']]) . '"
                  class="dropdown-item">' . __('buttons.backend.subjects.lecturers.list') . '</a> ';
     }
 
@@ -103,7 +105,7 @@ trait SubjectAttribute
                 </button>
                 <div class="dropdown-menu" aria-labelledby="subjectActions">
                 ' . $this->add_chapter_button . '
-                ' . $this->lecturers_button . '
+                ' . $this->lecturers_list_button . '
                 ' . $this->add_lecturer_button . '
                 ' . $this->delete_button . '
                 </div>

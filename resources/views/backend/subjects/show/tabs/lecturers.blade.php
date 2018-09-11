@@ -22,16 +22,22 @@
                     <td>{!! $lecturer->permissions_label !!}</td>
                     <td>
                         <div class="btn-group btn-group-sm" role="group" aria-label="User Actions">
+                            {{--<a href="{{route('admin.subject.lecturer.destroy', [$subject, $lecturer])}}"--}}
+                               {{--name="confirm_item" class="btn btn-danger">--}}
+                                {{--<i class="fas fa-trash" data-toggle="tooltip" data-placement="top"--}}
+                                   {{--title="{{ __('buttons.backend.subjects.delete_permanently')}}">--}}
+                                {{--</i>--}}
+                            {{--</a>--}}
+                            <a href="{{route('admin.subject.lecturer.destroy', [$subject, $lecturer])}}"
+                                data-method="delete"
+                                data-trans-button-cancel="{{__('buttons.general.cancel')}}"
+                                data-trans-button-confirm="{{__('buttons.general.crud.delete')}}"
+                                data-trans-title="{{__('strings.backend.general.are_you_sure')}}"
+                                class="btn btn-danger">
+                                <i class="fas fa-trash" data-toggle="tooltip" data-placement="top"
+                                    title="{{ __('buttons.general.crud.delete')}}"></i>
+                            </a>
                             {!! $lecturer->show_button !!}
-                            {!! $lecturer->edit_button !!}
-                            <div class="btn-group btn-group-sm" role="group">
-                                <button id="lecturerActions" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    More
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="lecturerActions">
-                                    {!! $lecturer->delete_button !!}
-                                </div>
-                            </div>
                         </div>
                     </td>
                 </tr>

@@ -38,15 +38,17 @@ class SubjectController extends Controller
     public function store(StoreSubjectRequest $request)
     {
         $this->subjectRepository->create($request->only('name', 'abbreviation', 'is_actived', 'credit'));
-        return redirect()->route('admin.subject.index')->withFlashSuccess(__('alerts.backend.subjects.created'));
+        return redirect()->route('admin.subject.index')
+            ->withFlashSuccess(__('alerts.backend.subjects.created'));
     }
 
     public function show(ManageSubjectRequest $request, Subject $subject, $tab_type = null)
     {
         if(!(isset($tab_type) && in_array($tab_type, array_values(Subject::TAB_TYPES)))) {
-            $tab_type = 'subjects';
+            $tab_type = Subject::TAB_TYPES['subjects'];
         }
-        $deleted_chapters = $this->chapterRepository->getDeletedPaginatedByModelParent($subject,25, 'deleted_at', 'desc');
+        $deleted_chapters = $this->chapterRepository
+            ->getDeletedPaginatedByModelParent($subject,25, 'deleted_at', 'desc');
         return view('backend.subjects.show')
             ->with('tab_type', $tab_type)
             ->with('deleted_chapters', $deleted_chapters)
@@ -56,7 +58,8 @@ class SubjectController extends Controller
     public function destroy(ManageSubjectRequest $request, Subject $subject)
     {
         $this->subjectRepository->deleteById($subject->id);
-        return redirect()->route('admin.subject.deleted')->withFlashSuccess(__('alerts.backend.subjects.deleted'));
+        return redirect()->route('admin.subject.deleted')
+            ->withFlashSuccess(__('alerts.backend.subjects.deleted'));
     }
 
     public function edit(Subject $subject)
@@ -68,6 +71,7 @@ class SubjectController extends Controller
     public function update(StoreSubjectRequest $request, Subject $subject)
     {
         $subject->update($request->only(['name', 'credit', 'abbreviation']));
-        return redirect()->route('admin.subject.index')->withFlashSuccess(__('alerts.backend.subjects.updated'));
+        return redirect()->route('admin.subject.index')
+            ->withFlashSuccess(__('alerts.backend.subjects.updated'));
     }
 }

@@ -54,7 +54,12 @@ return [
             'lecturers' => [
                 'invalid_lecturers'     => 'The lecturers are selected not invalid.',
                 'added'                 => 'The lecturers was successfully added.',
-
+                'deleted' => 'The lecturer was successfully deleted.',
+                'undeleted' => 'The lecturer was not deleted because of some errors.',
+                'updated' => 'The lecturer was successfully updated.',
+                'actived' => 'The lecturer was successfully actived.',
+                'inactived' => 'The lecturer was successfully inactived.',
+                'restored' => 'The lecturer was successfully restored.',
             ],
         ],
     ],
