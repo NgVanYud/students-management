@@ -41,6 +41,10 @@ class Chapter extends Model
         return $this->belongsTo(Subject::class, 'subject_id', 'id');
     }
 
+    public function questions() {
+        return $this->hasMany(Question::class, 'chapter_id', 'id');
+    }
+
     public function getRouteKeyName()
     {
         return 'slug';

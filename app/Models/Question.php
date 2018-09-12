@@ -30,7 +30,7 @@ class Question extends Model
     }
 
     public function answers() {
-        return $this->hasMany(Question::class, 'question_id', 'id');
+        return $this->hasMany(Answer::class, 'question_id', 'id');
     }
 
     public function chapter() {

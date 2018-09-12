@@ -2,10 +2,9 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(\App\Models\Chapter::class, $subject_id,function (Faker $faker) use ($subject_id) {
+$factory->define(\App\Models\Chapter::class, function (Faker $faker) {
     return [
-        'name' => $faker->text(60),
-        'subject_id' => $subject_id,
+        'name' => $faker->unique()->text(60),
         'is_actived' => 1,
     ];
 });
