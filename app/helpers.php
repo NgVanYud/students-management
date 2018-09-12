@@ -6,7 +6,7 @@ use App\Helpers\General\HtmlHelper;
 /*
  * Global helpers file with misc functions.
  */
-if (! function_exists('app_name')) {
+if (!function_exists('app_name')) {
     /**
      * Helper to grab the application name.
      *
@@ -18,7 +18,7 @@ if (! function_exists('app_name')) {
     }
 }
 
-if (! function_exists('gravatar')) {
+if (!function_exists('gravatar')) {
     /**
      * Access the gravatar helper.
      */
@@ -28,7 +28,7 @@ if (! function_exists('gravatar')) {
     }
 }
 
-if (! function_exists('timezone')) {
+if (!function_exists('timezone')) {
     /**
      * Access the timezone helper.
      */
@@ -38,7 +38,7 @@ if (! function_exists('timezone')) {
     }
 }
 
-if (! function_exists('include_route_files')) {
+if (!function_exists('include_route_files')) {
 
     /**
      * Loops through a folder and requires all PHP files
@@ -53,7 +53,7 @@ if (! function_exists('include_route_files')) {
             $it = new recursiveIteratorIterator($rdi);
 
             while ($it->valid()) {
-                if (! $it->isDot() && $it->isFile() && $it->isReadable() && $it->current()->getExtension() === 'php') {
+                if (!$it->isDot() && $it->isFile() && $it->isReadable() && $it->current()->getExtension() === 'php') {
                     require $it->key();
                 }
 
@@ -65,7 +65,7 @@ if (! function_exists('include_route_files')) {
     }
 }
 
-if (! function_exists('home_route')) {
+if (!function_exists('home_route')) {
 
     /**
      * Return the route to the "home" page depending on authentication/authorization status.
@@ -86,12 +86,12 @@ if (! function_exists('home_route')) {
     }
 }
 
-if (! function_exists('style')) {
+if (!function_exists('style')) {
 
     /**
      * @param       $url
      * @param array $attributes
-     * @param null  $secure
+     * @param null $secure
      *
      * @return mixed
      */
@@ -101,12 +101,12 @@ if (! function_exists('style')) {
     }
 }
 
-if (! function_exists('script')) {
+if (!function_exists('script')) {
 
     /**
      * @param       $url
      * @param array $attributes
-     * @param null  $secure
+     * @param null $secure
      *
      * @return mixed
      */
@@ -116,7 +116,7 @@ if (! function_exists('script')) {
     }
 }
 
-if (! function_exists('form_cancel')) {
+if (!function_exists('form_cancel')) {
 
     /**
      * @param        $cancel_to
@@ -131,7 +131,7 @@ if (! function_exists('form_cancel')) {
     }
 }
 
-if (! function_exists('form_submit')) {
+if (!function_exists('form_submit')) {
 
     /**
      * @param        $title
@@ -145,7 +145,7 @@ if (! function_exists('form_submit')) {
     }
 }
 
-if (! function_exists('camelcase_to_word')) {
+if (!function_exists('camelcase_to_word')) {
 
     /**
      * @param $str
@@ -160,5 +160,20 @@ if (! function_exists('camelcase_to_word')) {
         | (?<=[A-Z])
           (?=[A-Z][a-z])
         /x', $str));
+    }
+}
+
+if (!function_exists('create_question_options')) {
+
+    function create_question_options($options_num)
+    {
+        $options = [];
+        $options_num = config('question.options_num');
+        $count = 0;
+        while ($count < $options_num) {
+            $options[$count + 1] = 'Option ' . ($count + 1);
+            ++$count;
+        }
+        return $options;
     }
 }

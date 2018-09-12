@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend\Question;
 
 use App\Http\Requests\Backend\Question\ManageQuestionRequest;
+use App\Http\Requests\Backend\Question\StoreQuestionRequest;
 use App\Models\Question;
 use App\Repositories\Backend\QuestionRepository;
 use App\Repositories\Backend\SubjectRepository;
@@ -104,7 +105,7 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request);
     }
 
     /**

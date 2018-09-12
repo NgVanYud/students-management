@@ -236,9 +236,7 @@ return [
          * Model Aliases
          */
         'UserModel' => \App\Models\Auth\User::class,
-
         'SubjectModel'  => \App\Models\Subject::class,
-
     ],
 
 ];

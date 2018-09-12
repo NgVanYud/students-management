@@ -8,6 +8,7 @@
 
 @push('before-styles')
     {!! style(asset('plugins/select2/css/select2.min.css')) !!}
+    {!! style(asset('plugins/summernote/summernote-bs4.css')) !!}
 @endpush
 
 @section('content')
@@ -45,14 +46,40 @@
                         </div><!--col-->
                     </div><!--form-group-->
 
+                    <div></div>
+
                     <div class="form-group row">
-                        {{ html()->label(__('validation.attributes.backend.access.users.password'))->class('col-md-2 form-control-label')->for('password') }}
+                        {{ html()->label(__('validation.attributes.backend.questions.content'))
+                        ->class('col-md-2 form-control-label')->for('content') }}
 
                         <div class="col-md-10">
-                            {{ html()->text('content')
+                            {{ html()->textarea('content')
+                                ->class('form-control text_editor')}}
+                        </div><!--col-->
+                    </div><!--form-group-->
+
+                    @for($i = 0; $i < config('question.options_num'); $i++)
+                        <div class="form-group row">
+                            <label class="col-md-2 form-control-label">Option #{{$i+1}}</label>
+
+                            <div class="col-md-10">
+                                <textarea class="form-control text_editor" name="option{{$i+1}}"></textarea>
+                            </div><!--col-->
+                        </div><!--form-group-->
+                    @endfor
+
+                    <div class="form-group row">
+                        {{ html()->label(__('validation.attributes.backend.questions.correct_options'))
+                        ->class('col-md-2 form-control-label')
+                        ->for('correct_options') }}
+
+                        <div class="col-md-10">
+                            {{ html()->select('correct_options[]', [null => null])
+                                ->multiple('multiple')
+                                ->options(create_question_options(config('question.options_num')))
                                 ->class('form-control')
-                                ->placeholder(__('validation.attributes.backend.access.users.password'))
-                                ->required() }}
+                                ->id('correct_options')
+                                ->required()}}
                         </div><!--col-->
                     </div><!--form-group-->
 
@@ -76,7 +103,7 @@
         <div class="card-footer">
             <div class="row">
                 <div class="col">
-                    {{ form_cancel(route('admin.question.index'), __('buttons.general.cancel')) }}
+                    {{ form_cancel(route('admin.question.store'), __('buttons.general.cancel')) }}
                 </div><!--col-->
 
                 <div class="col text-right">
@@ -90,10 +117,11 @@
 
 @push('after-scripts')
     {!! script(asset('plugins/select2/js/select2.min.js')) !!}
+    {!! script(asset('plugins/summernote/summernote-bs4.min.js')) !!}
     <script type="text/javascript">
         $(document).ready(function() {
-            $("#subjects_list, #chapters_list").select2({
-                placeholder: "Select a subject",
+            $("#correct_options").select2({
+                placeholder: "Select correct options",
             });
 
             $("#chapters_list").select2({
@@ -115,6 +143,10 @@
                         // iterate through objects and build HTML here
                     }
                 });
+            });
+
+            $('.text_editor').summernote({
+                minHeight:200
             });
         });
     </script>
