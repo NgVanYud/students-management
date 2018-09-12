@@ -48,6 +48,10 @@ class Subject extends Model
     }
 
     public function chapters() {
+        return $this->hasMany(Chapter::class)->orderBy('name', 'asc');
+    }
+
+    public function chaptersWithPaginate() {
         return $this->hasMany(Chapter::class)->orderBy('name', 'asc')->paginate(25);
     }
 
@@ -78,4 +82,10 @@ class Subject extends Model
     {
         return 'slug';
     }
+
+    public function scopeActive($query, $status = true)
+    {
+        return $query->where('is_actived', $status);
+    }
+
 }

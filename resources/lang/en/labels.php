@@ -225,7 +225,26 @@ return [
                 'total'             => 'chapter total|chapters total',
                 'last_updated'      => 'Last Updated',
             ]
-        ]
+        ],
+
+        'questions' => [
+            'all'           => 'All Question',
+            'create'        => 'Create Question',
+            'edit'          => 'Edit Question',
+            'management'    => 'Question Management',
+            'deleted'       => 'Deleted Question',
+            'view'          => 'View Question',
+            'modify'        => 'Modify Question',
+
+            'table' => [
+                'total'         => 'question total|questions total',
+                'name'              => 'Name',
+                'actived'           => 'Actived',
+                'question_num'      => 'Number of questions',
+                'total'             => 'chapter total|chapters total',
+                'last_updated'      => 'Last Updated',
+            ]
+        ],
     ],
 
     'frontend' => [

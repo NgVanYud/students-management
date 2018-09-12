@@ -45,4 +45,9 @@ class Chapter extends Model
     {
         return 'slug';
     }
+
+    public function scopeActive($query, $status = true)
+    {
+        return $query->where('is_actived', $status);
+    }
 }

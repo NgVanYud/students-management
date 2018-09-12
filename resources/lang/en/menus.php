@@ -29,6 +29,13 @@ return [
             'edit'      => 'Edit Subject',
         ],
 
+        'questions' => [
+            'title'     => 'Questions',
+            'all'       => 'All Questions',
+            'create'    => 'Create Question',
+            'edit'      => 'Edit Question',
+        ],
+
         'access' => [
             'title' => 'Access',
 

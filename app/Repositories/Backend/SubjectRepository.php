@@ -91,4 +91,22 @@ class SubjectRepository extends BaseRepository
             ->orderBy($orderBy, $sort)
             ->paginate($paged);
     }
+
+    public function getActive(array $columns = ['*'], $orderBy = 'created_at', $sort='asc') {
+        return $this->model
+            ->select($columns)
+            ->active()
+            ->orderBy($orderBy, $sort)
+            ->get();
+    }
+
+    public function getActivePaginated(array $columns = ['*'], $paged = 25, $orderBy = 'created_at', $sort = 'desc'): LengthAwarePaginator
+    {
+        return $this->model
+            ->with('chapters', 'lecturers')
+            ->select($columns)
+            ->active()
+            ->orderBy($orderBy, $sort)
+            ->paginate($paged);
+    }
 }

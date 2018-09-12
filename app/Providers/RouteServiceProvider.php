@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Auth\User;
+use App\Models\Question;
 use App\Models\Subject;
 use App\Models\Chapter;
 use Illuminate\Support\Facades\Route;
@@ -61,6 +62,13 @@ class RouteServiceProvider extends ServiceProvider
             $lecturer = new User();
             return User::withTrashed()
                     ->where($lecturer->getRouteKeyName(), $value)
+                    ->first()?? abort(404);;
+        });
+
+        $this->bind('question', function ($value) {
+            $question = new Question();
+            return Question::withTrashed()
+                    ->where($question->getRouteKeyName(), $value)
                     ->first()?? abort(404);;
         });
 

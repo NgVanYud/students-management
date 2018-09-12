@@ -73,3 +73,19 @@ Route::group([
      */
     Route::resource('subject.chapter', 'ChapterController')->except(['index']);
 });
+
+/**
+ * Question
+ */
+
+Route::group([
+    'namespace' => 'Question'
+], function(){
+    Route::group([
+
+    ], function() {
+
+    });
+
+    Route::resource('question', 'QuestionController');
+});

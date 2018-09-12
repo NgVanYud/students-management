@@ -1,5 +1,5 @@
 <div class="col">
-    @php $chapters = $subject->chapters(); @endphp
+    @php $chapters = $subject->chaptersWithPaginate(); @endphp
     @include('backend.subjects.includes.chapter-header-buttons', ['subject' => $subject])
     <div class="table-responsive">
 

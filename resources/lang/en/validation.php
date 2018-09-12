@@ -211,6 +211,16 @@ return [
                 'subjects' => 'Subjects',
                 'lecturers' => 'Lecturers',
             ],
+
+            'questions' => [
+                'content'          => 'Content',
+                'is_actived'        => 'Active',
+                'abbreviation'  => 'Abbreviation',
+                'active'        => 'Active',
+                'option'        => 'Option',
+                'subjects'        => 'Subjects',
+                'chapters'        => 'Chapters',
+            ],
         ],
 
         'frontend' => [

@@ -379,4 +379,11 @@ class UserRepository extends BaseRepository
         $lecturers = $this->model->role($role_name)->active()->get();
         return $lecturers;
     }
+
+    public function getActive($orderBy = 'created_at', $sort='asc') {
+        return $this->model
+            ->active()
+            ->orderBy($orderBy, $sort)
+            ->get();
+    }
 }
