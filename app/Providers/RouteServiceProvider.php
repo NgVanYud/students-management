@@ -45,7 +45,7 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         $this->bind('subject', function ($value) {
-            $subject = new Subject();
+            $subject = new $lecturer;
             return Subject::withTrashed()
                 ->where($subject->getRouteKeyName(), $value)
                 ->first()?? abort(404);;

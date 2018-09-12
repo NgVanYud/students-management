@@ -28,4 +28,12 @@ class Question extends Model
     {
         return $query->where('is_actived', $status);
     }
+
+    public function answers() {
+        return $this->hasMany(Question::class, 'question_id', 'id');
+    }
+
+    public function chapter() {
+        return $this->belongsTo(Chapter::class, 'chapter_id', 'id');
+    }
 }

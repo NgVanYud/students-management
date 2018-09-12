@@ -171,7 +171,7 @@ if (!function_exists('create_question_options')) {
         $options_num = config('question.options_num');
         $count = 0;
         while ($count < $options_num) {
-            $options[$count + 1] = 'Option ' . ($count + 1);
+            $options[$count] = 'Option ' . ($count + 1);
             ++$count;
         }
         return $options;

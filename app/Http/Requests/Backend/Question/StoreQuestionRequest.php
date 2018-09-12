@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Backend\Question;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Route;
 
 class StoreQuestionRequest extends FormRequest
 {
@@ -27,23 +28,22 @@ class StoreQuestionRequest extends FormRequest
         if($action == "store") {
             return [
                 'chapters' => 'required',
-                'content' => 'required|min:20|unique:questions,content',
-                'option1' => 'required|min:1',
-                'option2' => 'required|min:1',
-                'option3' => 'required|min:1',
-                'option4' => 'required|min:1',
-                'true_option' => 'required',
+                'content' => 'required|min:5|unique:questions,content',
+                'options.*' => 'required|min:1',
+                "correct_options"    => "required|array|min:1",
+                "correct_options.*"  => "required|string|distinct|size:1|in:".implode(",", array_keys(create_question_options(config('question.options_num')))),
             ];
         } elseif ($action == "update") {
             return [
                 'chapters' => 'required',
                 'content' => 'required|min:20|unique:questions,content,'. $this->question->id,
-                'option1' => 'required|min:1',
-                'option2' => 'required|min:1',
-                'option3' => 'required|min:1',
-                'option4' => 'required|min:1',
-                'true_option' => 'required',
+                'options.*' => 'required|min:1',
+                "correct_options"    => "required|array|min:1",
+                "correct_options.*"  => "required|string|distinct|size:1|in:".implode(",", array_keys(create_question_options(config('question.options_num'))))
             ];
         }
+        return [
+
+        ];
     }
 }

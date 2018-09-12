@@ -62,6 +62,16 @@ return [
                 'restored' => 'The lecturer was successfully restored.',
             ],
         ],
+
+        'questions' => [
+            'created' => 'The question was successfully created.',
+            'uncreated' => 'The question was not created because of some errors.',
+            'deleted' => 'The question was successfully deleted.',
+            'updated' => 'The question was successfully updated.',
+            'actived' => 'The question was successfully actived.',
+            'inactived' => 'The question was successfully inactived.',
+            'restored' => 'The question was successfully restored.',
+        ]
     ],
 
     'frontend' => [

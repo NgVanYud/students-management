@@ -72,7 +72,7 @@ class ChapterRepository extends BaseRepository
 //                'is_actived' => isset($data['is_actived']) && $data['is_actived'] == '1' ? Chapter::ACTIVE_CODE : Chapter::INACTIVE_CODE,
 //            ]);
 //
-//            $chapter->subject()->associated();
+//            $chapter->$lecturer->associated();
 //            // See if adding any additional permissions
 //            if (! isset($data['permissions']) || ! count($data['permissions'])) {
 //                $data['permissions'] = [];

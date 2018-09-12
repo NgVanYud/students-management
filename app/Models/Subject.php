@@ -73,6 +73,16 @@ class Subject extends Model
         )->withTimestamps()->orderBy('first_name', 'asc')->paginate(25);
     }
 
+    public function questions() {
+        return $this->hasManyThrough(Question::class,
+            Chapter::class,
+            'subject_id',
+            'chapter_id',
+            'id',
+            'id'
+        );
+    }
+
     /**
      * Get the route key for the model.
      *

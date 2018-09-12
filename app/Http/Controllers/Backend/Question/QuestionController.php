@@ -4,28 +4,35 @@ namespace App\Http\Controllers\Backend\Question;
 
 use App\Http\Requests\Backend\Question\ManageQuestionRequest;
 use App\Http\Requests\Backend\Question\StoreQuestionRequest;
+use App\Models\Answer;
 use App\Models\Question;
+use App\Repositories\Backend\AnswerRepository;
 use App\Repositories\Backend\QuestionRepository;
 use App\Repositories\Backend\SubjectRepository;
 use App\Repositories\ChapterRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class QuestionController extends Controller
 {
     protected $questionRepository;
     protected $subjectRepository;
     protected $chapterRepository;
+    protected $answerRepository;
 
     public function __construct(
         QuestionRepository $questionRepository,
         SubjectRepository $subjectRepository,
-        ChapterRepository $chapterRepository
+        ChapterRepository $chapterRepository,
+        AnswerRepository $answerRepository
     )
     {
         $this->questionRepository = $questionRepository;
         $this->subjectRepository = $subjectRepository;
         $this->chapterRepository = $chapterRepository;
+        $this->answerRepository = $answerRepository;
     }
 
 
@@ -92,8 +99,8 @@ class QuestionController extends Controller
         foreach ($subjects as $subject) {
             $subjects_info[$subject->name] = $subject->chapters->pluck('name', 'slug')->toArray();
         }
-        return view('backend.questions.create',[
-           'subjects_info' => $subjects_info
+        return view('backend.questions.create', [
+            'subjects_info' => $subjects_info
         ]);
     }
 
@@ -103,9 +110,42 @@ class QuestionController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreQuestionRequest $request)
     {
-        dd($request);
+        $creater = Auth::check() ? Auth::user() : null;
+        $chapter = $this->chapterRepository->getByColumn($request->chapters, 'slug');
+        $subject = $chapter->subject;
+        if ($subject && $chapter && $creater) {
+            $question_info = $request->only(['content', 'is_actived']) +
+                [
+                    'subject_id' => $subject->id,
+                    'creater_id' => $creater->id,
+                    'chapter_id' => $chapter->id
+                ];
+            DB::transaction(function() use ($question_info, $request){
+                $created_question = $this->questionRepository->create($question_info);
+                if($created_question) {
+                    $options = $request->options;
+                    $correct_options = $request->correct_options;
+                    $all_answers = [];
+                    foreach ($options as $key => $option) {
+                        $all_answers[] = [
+                            'content' => $option,
+                            'question_id' => $created_question->id,
+                            'is_correct' => in_array($key, $correct_options, false) ? Answer::CODE_CORRECT : Answer::CODE_INCORRECT
+                        ];
+                    }
+                    $created_answers = $this->answerRepository->createMultiple($all_answers);
+                    if($created_answers) {
+                        return redirect()->back()
+                            ->withFlashSuccess(__('alerts.backend.questions.created'));
+                    }
+                }
+            });
+
+        }
+        return redirect()->back()
+            ->withFlashError(__('alerts.backend.questions.uncreated'));
     }
 
     /**

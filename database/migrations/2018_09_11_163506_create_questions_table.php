@@ -21,7 +21,6 @@ class CreateQuestionsTable extends Migration
             $table->integer('chapter_id');
             $table->integer('subject_id');
             $table->integer('creater_id');
-            $table->integer('true_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

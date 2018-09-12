@@ -42,7 +42,8 @@
                             {{ html()->select('chapters', [null => null])
                                 ->options($subjects_info)
                                 ->class('form-control')
-                                ->id('chapters_list')}}
+                                ->id('chapters_list')
+                                ->required()}}
                         </div><!--col-->
                     </div><!--form-group-->
 
@@ -59,36 +60,62 @@
                     </div><!--form-group-->
 
                     @for($i = 0; $i < config('question.options_num'); $i++)
+                        {{--<div class="form-group row">--}}
+                            {{--<label class="col-md-2 form-control-label">Option #{{$i+1}}</label>--}}
+
+                            {{--<div class="col-md-10">--}}
+                                {{--<textarea class="form-control text_editor" name="option{{$i+1}}"></textarea>--}}
+                            {{--</div><!--col-->--}}
+                        {{--</div><!--form-group-->--}}
+
                         <div class="form-group row">
                             <label class="col-md-2 form-control-label">Option #{{$i+1}}</label>
 
                             <div class="col-md-10">
-                                <textarea class="form-control text_editor" name="option{{$i+1}}"></textarea>
+                                <textarea class="form-control text_editor" name="options[]">{{old('options.'.$i)}}</textarea>
                             </div><!--col-->
                         </div><!--form-group-->
                     @endfor
 
-                    <div class="form-group row">
-                        {{ html()->label(__('validation.attributes.backend.questions.correct_options'))
-                        ->class('col-md-2 form-control-label')
-                        ->for('correct_options') }}
+                    @if(config('question.multiple_choices'))
+                        <div class="form-group row">
+                            {{ html()->label(__('validation.attributes.backend.questions.correct_options'))
+                            ->class('col-md-2 form-control-label')
+                            ->for('correct_options') }}
 
-                        <div class="col-md-10">
-                            {{ html()->select('correct_options[]', [null => null])
-                                ->multiple('multiple')
-                                ->options(create_question_options(config('question.options_num')))
-                                ->class('form-control')
-                                ->id('correct_options')
-                                ->required()}}
-                        </div><!--col-->
-                    </div><!--form-group-->
+                            <div class="col-md-10">
+                                {{ html()->select('correct_options[]', [null => null])
+                                    ->multiple('multiple')
+                                    ->options(create_question_options(config('question.options_num')))
+                                    ->class('form-control')
+                                    ->id('correct_options')
+                                    ->required()}}
+                            </div><!--col-->
+                        </div><!--form-group-->
+                    @else
+                        <div class="form-group row">
+                            {{ html()->label(__('validation.attributes.backend.questions.correct_options'))
+                            ->class('col-md-2 form-control-label')
+                            ->for('correct_options') }}
+
+                            <div class="col-md-10">
+                                {{ html()->select('correct_options', [null => null])
+                                    ->options(create_question_options(config('question.options_num')))
+                                    ->value(old('correct_options'))
+                                    ->class('form-control')
+                                    ->id('correct_options')
+                                    ->required()}}
+                            </div><!--col-->
+                        </div><!--form-group-->
+                    @endif
+
 
                     <div class="form-group row">
                         {{ html()->label(__('validation.attributes.backend.access.users.active'))->class('col-md-2 form-control-label')->for('active') }}
 
                         <div class="col-md-10">
                             <label class="switch switch-3d switch-primary">
-                                {{ html()->checkbox('active', true, '1')->class('switch-input') }}
+                                {{ html()->checkbox('is_actived', true, '1')->class('switch-input') }}
                                 <span class="switch-label"></span>
                                 <span class="switch-handle"></span>
                             </label>

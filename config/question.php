@@ -14,7 +14,7 @@ return [
     /**
      * Check if enable multiple choice in a question
      */
-    'multiple_choices' => false,
+    'multiple_choices' => true,
 
     /**
      * Force full 'options_num' option in a question
