@@ -1,6 +1,6 @@
 @extends ('backend.layouts.app')
 
-@section ('title', app_name() . ' | ' . __('labels.backend.subjects.management'))
+@section ('title', app_name() . ' | ' . __('labels.backend.questions.management'))
 
 @section('breadcrumb-links')
     @include('backend.auth.user.includes.breadcrumb-links')
@@ -12,14 +12,14 @@
 @endpush
 
 @section('content')
-    {{ html()->form('POST', route('admin.chapter.question.store'))->class('form-horizontal')->open() }}
+    {{ html()->modelForm($question, 'PATCH', route('admin.chapter.question.update', [$chapter, $question]))->class('form-horizontal')->open() }}
     <div class="card">
         <div class="card-body">
             <div class="row">
                 <div class="col-sm-5">
                     <h4 class="card-title mb-0">
                         {{ __('labels.backend.questions.management') }}
-                        <small class="text-muted">{{ __('labels.backend.questions.create') }}</small>
+                        <small class="text-muted">{{ __('labels.backend.questions.edit') }}</small>
                     </h4>
                 </div><!--col-->
             </div><!--row-->
@@ -39,6 +39,7 @@
                                 ->options($subjects_info)
                                 ->class('form-control')
                                 ->id('chapters_list')
+                                ->value($chapter->slug)
                                 ->required()}}
                         </div><!--col-->
                     </div><!--form-group-->
@@ -54,24 +55,20 @@
                                 ->class('form-control text_editor')}}
                         </div><!--col-->
                     </div><!--form-group-->
-
-                    @for($i = 0; $i < config('question.options_num'); $i++)
-                        {{--<div class="form-group row">--}}
-                            {{--<label class="col-md-2 form-control-label">Option #{{$i+1}}</label>--}}
-
-                            {{--<div class="col-md-10">--}}
-                                {{--<textarea class="form-control text_editor" name="option{{$i+1}}"></textarea>--}}
-                            {{--</div><!--col-->--}}
-                        {{--</div><!--form-group-->--}}
+                    @php $correct_options_index = array(); @endphp
+                    @foreach($question->answers as $option)
+                        @if($option->is_correct)
+                            @php $correct_options_index[] = ($loop->index); @endphp
+                        @endif
 
                         <div class="form-group row">
-                            <label class="col-md-2 form-control-label">Option #{{$i+1}}</label>
+                            <label class="col-md-2 form-control-label">Option #{{$loop->index +1}}</label>
 
                             <div class="col-md-10">
-                                <textarea class="form-control text_editor" name="options[]">{{old('options.'.$i)}}</textarea>
+                                <textarea class="form-control text_editor" name="options[]">{!! $option->content !!}</textarea>
                             </div><!--col-->
                         </div><!--form-group-->
-                    @endfor
+                    @endforeach
 
                     @if(config('question.multiple_choices'))
                         <div class="form-group row">
@@ -80,7 +77,7 @@
                             ->for('correct_options') }}
 
                             <div class="col-md-10">
-                                {{ html()->select('correct_options[]', [null => null])
+                                {{ html()->select('correct_options[]')
                                     ->multiple('multiple')
                                     ->options(create_question_options(config('question.options_num')))
                                     ->class('form-control')
@@ -126,11 +123,11 @@
         <div class="card-footer">
             <div class="row">
                 <div class="col">
-                    {{ form_cancel(route('admin.chapter.question.store'), __('buttons.general.cancel')) }}
+                    {{ form_cancel(route('admin.chapter.question.index'), __('buttons.general.cancel')) }}
                 </div><!--col-->
 
                 <div class="col text-right">
-                    {{ form_submit(__('buttons.general.crud.create')) }}
+                    {{ form_submit(__('buttons.general.crud.update')) }}
                 </div><!--col-->
             </div><!--row-->
         </div><!--card-footer-->
@@ -143,29 +140,12 @@
     {!! script(asset('plugins/summernote/summernote-bs4.min.js')) !!}
     <script type="text/javascript">
         $(document).ready(function() {
-            $("#correct_options").select2({
+            $('#correct_options').select2({
                 placeholder: "Select correct options",
-            });
+            }).val({{json_encode($correct_options_index)}}).trigger("change");;
 
-            $("#chapters_list").select2({
+            $('#chapters_list').select2({
                 placeholder: "Select a chapter",
-            });
-
-            $('#subjects_list').change(function() {
-                var subject = $(this).val(); //get the current value's option
-                $.ajax({
-                    type:'GET',
-                    {{--url:'{{route('')}}',--}}
-                    data:{'id':id},
-                    success:function(data){
-                        //in here, for simplicity, you can substitue the HTML for a brand new select box for countries
-                        //1.
-                        $(".countries_container").html(data);
-
-                        //2.
-                        // iterate through objects and build HTML here
-                    }
-                });
             });
 
             $('.text_editor').summernote({

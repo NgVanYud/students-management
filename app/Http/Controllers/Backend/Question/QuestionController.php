@@ -170,10 +170,10 @@ class QuestionController extends Controller
      */
     public function show(ManageQuestionRequest $request, Chapter $chapter)
     {
-        $questions = $chapter->questions()->orderBy('created_at', 'asc')->paginate(25);
-        if ($request->ajax()) {
-            return Response::json(View::make('backend.questions.includes.load-list', array('questions' => $questions))->render());
-        }
+//        $questions = $chapter->questions()->orderBy('created_at', 'asc')->paginate(25);
+//        if ($request->ajax()) {
+//            return Response::json(View::make('backend.questions.includes.load-list', array('questions' => $questions))->render());
+//        }
     }
 
     /**
@@ -184,7 +184,31 @@ class QuestionController extends Controller
      */
     public function edit(ManageQuestionRequest $request, Chapter $chapter, Question $question)
     {
-        dd('edit question controller');
+        $subjects = $this->subjectRepository->getActive(['id', 'name', 'slug'], 'name', 'asc');
+//        $chapters = $this->chapterRepository->getActive(['name', 'slug'], 'name', 'asc');
+        /**
+         * $subject_info
+         *  [
+         *      'name_subject1' => [
+         *              'name_chapter1' => 'slug_chapter1'
+         *              'name_chapter2' => 'slug_chapter2'
+         *              'name_chapter3' => 'slug_chapter3'
+         *      ],
+         *      'name_subject2' => [
+         *              'name_chapter1' => 'slug_chapter1'
+         *              'name_chapter2' => 'slug_chapter2'
+         *      ]
+         *  ]
+         */
+        $subjects_info = [];
+        foreach ($subjects as $subject) {
+            $subjects_info[$subject->name] = $subject->chapters->pluck('name', 'slug')->toArray();
+        }
+        return view('backend.questions.edit', [
+            'subjects_info' => $subjects_info,
+            'chapter' => $chapter,
+            'question' => $question,
+        ]);
     }
 
     /**
@@ -194,9 +218,12 @@ class QuestionController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreQuestionRequest $request, Chapter $chapter, Question $question)
     {
-        //
+        $question->update($request->only(['content', 'opti', 'abbreviation']));
+        return redirect()->route('admin.subject.index')
+            ->withFlashSuccess(__('alerts.backend.subjects.updated'));
+        dd('update method controller');
     }
 
     /**

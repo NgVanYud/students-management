@@ -93,11 +93,10 @@ Route::group([
         Route::get('deleted', 'QuestionController@getDeleted')->name('deleted');
     });
 
-
-
     Route::get('chapter/question', 'QuestionController@index')->name('chapter.question.index');
-    Route::post('{chapter}/question', 'QuestionController@show')->name('chapter.question.show');
+//    Route::post('{chapter}/question', 'QuestionController@show')->name('chapter.question.show');
     Route::get('question/create', 'QuestionController@create')->name('chapter.question.create');
-    Route::post('question ', 'QuestionController@store')->name('question.store');
+    Route::post('question ', 'QuestionController@store')->name('chapter.question.store');
+
     Route::resource('chapter.question', 'QuestionController')->except(['index', 'create', 'store', 'show']);
 });
