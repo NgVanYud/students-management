@@ -74,6 +74,16 @@ return [
                 'validate_error'                            => 'There was a problem validation this new chapter',
             ],
         ],
+
+        'questions' => [
+            'already_actived'       => 'This question is already actived.',
+            'cant_active'           => 'There was a problem activing the question.',
+            'not_actived'           => 'This question is not actived.',
+            'cant_inactive'         => 'There was a problem inactiving the question',
+            'delete_first'          => 'This question must be deleted first before it can be destroyed permanently.',
+            'cant_restore'          => 'This question is not deleted so it can not be restored.',
+            'restore_error'         => 'There was a problem restoring this question. Please try again.',
+        ]
     ],
 
     'frontend' => [

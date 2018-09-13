@@ -51,6 +51,14 @@ return [
                 'add'            => ' Add Lecturer',
             ],
         ],
+
+        'questions' => [
+            'active'                    => 'Active',
+            'inactive'                  => 'Inactive',
+            'restore_subject'           => 'Restore Subject',
+            'delete'                    => 'Delete',
+            'delete_permanently'        => 'Delete Permanently',
+        ]
     ],
 
     'emails' => [

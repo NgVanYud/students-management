@@ -235,13 +235,15 @@ return [
             'deleted'       => 'Deleted Question',
             'view'          => 'View Question',
             'modify'        => 'Modify Question',
+            'list'          => 'List Questions',
 
             'table' => [
                 'total'         => 'question total|questions total',
+                'options'       => 'Options',
+                'contents'       => 'Content',
                 'name'              => 'Name',
                 'actived'           => 'Actived',
                 'question_num'      => 'Number of questions',
-                'total'             => 'chapter total|chapters total',
                 'last_updated'      => 'Last Updated',
             ]
         ],

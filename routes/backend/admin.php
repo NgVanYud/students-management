@@ -82,10 +82,22 @@ Route::group([
     'namespace' => 'Question'
 ], function(){
     Route::group([
-
+        'as' => 'question.'
     ], function() {
-
+        /*
+     * Active, inactive
+     */
+        Route::get('{question}/inactive', 'QuestionController@inactive')->name('inactive');
+        Route::get('{question}/active', 'QuestionController@active')->name('active');
+        Route::get('{question}/restore', 'QuestionController@restore')->name('restore');
+        Route::get('deleted', 'QuestionController@getDeleted')->name('deleted');
     });
 
-    Route::resource('question', 'QuestionController');
+
+
+    Route::get('chapter/question', 'QuestionController@index')->name('chapter.question.index');
+    Route::post('{chapter}/question', 'QuestionController@show')->name('chapter.question.show');
+    Route::get('question/create', 'QuestionController@create')->name('chapter.question.create');
+    Route::post('question ', 'QuestionController@store')->name('question.store');
+    Route::resource('chapter.question', 'QuestionController')->except(['index', 'create', 'store', 'show']);
 });
