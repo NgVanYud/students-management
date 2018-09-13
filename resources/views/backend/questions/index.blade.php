@@ -8,6 +8,7 @@
 
 @push('before-styles')
     {!! style(asset('plugins/select2/css/select2.min.css')) !!}
+
 @endpush
 
 @section('content')
@@ -82,17 +83,9 @@
 
 
              $("select[name='chapter']").change(function() {
+                 setBusyStatus();
                  chapter_slug = $(this).val();
                  var token = $("input[name='_token']").val();
-                 {{--$("body").css({--}}
-                     {{--"position": "fix",--}}
-                     {{--"top": "0px",--}}
-                     {{--"left": "0px",--}}
-                     {{--"width": "100%",--}}
-                     {{--"height": "100%",--}}
-                     {{--"z-index": "9999 !important",--}}
-                    {{--"background": "url({{asset('img/backend/loading.gif')}}) 50% 50% no-repeat rgb(249,249,249)"--}}
-                 {{--});--}}
                  var url_process = '{{ route("admin.chapter.question.index") }}';
                  // url_process = url_process.replace(":slug", chapter_slug);
                  $.ajax({
@@ -106,17 +99,18 @@
 
                      success: function(data) {
                          $(".questions_list").html(data);
-                         console.log(data);
+                         resetBusyStatus();
                      },
 
                      error: function(error) {
-                         console.log(error);
+                         alert('Can not get question in this chapter');
                      }
                  });
              });
 
 
             $(document).on('click', '.pagination a', function (e) {
+                setBusyStatus();
                 getQuestions($(this).attr('href').split('page=')[1]);
                 e.preventDefault();
             });
@@ -141,9 +135,20 @@
                     left: 0,
                     behavior: 'smooth'
                 });
+               resetBusyStatus();
             }).fail(function () {
                 alert('Questions could not be loaded.');
             });
+        }
+
+        function resetBusyStatus() {
+            $("#content-wrapper").css({"opacity": "1"});
+            $(".loader").addClass('d-none');
+        }
+
+        function setBusyStatus() {
+            $("#content-wrapper").css({"opacity": "0.2"});
+            $(".loader").removeClass('d-none');
         }
     </script>
 @endpush
