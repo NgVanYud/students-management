@@ -5,7 +5,11 @@ namespace App\Http\Controllers\Backend\Question;
 use App\Http\Requests\Backend\Question\ManageQuestionRequest;
 use App\Http\Requests\Backend\Question\StoreQuestionRequest;
 use App\Models\Answer;
+use App\Models\Auth\User;
+use App\Models\Chapter;
 use App\Models\Question;
+use App\Models\Subject;
+use App\Models\Traits\Method\QuestionMethod;
 use App\Repositories\Backend\AnswerRepository;
 use App\Repositories\Backend\QuestionRepository;
 use App\Repositories\Backend\SubjectRepository;
@@ -14,6 +18,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\View;
 
 class QuestionController extends Controller
 {
@@ -43,7 +49,7 @@ class QuestionController extends Controller
      */
     public function index(ManageQuestionRequest $request)
     {
-        $questions = $this->questionRepository->getActivePaginated();
+        $questions = $this->questionRepository->getIsActivePaginated(true);
         $subjects = $this->subjectRepository->getActive(['id', 'name', 'slug'], 'name', 'asc');
 //        $chapters = $this->chapterRepository->getActive(['name', 'slug'], 'name', 'asc');
         /**
@@ -65,9 +71,17 @@ class QuestionController extends Controller
             $subjects_info[$subject->name] = $subject->chapters->pluck('name', 'slug')->toArray();
         }
 
+        if ($request->ajax()) {
+            if(isset($request->chapter_slug)) {
+                $chapter = $this->chapterRepository->getByColumn($request->chapter_slug, 'slug');
+                $questions = $chapter->questions()->orderBy('created_at', 'asc')->paginate(25);
+            }
+            return Response::json(View::make('backend.questions.includes.load-list', array('questions' => $questions))->render());
+        }
+
         return view('backend.questions.index',
             [
-                'question' => $questions,
+                'questions' => $questions,
                 'subjects_info' => $subjects_info
             ]);
     }
@@ -154,9 +168,12 @@ class QuestionController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(ManageQuestionRequest $request, Chapter $chapter)
     {
-        //
+        $questions = $chapter->questions()->orderBy('created_at', 'asc')->paginate(25);
+        if ($request->ajax()) {
+            return Response::json(View::make('backend.questions.includes.load-list', array('questions' => $questions))->render());
+        }
     }
 
     /**
@@ -165,9 +182,9 @@ class QuestionController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(ManageQuestionRequest $request, Chapter $chapter, Question $question)
     {
-        //
+        dd('edit question controller');
     }
 
     /**
@@ -191,5 +208,36 @@ class QuestionController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function active(ManageQuestionRequest $request, Question $question) {
+        $this->questionRepository->active($question);
+        return redirect()->back()->withFlashSuccess(__('alerts.backend.questions.actived'));
+    }
+
+    public function inactive(ManageQuestionRequest $request, Question $question) {
+        $this->questionRepository->inactive($question);
+        return redirect()->back()->withFlashSuccess(__('alerts.backend.questions.inactived'));
+    }
+
+    public function restore(ManageQuestionRequest $request, Question $question) {
+
+    }
+
+    public function getDeleted(ManageQuestionRequest $request) {
+        return view('backend.subjects.deleted')
+            ->withSubjects($this->subjectRepository->getDeletedPaginated(25, 'deleted_at', 'desc'));
+    }
+
+
+    /**
+     * @param ManageUserRequest $request
+     *
+     * @return mixed
+     */
+    public function getDeactivated(ManageSubjectRequest $request)
+    {
+        return view('backend.auth.user.deactivated')
+            ->withUsers($this->userRepository->getInactivePaginated(25, 'id', 'asc'));
     }
 }

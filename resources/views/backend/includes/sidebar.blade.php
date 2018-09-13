@@ -71,12 +71,12 @@
 
                 <ul class="nav-dropdown-items">
                     <li class="nav-item">
-                        <a class="nav-link {{ active_class(Active::checkUriPattern('admin/subjects*')) }}" href="{{ route('admin.question.index') }}">
+                        <a class="nav-link {{ active_class(Active::checkUriPattern('admin/subjects*')) }}" href="{{ route('admin.chapter.question.index') }}">
                             {{ __('labels.backend.questions.all') }}
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ active_class(Active::checkUriPattern('admin/subjects/create*')) }}" href="{{ route('admin.question.create') }}">
+                        <a class="nav-link {{ active_class(Active::checkUriPattern('admin/subjects/create*')) }}" href="{{route('admin.chapter.question.create')}}">
                             {{ __('labels.backend.questions.create') }}
                         </a>
                     </li>

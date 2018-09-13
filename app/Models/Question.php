@@ -2,14 +2,23 @@
 
 namespace App\Models;
 
+use App\Models\Traits\Attribute\QuestionAttribute;
+use App\Models\Traits\Method\QuestionMethod;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Question extends Model
 {
+    use QuestionAttribute;
+    use QuestionMethod;
+    use SoftDeletes;
+
     const ACTIVE_CODE = 1;
     const INACTIVE_CODE = 0;
 
     protected $table = 'questions';
+
+    protected $dates = ['deleted_at'];
 
     protected $fillable = [
         'content',

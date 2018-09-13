@@ -21,12 +21,12 @@ class SubjectTableSeeder extends Seeder
 //            }));
 //        });
 
-        factory(\App\Models\Subject::class, 15)->create()
+        factory(\App\Models\Subject::class, 10)->create()
             ->each(function($subject) {
-                $subject->chapters()->saveMany(factory(\App\Models\Chapter::class, 15)
+                $subject->chapters()->saveMany(factory(\App\Models\Chapter::class, 10)
                     ->create(['subject_id' => $subject->id])
                     ->each(function($chapter) {
-                        $chapter->questions()->saveMany(factory(\App\Models\Question::class, 200)
+                        $chapter->questions()->saveMany(factory(\App\Models\Question::class, 150)
                         ->create(['subject_id' => $chapter->subject_id, 'chapter_id' => $chapter->id])
                         ->each(function ($question) {
                             $question->answers()->saveMany(factory(\App\Models\Answer::class, (int)config('question.options_num'))

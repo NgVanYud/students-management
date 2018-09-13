@@ -10,6 +10,7 @@ namespace App\Repositories\Backend;
 
 
 use App\Models\Question;
+use App\Models\Traits\Method\QuestionMethod;
 use App\Repositories\BaseRepository;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -29,7 +30,8 @@ class QuestionRepository extends BaseRepository
             ->get();
     }
 
-    public function getActivePaginated(
+    public function getIsActivePaginated(
+        $is_active = true,
         array $columns = ['*'],
         $paged = 25,
         $orderBy = 'created_at',
@@ -39,8 +41,35 @@ class QuestionRepository extends BaseRepository
         return $this->model
 //            ->with('chapters', 'lecturers')
             ->select($columns)
-            ->active()
+            ->active($is_active)
             ->orderBy($orderBy, $sort)
             ->paginate($paged);
+    }
+
+    public function active(Question $question)
+    {
+        if ($question->isActived()) {
+            throw new GeneralException(__('exceptions.backend.questions.already_actived'));
+        }
+        $question->is_actived = Question::ACTIVE_CODE;
+        $actived = $question->save();
+
+        if ($actived) {
+            return $question;
+        }
+
+        throw new GeneralException(__('exceptions.backend.questions.cant_active'));
+    }
+
+    public function inactive(Question $question) {
+        if(!$question->isActived()) {
+            throw new GeneralException(__('exceptions.backend.questions.not_actived'));
+        }
+        $question->is_actived = Question::INACTIVE_CODE;
+        $inactived = $question->save();
+        if($inactived) {
+            return $question;
+        }
+        throw new GeneralException(__('exceptions.backend.questions.cant_inactive'));
     }
 }
