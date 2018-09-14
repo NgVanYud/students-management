@@ -45,8 +45,8 @@ class StoreQuestionRequest extends FormRequest
             ];
         } elseif ($action == "update") {
             return [
-                'chapters' => 'required',
-                'content' => 'required|min:20|unique:questions,content,'. $this->question->id,
+//                'chapters' => 'required',
+                'content' => 'required|min:5|unique:questions,content,'. $this->question->id,
                 'options.*' => 'required|min:1',
                 "correct_options"    => "required|array|min:1",
                 "correct_options.*"  => "required|string|distinct|size:1|in:".implode(",", array_keys(create_question_options(config('question.options_num'))))

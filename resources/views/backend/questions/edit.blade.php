@@ -31,16 +31,16 @@
 
                     <div class="form-group row">
                         {{ html()->label(__('validation.attributes.backend.questions.chapters'))
-                            ->class('col-md-2 form-control-label')
-                            ->for('chapters') }}
+                            ->class('col-md-2 form-control-label') }}
 
                         <div class="col-md-10">
-                            {{ html()->select('chapters', [null => null])
-                                ->options($subjects_info)
-                                ->class('form-control')
-                                ->id('chapters_list')
-                                ->value($chapter->slug)
-                                ->required()}}
+                            {{--{{ html()->select('chapters', [null => null])--}}
+                                {{--->options($subjects_info)--}}
+                                {{--->class('form-control')--}}
+                                {{--->id('chapters_list')--}}
+                                {{--->value($chapter->slug)--}}
+                                {{--->required()}}--}}
+                            {{$chapter->name}}
                         </div><!--col-->
                     </div><!--form-group-->
 
@@ -104,7 +104,7 @@
 
 
                     <div class="form-group row">
-                        {{ html()->label(__('validation.attributes.backend.access.users.active'))->class('col-md-2 form-control-label')->for('active') }}
+                        {{ html()->label(__('validation.attributes.backend.access.users.active'))->class('col-md-2 form-control-label')->for('is_actived') }}
 
                         <div class="col-md-10">
                             <label class="switch switch-3d switch-primary">

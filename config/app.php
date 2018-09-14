@@ -237,6 +237,7 @@ return [
          */
         'UserModel' => \App\Models\Auth\User::class,
         'SubjectModel'  => \App\Models\Subject::class,
+        'QuestionModel'  => \App\Models\Question::class,
     ],
 
 ];

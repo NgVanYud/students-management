@@ -36,15 +36,27 @@
 
                     <div class="form-group row">
                         {{ html()->label(__('validation.attributes.backend.questions.chapters'))
-                            ->class('col-12 form-control-label')
+                            ->class('col-1 form-control-label')
                             ->for('chapter') }}
 
-                        <div class="col-12">
+                        <div class="col-7">
                             {{ html()->select('chapter', [null => null])
                                 ->options($subjects_info)
                                 ->class('form-control')
                                 ->id('chapters_list')}}
                         </div><!--col-->
+
+                        {{ html()->label(__('validation.attributes.backend.questions.status'))
+                            ->class('col-1 form-control-label')
+                            ->for('status') }}
+
+                        <div class="col-3">
+                            {{ html()->select('status', [null => null])
+                                ->options([QuestionModel::ACTIVE_CODE => 'Actived', QuestionModel::INACTIVE_CODE => 'Deactived'])
+                                ->class('form-control')
+                                ->id('statuses_list')}}
+                        </div><!--col-->
+
                     </div><!--form-group-->
 
                     <div class="questions_list">
@@ -72,7 +84,7 @@
                 }
             }
         });
-        var chapter_slug;
+        var chapter_slug, status_code;
 
         $(document).ready(function() {
 
@@ -81,10 +93,17 @@
                 closeOnSelect: true
             });
 
+            $("#statuses_list").select2({
+               placeholder: "Select a status",
+               closeOnSelect: true
+            });
 
-             $("select[name='chapter']").change(function() {
+
+             $("select[name='chapter'], select[name='status']").change(function() {
                  setBusyStatus();
-                 chapter_slug = $(this).val();
+                 chapter_slug = $("select[name='chapter']").val();
+                 status_code = $("select[name='status']").val();
+
                  var token = $("input[name='_token']").val();
                  var url_process = '{{ route("admin.chapter.question.index") }}';
                  // url_process = url_process.replace(":slug", chapter_slug);
@@ -93,7 +112,8 @@
                      method: 'GET',
                      data: {
                          _token:token,
-                         chapter_slug: chapter_slug
+                         chapter_slug: chapter_slug,
+                         status_code: status_code
                      },
                      dataType: 'json',
 
@@ -104,6 +124,7 @@
 
                      error: function(error) {
                          alert('Can not get question in this chapter');
+                         resetBusyStatus();
                      }
                  });
              });
@@ -118,11 +139,12 @@
 
         function getQuestions(page) {
             var data_post = {}
-            if(chapter_slug) {
+            // if(chapter_slug) {
                 data_post = {
-                    chapter_slug: chapter_slug
+                    chapter_slug: chapter_slug,
+                    status_code: status_code
                 }
-            }
+            // }
             $.ajax({
                 url : '?page=' + page,
                 dataType: 'json',

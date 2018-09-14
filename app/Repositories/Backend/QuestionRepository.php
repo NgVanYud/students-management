@@ -46,6 +46,13 @@ class QuestionRepository extends BaseRepository
             ->paginate($paged);
     }
 
+    public function getAllPaginated($paged = 25, $columns = ['*'], $orderBy = 'created_at', $sort = 'asc') {
+        return $this->model
+            ->select($columns)
+            ->orderBy($orderBy, $sort)
+            ->paginate($paged);
+    }
+
     public function active(Question $question)
     {
         if ($question->isActived()) {

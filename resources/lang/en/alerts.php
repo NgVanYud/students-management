@@ -68,6 +68,7 @@ return [
             'uncreated' => 'The question was not created because of some errors.',
             'deleted' => 'The question was successfully deleted.',
             'updated' => 'The question was successfully updated.',
+            'unupdated' => 'The question was not updated because of some errors.',
             'actived' => 'The question was successfully actived.',
             'inactived' => 'The question was successfully inactived.',
             'restored' => 'The question was successfully restored.',

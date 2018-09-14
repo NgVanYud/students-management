@@ -49,7 +49,7 @@ class QuestionController extends Controller
      */
     public function index(ManageQuestionRequest $request)
     {
-        $questions = $this->questionRepository->getIsActivePaginated(true);
+        $questions = $this->questionRepository->getAllPaginated(25, ['*']);
         $subjects = $this->subjectRepository->getActive(['id', 'name', 'slug'], 'name', 'asc');
 //        $chapters = $this->chapterRepository->getActive(['name', 'slug'], 'name', 'asc');
         /**
@@ -72,9 +72,21 @@ class QuestionController extends Controller
         }
 
         if ($request->ajax()) {
+
             if(isset($request->chapter_slug)) {
                 $chapter = $this->chapterRepository->getByColumn($request->chapter_slug, 'slug');
-                $questions = $chapter->questions()->orderBy('created_at', 'asc')->paginate(25);
+                if(isset($request->status_code)) {
+                    $questions = $chapter->questions()
+                        ->where('is_actived', $request->status_code)
+                        ->orderBy('created_at', 'asc')
+                        ->paginate(25);
+                } else {
+                    $questions = $chapter->questions()->orderBy('created_at', 'asc')->paginate(25);
+                }
+            } else {
+                if(isset($request->status_code)) {
+                    $questions = $this->questionRepository->getIsActivePaginated($request->status_code, ['*'], '25');
+                }
             }
             return Response::json(View::make('backend.questions.includes.load-list', array('questions' => $questions))->render());
         }
@@ -220,10 +232,26 @@ class QuestionController extends Controller
      */
     public function update(StoreQuestionRequest $request, Chapter $chapter, Question $question)
     {
-        $question->update($request->only(['content', 'opti', 'abbreviation']));
-        return redirect()->route('admin.subject.index')
-            ->withFlashSuccess(__('alerts.backend.subjects.updated'));
-        dd('update method controller');
+        $creater = Auth::check() ? Auth::user() : null;
+        $subject = $chapter->subject;
+        if(($chapter->is($question->chapter)) && $subject && $creater) {
+            DB::transaction(function () use ($request, $question) {
+                $updated_question = $question->update($request->only(['content', 'is_actived']));
+                if ($updated_question) {
+                    $options = $request->options;
+                    $correct_options = $request->correct_options;
+                    $all_answers = $question->answers;
+                    foreach ($all_answers as $key => $option) {
+                        $option->update(['content' => $options[$key], 'is_correct' =>
+                            in_array($key, $correct_options, false) ? Answer::CODE_CORRECT : Answer::CODE_INCORRECT]);
+                    }
+                }
+            });
+            return redirect()->route('admin.chapter.question.index')
+                ->withFlashSuccess(__('alerts.backend.questions.updated'));
+        }
+        return redirect()->route('admin.chapter.question.index')
+            ->withFlashError(__('alerts.backend.questions.unupdated'));
     }
 
     /**

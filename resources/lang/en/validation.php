@@ -225,6 +225,7 @@ return [
                 'subjects'        => 'Subjects',
                 'chapters'        => 'Chapters',
                 'correct_options'        => 'Correct Option',
+                'status'        => 'Status'
             ],
         ],
 
