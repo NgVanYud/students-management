@@ -247,6 +247,27 @@ return [
                 'last_updated'      => 'Last Updated',
             ]
         ],
+
+        'examinations' => [
+            'all'           => 'All Examinations',
+            'create'        => 'Create Examination',
+            'edit'          => 'Edit Examinations',
+            'management'    => 'Examinations Management',
+            'deleted'       => 'Deleted Examination',
+            'view'          => 'View Examination',
+            'modify'        => 'Modify Examinations',
+            'list'          => 'List Examinations',
+
+            'table' => [
+                'total'         => 'question total|questions total',
+                'options'       => 'Options',
+                'contents'       => 'Content',
+                'name'              => 'Name',
+                'actived'           => 'Actived',
+                'question_num'      => 'Number of questions',
+                'last_updated'      => 'Last Updated',
+            ]
+        ],
     ],
 
     'frontend' => [

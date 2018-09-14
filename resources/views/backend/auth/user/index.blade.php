@@ -34,7 +34,7 @@
                             <th>{{ __('labels.backend.access.users.table.confirmed') }}</th>
                             <th>{{ __('labels.backend.access.users.table.roles') }}</th>
                             <th>{{ __('labels.backend.access.users.table.other_permissions') }}</th>
-                            <th>{{ __('labels.backend.access.users.table.last_updated') }}</th>
+                            {{--<th>{{ __('labels.backend.access.users.table.last_updated') }}</th>--}}
                             <th>{{ __('labels.general.actions') }}</th>
                         </tr>
                         </thead>
@@ -48,7 +48,7 @@
                                 <td>{!! $user->confirmed_label !!}</td>
                                 <td>{!! $user->roles_label !!}</td>
                                 <td>{!! $user->permissions_label !!}</td>
-                                <td>{{ $user->updated_at->diffForHumans() }}</td>
+                                {{--<td>{{ $user->updated_at->diffForHumans() }}</td>--}}
                                 <td>{!! $user->action_buttons !!}</td>
                             </tr>
                         @endforeach

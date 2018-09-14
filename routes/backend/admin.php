@@ -100,3 +100,13 @@ Route::group([
 
     Route::resource('chapter.question', 'QuestionController')->except(['index', 'create', 'store', 'show']);
 });
+
+/**
+ * Examination
+ */
+
+Route::group([
+   'namespace' => 'Examination'
+], function() {
+
+});

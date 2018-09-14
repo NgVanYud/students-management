@@ -59,6 +59,14 @@ return [
             ],
         ],
 
+        'examinations' => [
+            'title'      => 'Examinations',
+            'all'        => 'All Examinations',
+            'create'     => 'Create Examination',
+            'edit'       => 'Edit Examination',
+            'management' => 'Examinations Management',
+        ],
+
         'log-viewer' => [
             'main'      => 'Log Viewer',
             'dashboard' => 'Dashboard',
