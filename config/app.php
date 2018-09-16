@@ -162,7 +162,7 @@ return [
          * Package Service Providers that aren't auto-discover...
          */
         Cviebrock\EloquentSluggable\ServiceProvider::class,
-
+        Laravel\Tinker\TinkerServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -238,6 +238,7 @@ return [
         'UserModel' => \App\Models\Auth\User::class,
         'SubjectModel'  => \App\Models\Subject::class,
         'QuestionModel'  => \App\Models\Question::class,
+        'ExaminationModel'  => \App\Models\Examination::class,
     ],
 
 ];
