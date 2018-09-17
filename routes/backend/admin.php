@@ -112,8 +112,22 @@ Route::group([
         'as' => 'examination.',
         'prefix' => 'examination'
     ], function() {
-
+        Route::get('{examination}/inactive', 'ExaminationStatusController@inactive')->name('inactive');
+        Route::get('{examination}/active', 'ExaminationStatusController@active')->name('active');
+        Route::get('{examination}/restore', 'ExaminationStatusController@restore')->name('restore');
     });
-    Route::resource('examination', 'ExaminationController');
+    Route::resource('examination', 'ExaminationController')->except([
+        'edit', 'update'
+    ]);
+
+    Route::get('examination/{examination}/edit/{tab_type?}', 'ExaminationController@edit')
+        ->name('examination.edit');
+    Route::post('examination/{examination}/edit/general-info', 'ExaminationController@updateGeneralInfo')
+        ->name('examination.general_info.update');
+    Route::post('examination/{examination}/edit/proctor', 'ExaminationController@updateProctors')
+        ->name('examination.proctor.update');
+    Route::post('examination/{examination}/edit/student', 'ExaminationController@updateStudents')
+        ->name('examination.student.update');
+//    Route::get('examination/{examination}/student/{student}', 'ExaminationController@deleteStudent');
 });
 

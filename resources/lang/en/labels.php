@@ -80,6 +80,9 @@ return [
                     'total'             => 'user total|users total',
                     'username'          => 'Username',
                     'select'            => 'Select',
+                    'identity'          => 'Identity',
+                    'gender'            => 'Gender',
+                    'birthday'          => 'Birthday',
                 ],
 
                 'tabs' => [
@@ -263,6 +266,7 @@ return [
                 'all'       => 'All',
                 'students_num'       => 'Num of Students',
                 'proctors_num'       => 'Num of Proctors',
+                'proctors_students'       => 'Proc/Stds',
                 'options'       => 'Options',
                 'name'              => 'Name',
                 'code'              => 'Code',
