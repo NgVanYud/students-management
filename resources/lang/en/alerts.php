@@ -72,7 +72,24 @@ return [
             'actived' => 'The question was successfully actived.',
             'inactived' => 'The question was successfully inactived.',
             'restored' => 'The question was successfully restored.',
-        ]
+        ],
+
+        'examinations' => [
+            'created' => 'The examination was successfully created.',
+            'created_general_info' => 'The general information of examination was successfully created.',
+            'created_proctors' => 'The proctors of examination was successfully created.',
+            'created_students' => 'The students of examination was successfully created.',
+            'uncreated' => 'The examination was not created because of some errors in file excel. Please check it.',
+            'uncreated_proctors' => 'The proctors of examination was not created because of some errors in file excel. Please check it.',
+            'uncreated_students' => 'The students of examination was not created because of some errors in file excel. Please check it.',
+            'deleted' => 'The examination was successfully deleted.',
+            'updated' => 'The examination was successfully updated.',
+            'unupdated' => 'The examination was not updated because of some errors.',
+            'actived' => 'The examination was successfully actived.',
+            'inactived' => 'The examination was successfully inactived.',
+            'restored' => 'The examination was successfully restored.',
+        ],
+
     ],
 
     'frontend' => [

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Examination;
 use App\Models\Auth\User;
 use App\Models\Question;
 use App\Models\Subject;
@@ -69,6 +70,13 @@ class RouteServiceProvider extends ServiceProvider
             $question = new Question();
             return Question::withTrashed()
                     ->where($question->getRouteKeyName(), $value)
+                    ->first()?? abort(404);;
+        });
+
+        $this->bind('examination', function ($value) {
+            $examination = new Examination();
+            return Examination::withTrashed()
+                    ->where($examination->getRouteKeyName(), $value)
                     ->first()?? abort(404);;
         });
 

@@ -104,6 +104,8 @@ return [
          * false is off which doesn't log password changes or check against them
          */
         'password_history' => env('PASSWORD_HISTORY', 3),
+
+        'default_password' => 'secret'
     ],
 
     /*

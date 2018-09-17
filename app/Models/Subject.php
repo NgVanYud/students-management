@@ -83,6 +83,10 @@ class Subject extends Model
         );
     }
 
+    public function examinations() {
+        return $this->hasMany(Examination::class, 'subject_id', 'id');
+    }
+
     /**
      * Get the route key for the model.
      *

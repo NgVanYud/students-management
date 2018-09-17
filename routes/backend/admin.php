@@ -106,7 +106,14 @@ Route::group([
  */
 
 Route::group([
-   'namespace' => 'Examination'
+   'namespace' => 'Examination',
 ], function() {
+    Route::group([
+        'as' => 'examination.',
+        'prefix' => 'examination'
+    ], function() {
 
+    });
+    Route::resource('examination', 'ExaminationController');
 });
+

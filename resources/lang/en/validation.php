@@ -227,6 +227,17 @@ return [
                 'correct_options'        => 'Correct Option',
                 'status'        => 'Status'
             ],
+
+            'examinations' => [
+                'name'          => 'Name',
+                'begin_time'    => 'Start Date',
+                'subject'        => 'Subject',
+                'code'              => 'Code',
+                'active'        => 'Active',
+                'note'        => 'Note',
+                'proctors_file' => 'Proctors File',
+                'students_file' => 'Students File',
+            ],
         ],
 
         'frontend' => [

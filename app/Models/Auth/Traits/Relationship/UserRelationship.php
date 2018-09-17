@@ -2,6 +2,7 @@
 
 namespace App\Models\Auth\Traits\Relationship;
 
+use App\Models\Examination;
 use App\Models\Subject;
 use App\Models\System\Session;
 use App\Models\Auth\SocialAccount;
@@ -43,5 +44,23 @@ trait UserRelationship
             'lecturer_id',
             'subject_id'
         )->withTimestamps();
+    }
+
+    public function examinationsStudent() {
+        return $this->belongsToMany(
+            Examination::class,
+            'examination_student',
+            'student_id',
+            'examination_id'
+        );
+    }
+
+    public function examinationsProctor() {
+        return $this->belongsToMany(
+            Examination::class,
+            'examination_proctor',
+            'proctor_id',
+            'examination_id'
+        );
     }
 }

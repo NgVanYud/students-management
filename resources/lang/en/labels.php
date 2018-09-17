@@ -259,14 +259,27 @@ return [
             'list'          => 'List Examinations',
 
             'table' => [
-                'total'         => 'question total|questions total',
+                'total'         => 'examination total|examinations total',
+                'all'       => 'All',
+                'students_num'       => 'Num of Students',
+                'proctors_num'       => 'Num of Proctors',
                 'options'       => 'Options',
-                'contents'       => 'Content',
                 'name'              => 'Name',
+                'code'              => 'Code',
+                'begin_time'              => 'Begin Time',
                 'actived'           => 'Actived',
+                'subject'           => 'Subject',
                 'question_num'      => 'Number of questions',
                 'last_updated'      => 'Last Updated',
-            ]
+            ],
+
+            'tabs' => [
+                'titles' => [
+                    'general_info' => 'General Information',
+                    'proctors'  => 'Proctors',
+                    'students'   => 'Students',
+                ],
+            ],
         ],
     ],
 

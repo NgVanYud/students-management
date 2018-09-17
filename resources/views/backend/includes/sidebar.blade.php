@@ -125,12 +125,12 @@
 
                     <ul class="nav-dropdown-items">
                         <li class="nav-item">
-                            <a class="nav-link {{ active_class(Active::checkUriPattern('admin/subjects*')) }}" href="{{ route('admin.chapter.question.index') }}">
+                            <a class="nav-link {{ active_class(Active::checkUriPattern('admin/subjects*')) }}" href="{{ route('admin.examination.index') }}">
                                 {{ __('labels.backend.examinations.all') }}
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ active_class(Active::checkUriPattern('admin/subjects/create*')) }}" href="{{route('admin.chapter.question.create')}}">
+                            <a class="nav-link {{ active_class(Active::checkUriPattern('admin/subjects/create*')) }}" href="{{route('admin.examination.create')}}">
                                 {{ __('labels.backend.examinations.create') }}
                             </a>
                         </li>
