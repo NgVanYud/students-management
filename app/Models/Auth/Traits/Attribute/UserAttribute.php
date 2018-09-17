@@ -300,4 +300,8 @@ trait UserAttribute
 		  </div>
 		</div>';
     }
+
+    public function getGenderStringAttribute() {
+        return $this->gender == 1 ? 'Male' : 'Female';
+    }
 }

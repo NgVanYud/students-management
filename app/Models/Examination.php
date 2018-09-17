@@ -3,14 +3,21 @@
 namespace App\Models;
 
 use App\Models\Auth\User;
+use App\Models\Traits\Attribute\ExaminationAttribute;
+use App\Models\Traits\Method\ExaminationMethod;
 use App\Models\Traits\Uuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Examination extends Model
 {
-    use SoftDeletes;
-    use Uuid;
+    use SoftDeletes,
+        Uuid,
+        ExaminationAttribute,
+        ExaminationMethod;
+
+    const ACTIVE_CODE = 1;
+    const INACTIVE_CODE = 0;
 
     const TAB_TYPES = [
         'general_info'      => 'general info',

@@ -48,24 +48,6 @@ class StoreExaminationRequest extends FormRequest
                 'proctors_file' => 'required||max:50000',
                 'students_file' => 'required|max:50000',
             ];
-        } else if ($action == "update") {
-            return [
-                'name' => [
-                    'required',
-                    'min:2',
-                    'max:191',
-                    Rule::unique('examinations')->where(function ($query) use($name, $begin_time) {
-                        return $query->where('name', $name)
-                            ->where('begin_time', $begin_time);
-                    }),
-                ],
-                'code' => 'required|min:2|max:25|unique:examinations,code,'.$this->examination->id,
-                'subject' => 'required',
-                'begin_date' => 'required|date|after:today',
-                'begin_time' => 'required',
-                'proctors_file' => 'required||max:50000',
-                'students_file' => 'required|max:50000',
-            ];
         }
     }
 }

@@ -35,4 +35,31 @@ class ExaminationRepository extends BaseRepository
             ->paginate($paged);
     }
 
+    public function active(Examination $examination)
+    {
+        if ($examination->isActived()) {
+            throw new GeneralException(__('exceptions.backend.examinations.already_actived'));
+        }
+        $examination->is_actived = Examination::ACTIVE_CODE;
+        $actived = $examination->save();
+
+        if ($actived) {
+            return $examination;
+        }
+
+        throw new GeneralException(__('exceptions.backend.examinations.cant_active'));
+    }
+
+    public function inactive(Examination $examination) {
+        if(!$examination->isActived()) {
+            throw new GeneralException(__('exceptions.backend.examinations.not_actived'));
+        }
+        $examination->is_actived = Examination::INACTIVE_CODE;
+        $inactived = $examination->save();
+        if($inactived) {
+            return $examination;
+        }
+        throw new GeneralException(__('exceptions.backend.examinations.cant_inactive'));
+    }
+
 }

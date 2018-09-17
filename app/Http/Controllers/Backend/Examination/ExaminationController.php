@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend\Examination;
 use App\Exceptions\GeneralException;
 use App\Http\Requests\Backend\Examination\ManageExaminationRequest;
 use App\Http\Requests\Backend\Examination\StoreExaminationRequest;
+use App\Http\Requests\Backend\Examination\UpdateExaminationRequest;
 use App\Models\Auth\User;
 use App\Models\Examination;
 use App\Repositories\Backend\Auth\UserRepository;
@@ -14,6 +15,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use File;
 use Excel;
+use Torann\GeoIP\Console\Update;
 
 class ExaminationController extends Controller
 {
@@ -65,8 +67,8 @@ class ExaminationController extends Controller
             \DB::transaction(function() use ($request){
                 $examination = $this->storeGeneralInfo($request);
                 if($examination) {
-                    $this->storeProctors($examination, $request);
-                    $this->storeStudents($examination, $request);
+                    $this->storeProctors($request, $examination);
+                    $this->storeStudents($request, $examination);
                 }
             });
             return redirect()->route('admin.examination.index')
@@ -103,10 +105,9 @@ class ExaminationController extends Controller
         }
     }
 
-    public function storeProctors(Examination $examination, StoreExaminationRequest $request)
+    public function storeProctors(Request $request, Examination $examination)
     {
         $selected_file = $request->proctors_file;
-
 
         if($this->validateFile($selected_file, ['xlsx', 'xls', 'csv'])) {
             $data = $this->getExcelData($selected_file);
@@ -139,7 +140,8 @@ class ExaminationController extends Controller
                         $examination->proctors()->sync($proctors_in_exam->pluck('id')->toArray());
                     });
                 } catch (\Exception $ex) {
-                    throw new GeneralException(__('exceptions.backend.examinations.uncreated_proctors'));
+                    throw new GeneralException($ex->getMessage());
+//                    throw new GeneralException(__('exceptions.backend.examinations.uncreated_proctors'));
                 }
             } else {
                 throw new GeneralException(__('exceptions.backend.examinations.uncreated_proctors'));
@@ -147,7 +149,7 @@ class ExaminationController extends Controller
         }
     }
 
-    public function storeStudents(Examination $examination, StoreExaminationRequest $request){
+    public function storeStudents(Request $request, Examination $examination){
         $selected_file = $request->students_file;
 
         if($this->validateFile($selected_file, ['xlsx', 'xls', 'csv'])) {
@@ -179,8 +181,7 @@ class ExaminationController extends Controller
                                 }
                             }
                         }
-                        $saved = $examination->students()->sync($students_in_exam->pluck('id')->toArray());
-                        if($saved) return true;
+                        $examination->students()->sync($students_in_exam->pluck('id')->toArray());
                     });
                 } catch (\Exception $ex) {
 //                    throw new GeneralException($ex->getMessage());
@@ -200,7 +201,7 @@ class ExaminationController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -209,9 +210,19 @@ class ExaminationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(ManageExaminationRequest $request, Examination $examination, $tab_type = null)
     {
-        //
+        $tab_type = (isset($tab_type) && in_array($tab_type, Examination::TAB_TYPES))
+        ? $tab_type : Examination::TAB_TYPES['general_info'];
+
+        $subjects = $this->subjectRepository->getActive(['slug', 'name'], 'name', 'asc');
+        $subjects_arr = $subjects->pluck('name', 'slug')->toArray();
+
+        return view('backend.examinations.edit', [
+            'tab_type' => $tab_type,
+            'examination' => $examination,
+            'subjects' => $subjects_arr
+        ]);
     }
 
     /**
@@ -224,6 +235,48 @@ class ExaminationController extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+
+    public function updateGeneralInfo(UpdateExaminationRequest $request, Examination $examination) {
+        $subject = $this->subjectRepository->getAllWithCondition(['slug' => $request->subject])->first();
+
+        if($subject) {
+            try {
+                \DB::transaction(function() use ($examination, $request, $subject){
+                    $examination->name = $request->name;
+                    $examination->is_actived = intval($request->is_actived);
+                    $examination->code = $request->code;
+                    $examination->note = $request->note;
+                    $examination->setBeginTime($request->begin_date, $request->begin_time);
+                    $subject->examinations()->save($examination);
+                });
+                return redirect()->route('admin.examination.edit', [
+                    'examination' => $examination,
+                ])->withFlashSuccess(__('alerts.backend.examinations.updated_general_info'));
+            } catch (\Exception $ex) {
+//                throw new GeneralException($ex->getMessage());
+                throw new GeneralException(__('exceptions.backend.examinations.unupdated_general_info'));
+            }
+        }
+        return redirect()->route('admin.examination.edit', [
+            'examination' => $examination,
+        ])->withFlashError(__('alerts.backend.examinations.unupdated_general_info'));
+    }
+
+    public function updateStudents(UpdateExaminationRequest $request, Examination $examination) {
+        $this->storeStudents($request, $examination);
+        return redirect()->route('admin.examination.edit', [
+            'examination' => $examination,
+            'tab_type' => Examination::TAB_TYPES['students']
+        ])->withFlashSuccess(__('alerts.backend.examinations.updated_students'));
+    }
+
+    public function updateProctors(UpdateExaminationRequest $request, Examination $examination) {
+        $this->storeProctors($request, $examination);
+        return redirect()->route('admin.examination.edit', [
+            'examination' => $examination,
+            'tab_type' => Examination::TAB_TYPES['proctors']
+        ])->withFlashSuccess(__('alerts.backend.examinations.updated_proctors'));
     }
 
     /**
@@ -285,5 +338,9 @@ class ExaminationController extends Controller
         $row = $row->toArray();
         $user = $this->userRepository->create($row);
         return $user;
+    }
+
+    public function deleteStudent(ManageExaminationRequest $request, Examination $examination, User $student) {
+
     }
 }
