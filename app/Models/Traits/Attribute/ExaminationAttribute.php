@@ -11,6 +11,9 @@ namespace App\Models\Traits\Attribute;
 
 trait ExaminationAttribute
 {
+    public function getFormatTestButtonAttribute() {
+        return '<a href="' . route('admin.examination.format_test', $this) . '" class="btn btn-info"><i class="fas fa-file-word" data-toggle="tooltip" data-placement="top" title="' . __('buttons.backend.examinations.format_test') . '"></i></a>';
+    }
     /**
      * @return string
      */
@@ -82,6 +85,7 @@ trait ExaminationAttribute
         return '<div class="btn-group btn-group-sm" role="group" aria-label="Examination Actions">
               ' . $this->show_button . '
 			  ' . $this->edit_button . '
+              ' . $this->format_test_button . '
 			  <div class="btn-group btn-group-sm" role="group">
                 <button id="subjectActions" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   More
@@ -99,4 +103,5 @@ trait ExaminationAttribute
     public function getNumberStudentsAttribute() {
         return count($this->students);
     }
+
 }

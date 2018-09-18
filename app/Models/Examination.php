@@ -32,7 +32,19 @@ class Examination extends Model
         'code',
         'uuid',
         'note',
-        'name'
+        'name',
+        'format_test',
+        'question_num',
+        'timeout',
+        'is_published'
+    ];
+
+    protected $casts = [
+        'format_test' => 'array'
+    ];
+
+    protected $appends = [
+        'formatTest'
     ];
 
     protected $table = 'examinations';

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend\Examination;
 use App\Exceptions\GeneralException;
 use App\Http\Requests\Backend\Examination\ManageExaminationRequest;
 use App\Http\Requests\Backend\Examination\StoreExaminationRequest;
+use App\Http\Requests\Backend\Examination\StoreFormatTestRequest;
 use App\Http\Requests\Backend\Examination\UpdateExaminationRequest;
 use App\Models\Auth\User;
 use App\Models\Examination;
@@ -342,5 +343,25 @@ class ExaminationController extends Controller
 
     public function deleteStudent(ManageExaminationRequest $request, Examination $examination, User $student) {
 
+    }
+
+    public function formatTest(ManageExaminationRequest $request, Examination $examination) {
+//        dd(json_decode($examination->format_test, true));
+        return view('backend.examinations.tests.format', [
+            'examination' => $examination
+        ]);
+    }
+
+    public function storeFormatTest(StoreFormatTestRequest $request, Examination $examination) {
+        $arr_chapters = $request->except(['_token', 'timeout']);
+        unset($arr_chapters['_token']);
+        $total_questions = array_sum($arr_chapters);
+        $examination->update([
+            'format_test' => json_encode($arr_chapters),
+            'question_num' => $total_questions,
+            'timeout' => $request->timeout
+        ]);
+        return redirect()->route('admin.examination.index')
+            ->withFlashSuccess(__('alerts.backend.examinations.create_format_test'));
     }
 }
