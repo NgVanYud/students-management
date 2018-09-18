@@ -128,6 +128,24 @@ Route::group([
         ->name('examination.proctor.update');
     Route::post('examination/{examination}/edit/student', 'ExaminationController@updateStudents')
         ->name('examination.student.update');
+    Route::get('examination/{examination}/format-test', 'ExaminationController@formatTest')
+        ->name('examination.format_test');
+    Route::post('examination/{examination}/format-test', 'ExaminationController@storeFormatTest')
+        ->name('examination.store_format_test');
 //    Route::get('examination/{examination}/student/{student}', 'ExaminationController@deleteStudent');
 });
 
+/*
+ *
+ */
+Route::group([
+    'namespace' => 'Examination',
+], function() {
+    Route::group([
+        'as' => 'test.',
+        'prefix' => 'test'
+    ], function() {
+
+    });
+    Route::resource('{examination}/test', 'TestController');
+});

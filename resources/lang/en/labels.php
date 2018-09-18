@@ -260,6 +260,7 @@ return [
             'view'          => 'View Examination',
             'modify'        => 'Modify Examinations',
             'list'          => 'List Examinations',
+            'format_test'          => 'Format Test',
 
             'table' => [
                 'total'         => 'examination total|examinations total',

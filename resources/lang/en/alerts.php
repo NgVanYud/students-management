@@ -94,6 +94,8 @@ return [
             'actived' => 'The examination was successfully actived.',
             'inactived' => 'The examination was successfully inactived.',
             'restored' => 'The examination was successfully restored.',
+            'create_format_test' => 'The format of the test was successfully create.',
+            'update_format_test' => 'The format of the test was successfully update.',
         ],
 
     ],

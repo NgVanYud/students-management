@@ -58,7 +58,16 @@ return [
             'restore_subject'           => 'Restore Subject',
             'delete'                    => 'Delete',
             'delete_permanently'        => 'Delete Permanently',
-        ]
+        ],
+
+        'examinations' => [
+            'active'                    => 'Active',
+            'inactive'                  => 'Inactive',
+            'restore_examination'           => 'Restore Examination',
+            'delete'                    => 'Delete',
+            'delete_permanently'        => 'Delete Permanently',
+            'format_test'        => 'Format Test',
+        ],
     ],
 
     'emails' => [

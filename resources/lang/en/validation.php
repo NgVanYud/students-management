@@ -237,6 +237,7 @@ return [
                 'note'        => 'Note',
                 'proctors_file' => 'Proctors File',
                 'students_file' => 'Students File',
+                'timeout' => 'Timeout (minutes)',
             ],
         ],
 
