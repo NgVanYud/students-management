@@ -261,6 +261,7 @@ return [
             'modify'        => 'Modify Examinations',
             'list'          => 'List Examinations',
             'format_test'          => 'Format Test',
+            'test_num'          => 'Number of Test',
 
             'table' => [
                 'total'         => 'examination total|examinations total',

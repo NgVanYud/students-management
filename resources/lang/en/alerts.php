@@ -96,6 +96,8 @@ return [
             'restored' => 'The examination was successfully restored.',
             'create_format_test' => 'The format of the test was successfully create.',
             'update_format_test' => 'The format of the test was successfully update.',
+            'create_test_num' => 'The number of the test was successfully update.',
+            'uncreate_test_num' => 'The number of the test was not successfully update beacause of some errors.',
         ],
 
     ],

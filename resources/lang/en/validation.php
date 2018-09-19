@@ -238,6 +238,7 @@ return [
                 'proctors_file' => 'Proctors File',
                 'students_file' => 'Students File',
                 'timeout' => 'Timeout (minutes)',
+                'test_num' => 'Number of Test',
             ],
         ],
 
