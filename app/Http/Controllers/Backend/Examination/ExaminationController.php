@@ -390,37 +390,36 @@ class ExaminationController extends Controller
         if($examination->is_published || empty($examination->format_test))
             return redirect()->back()
                 ->withFlashError(__('alerts.backend.examinations.uncreate_test_num'));
-        $test_num = $request->test_num;
-        $updated = $examination->update(['test_num' => $test_num]);
-        $subject = $examination->subject;
 
-        $top_exams = $this->examinationRepository
-            ->getTopNearlyExamination(config('examination.previous_terms_num'), $subject);
+        try {
+            \DB::transaction(function() use ($examination, $request){
+                $test_num = $request->test_num;
+                $updated = $examination->update(['test_num' => $test_num]);
+                $subject = $examination->subject;
 
-        /*
-         * 10 kỳ trước đó
-         * array: [
-         *  'slug-chapterter1' => array([id_question]),
-         *  'slug-chapterter2' => array([id_question])
-         * ]
-         */
-        $questions_in_chapter = [];
-        foreach ($top_exams as $exam) {
-            $temp_question = $this->examinationRepository->getQuestionWithChapter($top_exams);
-            $questions_in_chapter = array_merge_recursive($questions_in_chapter, $temp_question);
-        }
-        if($updated) {
-            try {
-                \DB::transaction(function() use ($examination, $subject, $test_num, $questions_in_chapter){
+                $top_exams = $this->examinationRepository
+                    ->getTopNearlyExamination(config('examination.previous_terms_num'), $subject);
+
+                /*
+                 * 10 kỳ trước đó
+                 * array: [
+                 *  'slug-chapterter1' => array([id_question]),
+                 *  'slug-chapterter2' => array([id_question])
+                 * ]
+                 */
+                $questions_in_chapter = [];
+                foreach ($top_exams as $exam) {
+                    $temp_question = $this->examinationRepository->getQuestionWithChapter($top_exams);
+                    $questions_in_chapter = array_merge_recursive($questions_in_chapter, $temp_question);
+                }
+                if($updated) {
                     /**
                      * Tạo tất cả test cho exam
                      */
                     $examination = $this->examinationRepository->createMutipleTest($examination);
-
                     $format_question = json_decode($examination->format_test, true);
                     $all_tests = $examination->tests;
                     $all_chapters = $subject->chapters;
-
                     foreach ($all_tests as $test) {
                         foreach ($all_chapters as $chapter) {
 
@@ -433,7 +432,7 @@ class ExaminationController extends Controller
                             $existed_questions = $this->questionRepository->whereIn('id', $existed_questions_id)->get();
 
                             $needed_questions_num = $format_question[$chapter->slug];
-                            $reuse_questions_num = intval(floor(($existed_questions->count())*config('examination.duplicated_percent')/100));
+                            $reuse_questions_num = intval(floor(($existed_questions->count()) * config('examination.duplicated_percent') / 100));
                             $new_questions_num = $needed_questions_num - $reuse_questions_num;
 
                             /**
@@ -453,12 +452,12 @@ class ExaminationController extends Controller
                      * Phát đề thi cho từng thí sinh
                      */
                     $this->examinationRepository->allocateTests($examination);
-                });
-                return redirect()->route('admin.examination.index')
-                    ->withFlashSuccess(__('alerts.backend.examinations.create_test_num'));
-            } catch (\Exception $ex) {
-                throw new GeneralException('This number of tests was not created successfully because of some errors');
-            }
+                    }
+            });
+            return redirect()->route('admin.examination.index')
+                        ->withFlashSuccess(__('alerts.backend.examinations.create_test_num'));
+        } catch (\Exception $ex) {
+            throw new GeneralException('This number of tests was not created successfully because of some errors');
         }
         return redirect()->route('admin.examination.index')
             ->withFlashError('This examination is can not edit');

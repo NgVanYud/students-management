@@ -51,7 +51,7 @@ class Examination extends Model
 
     protected $table = 'examinations';
 
-    protected $dates = ['begin_time'];
+    protected $dates = ['begin_time', 'deleted_at'];
 
     public function subject() {
         return $this->belongsTo(Subject::class, 'subject_id', 'id');

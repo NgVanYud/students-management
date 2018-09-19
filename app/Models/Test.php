@@ -23,6 +23,10 @@ class Test extends Model
         'examination_id',
     ];
 
+    protected $dates = [
+        'deleted_at'
+    ];
+
     public function examination() {
         return $this->belongsTo(Examination::class, 'examination_id', 'id');
     }

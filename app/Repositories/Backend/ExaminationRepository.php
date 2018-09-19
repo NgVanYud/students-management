@@ -79,6 +79,7 @@ class ExaminationRepository extends BaseRepository
     public function createMutipleTest(Examination $examination) {
         try {
             \DB::transaction(function() use ($examination){
+                $this->delAllTest($examination);
                 $test_num = intval($examination->test_num);
                 for($i = 0; $i < $test_num; $i++) {
                     $examination->tests()->save(new Test([
@@ -86,10 +87,11 @@ class ExaminationRepository extends BaseRepository
                         'num_questions' => $examination->question_num,
                     ]));
                 }
+                $examination->refresh();
             });
             return $examination;
-
         } catch (\Exception $ex) {
+//            throw new GeneralException($ex->getMessage());
             throw new GeneralException('This error in create tests for examination');
         }
     }
@@ -122,13 +124,14 @@ class ExaminationRepository extends BaseRepository
 
     public function delAllTest(Examination $examination) {
         $all_tests = $examination->tests;
-        if(!empty($all_tests) && $all_tests->count() > 0) {
-            $all_tests->each(function($test, $key) {
-                $test->questions()->detach();
-                $test->students()->detach();
-            });
-            $examination->tests()->delete();
-        }
+            if(!empty($all_tests) && $all_tests->count() > 0) {
+                foreach ($all_tests as $test) {
+                    $test->students()->sync([]);
+                    $test->questions()->sync([]);
+                }
+                $examination->tests()->delete();
+                $examination->refresh();
+            }
         return $examination;
     }
 }

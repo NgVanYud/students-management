@@ -13,6 +13,7 @@ use App\Models\Question;
 use App\Models\Traits\Method\QuestionMethod;
 use App\Repositories\BaseRepository;
 use Illuminate\Pagination\LengthAwarePaginator;
+use App\Exceptions\GeneralException;
 
 class QuestionRepository extends BaseRepository
 {
@@ -88,7 +89,8 @@ class QuestionRepository extends BaseRepository
             $random_questions = $set_questions->random($question_num);
             return $random_questions;
         } catch (\Exception $ex) {
-            throw new GeneralException('Error in get question in chapter');
+//            throw new GeneralException('Error in get question in chapter');
+            throw new GeneralException($ex->getMessage());
         }
     }
 }
