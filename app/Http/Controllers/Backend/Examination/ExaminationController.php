@@ -387,9 +387,9 @@ class ExaminationController extends Controller
     }
 
     public function storeTests(StoreTestNumRequest $request, Examination $examination) {
-        if($examination->is_published)
+        if($examination->is_published || empty($examination->format_test))
             return redirect()->back()
-                ->withFlashError(__('alerts.examinations.uncreate_test_num'));
+                ->withFlashError(__('alerts.backend.examinations.uncreate_test_num'));
         $test_num = $request->test_num;
         $updated = $examination->update(['test_num' => $test_num]);
         $subject = $examination->subject;

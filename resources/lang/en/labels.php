@@ -268,7 +268,7 @@ return [
                 'all'       => 'All',
                 'students_num'       => 'Num of Students',
                 'proctors_num'       => 'Num of Proctors',
-                'proctors_students'       => 'Proc/Stds',
+                'proctors_students_tests_questions_time'       => 'Proc/Stds/Test/Ques/Time',
                 'options'       => 'Options',
                 'name'              => 'Name',
                 'code'              => 'Code',
