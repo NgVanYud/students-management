@@ -36,7 +36,7 @@ trait ExaminationAttribute
                  data-trans-button-cancel="' . __('buttons.general.cancel') . '"
                  data-trans-button-confirm="' . __('buttons.general.crud.delete') . '"
                  data-trans-title="' . __('strings.backend.general.are_you_sure') . '"
-                 class="dropdown-item">' . __('buttons.general.crud.delete') . '</a> ';
+                 class="btn btn-danger">' . '<i class="fas fa-trash" data-toggle="tooltip" data-placement="top" title="' . __('buttons.general.crud.delete') . '"></i>' . '</a> ';
     }
 
     /**
@@ -72,6 +72,18 @@ trait ExaminationAttribute
         return '<a href="' . route('admin.examination.active', $this) . '" data-toggle="tooltip" data-placement="top" title="' . __('buttons.backend.subjects.active') . '" name="confirm_item"><span class="badge badge-danger" style="cursor:pointer">' . __('labels.general.no') . '</span></a>';
     }
 
+    public function getPublishedLabelAttribute()
+    {
+        if ($this->isReadyToPublish()) {
+            return '<a href="' . route('admin.examination.publish',
+                    $this
+                ) . '" data-toggle="tooltip" data-placement="top" title="' . __('buttons.backend.examinations.publish') . '" name="confirm_item"><span class="badge badge-danger" style="cursor:pointer">' . __('labels.general.no') . '</span></a>';
+
+        }
+
+        return '';
+    }
+
     /**
      * @return string
      */
@@ -84,22 +96,24 @@ trait ExaminationAttribute
 				  ' . $this->restore_button . '
 				  ' . $this->delete_permanently_button . '
 				</div>';
-        }
-
-        return '<div class="btn-group btn-group-sm" role="group" aria-label="Examination Actions">
+        } else if($this->isFormatTest()) {
+            return '<div class="btn-group btn-group-sm" role="group" aria-label="Examination Actions">
               ' . $this->show_button . '
 			  ' . $this->edit_button . '
               ' . $this->format_test_button . '
               ' . $this->set_test_num_button . '
-			  <div class="btn-group btn-group-sm" role="group">
-                <button id="subjectActions" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  More
-                </button>
-                <div class="dropdown-menu" aria-labelledby="subjectActions">
-                ' . $this->delete_button . '
-                </div>
-              </div>
+              ' . $this->delete_button . '
 			</div>';
+        } else {
+            return '<div class="btn-group btn-group-sm" role="group" aria-label="Examination Actions">
+              ' . $this->show_button . '
+			  ' . $this->edit_button . '
+              ' . $this->format_test_button . '
+              ' . $this->delete_button . '
+			</div>';
+        }
+
+
     }
 
     public function getNumberProctorsAttribute() {

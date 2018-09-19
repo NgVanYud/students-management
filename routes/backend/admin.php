@@ -144,6 +144,14 @@ Route::group([
         ->name('examination.create_test_num');
     Route::post('examination/{examination}/test-num', 'ExaminationController@storeTests')
         ->name('examination.store_test');
+
+    /**
+     * Publish
+     */
+    Route::get('examination/{examination}/publish', 'ExaminationController@publish')
+        ->name('examination.publish');
+
+
 //    Route::get('examination/{examination}/student/{student}', 'ExaminationController@deleteStudent');
 });
 

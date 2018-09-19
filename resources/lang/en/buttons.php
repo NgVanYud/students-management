@@ -63,6 +63,7 @@ return [
         'examinations' => [
             'active'                    => 'Active',
             'inactive'                  => 'Inactive',
+            'publish'                  => 'Publish',
             'restore_examination'           => 'Restore Examination',
             'delete'                    => 'Delete',
             'delete_permanently'        => 'Delete Permanently',

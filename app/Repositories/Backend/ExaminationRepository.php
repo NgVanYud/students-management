@@ -134,4 +134,5 @@ class ExaminationRepository extends BaseRepository
             }
         return $examination;
     }
+
 }

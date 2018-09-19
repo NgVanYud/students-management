@@ -31,6 +31,7 @@
                                 <th>{{ __('labels.backend.examinations.table.name') }}</th>
                                 <th>{{ __('labels.backend.examinations.table.subject') }}</th>
                                 <th>{{ __('labels.backend.examinations.table.actived') }}</th>
+                                <th>{{ __('labels.backend.examinations.table.published') }}</th>
                                 <th>{{ __('labels.backend.examinations.table.begin_time') }}</th>
                                 <th>{{ __('labels.backend.examinations.table.proctors_students_tests_questions_time') }}</th>
                                 <th>{{ __('labels.general.actions') }}</th>
@@ -38,11 +39,13 @@
                             </thead>
                             <tbody>
                                 @foreach ($examinations as $examination)
+                                    {{--{{dd($examination->isReadyToPublish())}}--}}
                                     <tr>
                                         {{--<td>{{ $examination->code }}</td>--}}
                                         <td>{{ $examination->name }}</td>
                                         <td>{{ $examination->subject->name }}</td>
                                         <td>{!! $examination->actived_label !!}</td>
+                                        <td>{!! $examination->published_label !!}</td>
                                         <td>{{ $examination->begin_time }}</td>
                                         <td>
                                             {{$examination->number_proctors}}/{{$examination->number_students}}/{{$examination->test_num}}/{{$examination->question_num}}/{{$examination->timeout}}

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend\Examination;
 
+use App\Events\Backend\Exam\ExamPublished;
 use App\Exceptions\GeneralException;
 use App\Http\Requests\Backend\Examination\ManageExaminationRequest;
 use App\Http\Requests\Backend\Examination\StoreExaminationRequest;
@@ -461,5 +462,9 @@ class ExaminationController extends Controller
         }
         return redirect()->route('admin.examination.index')
             ->withFlashError('This examination is can not edit');
+    }
+
+    public function publish(ManageExaminationRequest $request, Examination $examination) {
+        event(new ExamPublished($examination));
     }
 }

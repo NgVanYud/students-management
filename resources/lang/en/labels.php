@@ -274,6 +274,7 @@ return [
                 'code'              => 'Code',
                 'begin_time'              => 'Begin Time',
                 'actived'           => 'Actived',
+                'published'           => 'Published',
                 'subject'           => 'Subject',
                 'question_num'      => 'Number of questions',
                 'last_updated'      => 'Last Updated',
