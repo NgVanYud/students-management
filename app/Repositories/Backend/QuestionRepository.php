@@ -79,4 +79,16 @@ class QuestionRepository extends BaseRepository
         }
         throw new GeneralException(__('exceptions.backend.questions.cant_inactive'));
     }
+
+    /*
+     * $except: an array of question_id
+     */
+    public function getRandomQuestions($set_questions , $question_num  = 0) {
+        try {
+            $random_questions = $set_questions->random($question_num);
+            return $random_questions;
+        } catch (\Exception $ex) {
+            throw new GeneralException('Error in get question in chapter');
+        }
+    }
 }

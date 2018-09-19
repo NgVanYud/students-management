@@ -7,6 +7,7 @@ use App\Models\Subject;
 use App\Models\System\Session;
 use App\Models\Auth\SocialAccount;
 use App\Models\Auth\PasswordHistory;
+use App\Models\Test;
 
 /**
  * Class UserRelationship.
@@ -62,5 +63,19 @@ trait UserRelationship
             'proctor_id',
             'examination_id'
         );
+    }
+
+    public function tests() {
+        return $this->belongsToMany(
+            Test::class,
+            'results',
+            'student_id',
+            'test_id'
+        )
+            ->as('result')
+            ->withTimestamps()
+            ->withPivot(
+                'uuid', 'correct_ans', 'is_completed', 'deleted_at'
+            );
     }
 }

@@ -128,10 +128,22 @@ Route::group([
         ->name('examination.proctor.update');
     Route::post('examination/{examination}/edit/student', 'ExaminationController@updateStudents')
         ->name('examination.student.update');
+
+    /**
+     * Format test
+     */
     Route::get('examination/{examination}/format-test', 'ExaminationController@formatTest')
         ->name('examination.format_test');
     Route::post('examination/{examination}/format-test', 'ExaminationController@storeFormatTest')
         ->name('examination.store_format_test');
+
+    /**
+     * Number of tests
+     */
+    Route::get('examination/{examination}/test-num', 'ExaminationController@createTestNum')
+        ->name('examination.create_test_num');
+    Route::post('examination/{examination}/test-num', 'ExaminationController@storeTests')
+        ->name('examination.store_test');
 //    Route::get('examination/{examination}/student/{student}', 'ExaminationController@deleteStudent');
 });
 

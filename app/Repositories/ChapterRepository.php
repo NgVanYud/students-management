@@ -136,4 +136,5 @@ class ChapterRepository extends BaseRepository
             ->orderBy($orderBy, $sort)
             ->paginate($paged);
     }
+
 }

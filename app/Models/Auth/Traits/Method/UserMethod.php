@@ -75,6 +75,20 @@ trait UserMethod
         return $this->hasRole(config('access.users.admin_role'));
     }
 
+    public function isProctor() {
+        return $this->hasAllRoles(
+            config('access.users.proctor_role').'|'.
+            config('access.users.teacher_role')
+        );
+    }
+
+    public function isCurator() {
+        return $this->hasAllRoles(
+            config('access.users.curator_role').'|'.
+            config('access.users.teacher_role')
+        );
+    }
+
     /**
      * @return bool
      */

@@ -36,13 +36,15 @@ class Examination extends Model
         'format_test',
         'question_num',
         'timeout',
-        'is_published'
+        'is_published',
+        'test_num'
     ];
 
     protected $casts = [
         'format_test' => 'array'
     ];
 
+    //dinh dang so cau hoi trong từng chapter
     protected $appends = [
         'formatTest'
     ];
@@ -71,6 +73,14 @@ class Examination extends Model
         );
     }
 
+    public function tests() {
+        return $this->hasMany(
+            Test::class,
+            'examination_id',
+            'id'
+        );
+    }
+
     public function getRouteKeyName()
     {
         return 'uuid';
@@ -83,5 +93,10 @@ class Examination extends Model
 
     public function getBeginTimeString($date, $time) {
         return $this->setBeginTime($date, $time)->toDateTimeString();
+    }
+
+    public function scopePublished($query, $status = true)
+    {
+        return $query->where('is_published', intval($status));
     }
 }

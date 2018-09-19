@@ -11,6 +11,10 @@ namespace App\Models\Traits\Attribute;
 
 trait ExaminationAttribute
 {
+    public function getSetTestNumButtonAttribute() {
+        return '<a href="' . route('admin.examination.create_test_num', $this) . '" class="btn btn-success"><i class="fas fa-list" data-toggle="tooltip" data-placement="top" title="' . __('buttons.backend.examinations.set_test_num') . '"></i></a>';
+    }
+
     public function getFormatTestButtonAttribute() {
         return '<a href="' . route('admin.examination.format_test', $this) . '" class="btn btn-info"><i class="fas fa-file-word" data-toggle="tooltip" data-placement="top" title="' . __('buttons.backend.examinations.format_test') . '"></i></a>';
     }
@@ -86,6 +90,7 @@ trait ExaminationAttribute
               ' . $this->show_button . '
 			  ' . $this->edit_button . '
               ' . $this->format_test_button . '
+              ' . $this->set_test_num_button . '
 			  <div class="btn-group btn-group-sm" role="group">
                 <button id="subjectActions" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   More

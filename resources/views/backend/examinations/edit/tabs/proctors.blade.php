@@ -59,17 +59,17 @@
 
 <form class="form-horizontal" action="{{ route('admin.examination.proctor.update', $examination)}}" method="POST" enctype="multipart/form-data">
     {{csrf_field()}}
-<div class="form-group row">
-    {{ html()->label(__('validation.attributes.backend.examinations.proctors_file'))
-        ->class('col-md-2 form-control-label')
-        ->for('proctors_file') }}
+    <div class="form-group row">
+        {{ html()->label(__('validation.attributes.backend.examinations.proctors_file'))
+            ->class('col-md-2 form-control-label')
+            ->for('proctors_file') }}
 
-    <div class="col-md-10">
-        {{ html()->file('proctors_file')
-            ->class('form-control')
-            ->required() }}
-    </div><!--col-->
-</div><!--form-group-->
+        <div class="col-md-10">
+            {{ html()->file('proctors_file')
+                ->class('form-control')
+                ->required() }}
+        </div><!--col-->
+    </div><!--form-group-->
 
 <div class="row">
     <div class="col">

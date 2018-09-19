@@ -45,4 +45,13 @@ class Question extends Model
     public function chapter() {
         return $this->belongsTo(Chapter::class, 'chapter_id', 'id');
     }
+
+    public function tests(){
+        return $this->belongsToMany(
+            Test::class,
+            'question_test',
+            'question_id',
+            'test_id'
+        );
+    }
 }

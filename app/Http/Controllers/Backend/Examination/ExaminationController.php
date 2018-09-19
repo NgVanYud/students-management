@@ -6,12 +6,17 @@ use App\Exceptions\GeneralException;
 use App\Http\Requests\Backend\Examination\ManageExaminationRequest;
 use App\Http\Requests\Backend\Examination\StoreExaminationRequest;
 use App\Http\Requests\Backend\Examination\StoreFormatTestRequest;
+use App\Http\Requests\Backend\Examination\StoreTestNumRequest;
 use App\Http\Requests\Backend\Examination\UpdateExaminationRequest;
 use App\Models\Auth\User;
 use App\Models\Examination;
+use App\Models\Test;
 use App\Repositories\Backend\Auth\UserRepository;
 use App\Repositories\Backend\ExaminationRepository;
+use App\Repositories\Backend\QuestionRepository;
 use App\Repositories\Backend\SubjectRepository;
+use App\Repositories\Backend\TestRepository;
+use App\Repositories\ChapterRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use File;
@@ -23,16 +28,25 @@ class ExaminationController extends Controller
     protected $subjectRepository;
     protected $examinationRepository;
     protected $userRepository;
+    protected $testRepository;
+    protected $chapterRepository;
+    protected $questionRepository;
 
     public function __construct(
         SubjectRepository $subjectRepository,
         ExaminationRepository $examinationRepository,
-        UserRepository $userRepository
+        UserRepository $userRepository,
+        TestRepository $testRepository,
+        ChapterRepository $chapterRepository,
+        QuestionRepository $questionRepository
     )
     {
         $this->subjectRepository = $subjectRepository;
         $this->examinationRepository = $examinationRepository;
         $this->userRepository = $userRepository;
+        $this->testRepository = $testRepository;
+        $this->chapterRepository = $chapterRepository;
+        $this->questionRepository = $questionRepository;
     }
 
     /**
@@ -125,6 +139,7 @@ class ExaminationController extends Controller
                                     $this->activeUserWithRoles($current_proctor, [config('access.users.proctor_role'), config('access.users.teacher_role')]);
                                     $proctors_in_exam->push($current_proctor);
                                 } else {
+                                    dd('moi: '.$row);
                                     $roles = [config('access.users.proctor_role'), config('access.users.teacher_role')];
                                     $new_proctor = $this->createUserFromExcel($row, $roles);
 
@@ -185,8 +200,8 @@ class ExaminationController extends Controller
                         $examination->students()->sync($students_in_exam->pluck('id')->toArray());
                     });
                 } catch (\Exception $ex) {
-//                    throw new GeneralException($ex->getMessage());
-                    throw new GeneralException(__('exceptions.backend.examinations.uncreated_students'));
+                    throw new GeneralException($ex->getMessage());
+//                    throw new GeneralException(__('exceptions.backend.examinations.uncreated_students'));
                 }
             }
         } else {
@@ -363,5 +378,89 @@ class ExaminationController extends Controller
         ]);
         return redirect()->route('admin.examination.index')
             ->withFlashSuccess(__('alerts.backend.examinations.create_format_test'));
+    }
+
+    public function createTestNum(ManageExaminationRequest $request, Examination $examination) {
+        return view('backend.examinations.tests.test-num', [
+            'examination' => $examination
+        ]);
+    }
+
+    public function storeTests(StoreTestNumRequest $request, Examination $examination) {
+        if($examination->is_published)
+            return redirect()->back()
+                ->withFlashError(__('alerts.examinations.uncreate_test_num'));
+        $test_num = $request->test_num;
+        $updated = $examination->update(['test_num' => $test_num]);
+        $subject = $examination->subject;
+
+        $top_exams = $this->examinationRepository
+            ->getTopNearlyExamination(config('examination.previous_terms_num'), $subject);
+
+        /*
+         * 10 kỳ trước đó
+         * array: [
+         *  'slug-chapterter1' => array([id_question]),
+         *  'slug-chapterter2' => array([id_question])
+         * ]
+         */
+        $questions_in_chapter = [];
+        foreach ($top_exams as $exam) {
+            $temp_question = $this->examinationRepository->getQuestionWithChapter($top_exams);
+            $questions_in_chapter = array_merge_recursive($questions_in_chapter, $temp_question);
+        }
+        if($updated) {
+            try {
+                \DB::transaction(function() use ($examination, $subject, $test_num, $questions_in_chapter){
+                    /**
+                     * Tạo tất cả test cho exam
+                     */
+                    $examination = $this->examinationRepository->createMutipleTest($examination);
+
+                    $format_question = json_decode($examination->format_test, true);
+                    $all_tests = $examination->tests;
+                    $all_chapters = $subject->chapters;
+
+                    foreach ($all_tests as $test) {
+                        foreach ($all_chapters as $chapter) {
+
+                            $existed_questions_id = isset($questions_in_chapter[$chapter->slug]) ? $questions_in_chapter[$chapter->slug] : [];
+                            $unexisted_question = $chapter->questions->whereNotIn('id', $existed_questions_id);
+
+                            /*
+                             * Tất cả các question trong $chaper trong 10 đợt thi gần đây
+                             */
+                            $existed_questions = $this->questionRepository->whereIn('id', $existed_questions_id)->get();
+
+                            $needed_questions_num = $format_question[$chapter->slug];
+                            $reuse_questions_num = intval(floor(($existed_questions->count())*config('examination.duplicated_percent')/100));
+                            $new_questions_num = $needed_questions_num - $reuse_questions_num;
+
+                            /**
+                             * Thêm các question từ kỳ $chapter trong các kỳ trk vào đề thi
+                             */
+                            $random_questions = $this->questionRepository->getRandomQuestions($existed_questions, $reuse_questions_num);
+                            $test->questions()->attach($random_questions->pluck('id')->toArray());
+
+                            /**
+                             * Thêm các question không
+                             */
+                            $random_questions = $this->questionRepository->getRandomQuestions($unexisted_question, $new_questions_num);
+                            $test->questions()->attach($random_questions->pluck('id')->toArray());
+                        }
+                    }
+                    /*
+                     * Phát đề thi cho từng thí sinh
+                     */
+                    $this->examinationRepository->allocateTests($examination);
+                });
+                return redirect()->route('admin.examination.index')
+                    ->withFlashSuccess(__('alerts.backend.examinations.create_test_num'));
+            } catch (\Exception $ex) {
+                throw new GeneralException('This number of tests was not created successfully because of some errors');
+            }
+        }
+        return redirect()->route('admin.examination.index')
+            ->withFlashError('This examination is can not edit');
     }
 }

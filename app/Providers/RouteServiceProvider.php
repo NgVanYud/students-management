@@ -7,6 +7,7 @@ use App\Models\Auth\User;
 use App\Models\Question;
 use App\Models\Subject;
 use App\Models\Chapter;
+use App\Models\Test;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
@@ -77,6 +78,13 @@ class RouteServiceProvider extends ServiceProvider
             $examination = new Examination();
             return Examination::withTrashed()
                     ->where($examination->getRouteKeyName(), $value)
+                    ->first()?? abort(404);;
+        });
+
+        $this->bind('test', function ($value) {
+            $test = new Test();
+            return Test::withTrashed()
+                    ->where($test->getRouteKeyName(), $value)
                     ->first()?? abort(404);;
         });
 
