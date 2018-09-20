@@ -24,6 +24,7 @@ return [
         'login'     => 'Login',
         'macros'    => 'Macros',
         'register'  => 'Register',
+        'test'      => 'Test',
 
         'user' => [
             'account'         => 'My Account',

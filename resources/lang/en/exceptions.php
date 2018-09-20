@@ -93,6 +93,8 @@ return [
             'unupdated_proctors'             => 'The proctors of this examination is not created because of some errors in file excel. Please check it.',
             'unupdated_students'             => 'The students of this examination is not created because of some errors in file excel. Please check it.',
             'already_actived'       => 'This examination is already actived.',
+            'already_published'       => 'This examination is already published.',
+            'cant_publish'           => 'There was a problem publishing the examination.',
             'cant_active'           => 'There was a problem activing the examination.',
             'not_actived'           => 'This examination is not actived.',
             'cant_inactive'         => 'There was a problem inactiving the examination',

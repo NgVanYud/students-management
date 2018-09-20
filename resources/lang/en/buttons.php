@@ -69,6 +69,7 @@ return [
             'delete_permanently'        => 'Delete Permanently',
             'format_test'        => 'Format Test',
             'set_test_num'        => 'Set Number of Test',
+            'submit'        => 'Submit',
         ],
     ],
 

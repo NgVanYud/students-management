@@ -93,6 +93,8 @@ return [
             'unupdated' => 'The examination was not updated because of some errors.',
             'actived' => 'The examination was successfully actived.',
             'inactived' => 'The examination was successfully inactived.',
+            'published' => 'The examination was successfully published.',
+            'unpublished' => 'The examination was not published because of some errors.',
             'restored' => 'The examination was successfully restored.',
             'create_format_test' => 'The format of the test was successfully create.',
             'update_format_test' => 'The format of the test was successfully update.',
