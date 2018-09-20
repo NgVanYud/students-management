@@ -21,4 +21,9 @@ class Answer extends Model
     public function question() {
         return $this->belongsTo(Question::class, 'question_id', 'id');
     }
+
+    public function scopeCorrect($query, $is_correct = true)
+    {
+        return $query->where('is_correct', intval($is_correct));
+    }
 }

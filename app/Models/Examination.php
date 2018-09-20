@@ -18,6 +18,7 @@ class Examination extends Model
 
     const ACTIVE_CODE = 1;
     const INACTIVE_CODE = 0;
+    const PUBLISHED_CODE = 1;
 
     const TAB_TYPES = [
         'general_info'      => 'general info',

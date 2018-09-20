@@ -75,7 +75,7 @@ trait UserRelationship
             ->as('result')
             ->withTimestamps()
             ->withPivot(
-                'uuid', 'correct_ans', 'is_completed', 'deleted_at'
+                'uuid', 'correct_ans', 'is_completed', 'deleted_at', 'status', 'read_at', 'timeout'
             );
     }
 }

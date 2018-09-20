@@ -463,8 +463,4 @@ class ExaminationController extends Controller
         return redirect()->route('admin.examination.index')
             ->withFlashError('This examination is can not edit');
     }
-
-    public function publish(ManageExaminationRequest $request, Examination $examination) {
-        event(new ExamPublished($examination));
-    }
 }

@@ -44,7 +44,8 @@ class ExamPublish extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
-        $url = route('frontend.student.join_test', [$notifiable, $this->examination]);
+//        $url = route('frontend.student.join_test', [$notifiable, $this->examination]);
+        $url = route('frontend.user.dashboard');
         return (new MailMessage)
                     ->greeting('Hi,'.$notifiable->fullname)
                     ->line('New examination.')
@@ -54,9 +55,15 @@ class ExamPublish extends Notification implements ShouldQueue
     }
 
     public function toDatabase($notifiable) {
+        $subject = 'New examination: '.$this->examination->subject->name;
+        $content = 'Exam '.$this->examination->name .
+            ' last '.$this->examination->timeout .
+            ' with '. $this->examination->question_num. ' questions.';
         return [
             'examination_id' => $this->examination->id,
-            'student_id' => $notifiable->id
+            'student_id' => $notifiable->id,
+            'subject' => $subject,
+            'content' => $content
         ];
     }
 

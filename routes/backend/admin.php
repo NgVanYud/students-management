@@ -148,7 +148,7 @@ Route::group([
     /**
      * Publish
      */
-    Route::get('examination/{examination}/publish', 'ExaminationController@publish')
+    Route::get('examination/{examination}/publish', 'ExaminationStatusController@publish')
         ->name('examination.publish');
 
 

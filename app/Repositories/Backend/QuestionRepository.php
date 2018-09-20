@@ -93,4 +93,18 @@ class QuestionRepository extends BaseRepository
             throw new GeneralException($ex->getMessage());
         }
     }
+
+    public function getAllCorrectOptions($question_id) {
+        $question = Question::find($question_id);
+        $correct_answers = [];
+        if($question) {
+            $correct_answers = $question->answers()
+                ->correct()
+                ->get()
+                ->pluck('id')
+                ->toArray();
+        }
+        return $correct_answers;
+    }
+
 }

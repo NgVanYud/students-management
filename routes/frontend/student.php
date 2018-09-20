@@ -12,4 +12,5 @@ Route::group([
     'namespace' => 'Student'
 ], function() {
     Route::get('{user}/{examination}/join-test', 'StudentController@joinTest')->name('join_test');
+    Route::post('{user}/{examination}/submit-test', 'StudentController@submitTest')->name('submit_test');
 });

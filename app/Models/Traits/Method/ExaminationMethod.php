@@ -21,6 +21,11 @@ trait ExaminationMethod
         return (bool)$this->is_actived;
     }
 
+    public function isPublished()
+    {
+        return (bool)$this->is_published;
+    }
+
     public function isReadyToPublish() {
         $check = true;
         if(empty($this->format_test) || empty($this->test_num) || !$this->isActived()) {

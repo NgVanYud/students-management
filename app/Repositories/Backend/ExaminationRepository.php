@@ -135,4 +135,17 @@ class ExaminationRepository extends BaseRepository
         return $examination;
     }
 
+    public function publish(Examination $examination) {
+        if ($examination->isPublished()) {
+            throw new GeneralException(__('exceptions.backend.examinations.already_published'));
+        }
+        $examination->is_published = Examination::PUBLISHED_CODE;
+        $published = $examination->save();
+
+        if ($published) {
+            return $examination;
+        }
+
+        throw new GeneralException(__('exceptions.backend.examinations.cant_publish'));
+    }
 }

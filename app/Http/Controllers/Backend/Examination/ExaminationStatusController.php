@@ -7,6 +7,7 @@ use App\Models\Examination;
 use App\Repositories\Backend\ExaminationRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Events\Backend\Exam\ExamPublished;
 
 class ExaminationStatusController extends Controller
 {
@@ -28,6 +29,17 @@ class ExaminationStatusController extends Controller
     {
         $this->examinationRepository->inactive($examination);
         return redirect()->back()->withFlashSuccess(__('alerts.backend.examinations.inactived'));
+    }
+
+    public function publish(ManageExaminationRequest $request, Examination $examination) {
+        $examination = $this->examinationRepository->publish($examination);
+        if($examination) {
+            event(new ExamPublished($examination));
+            return redirect()->back()
+                ->withFlashSuccess(__('alerts.backend.examinations.published'));
+        }
+        return redirect()->back()
+            ->withFlashError(__('alerts.backend.examinations.unpublished'));
     }
 //
 //    /**
@@ -61,11 +73,11 @@ class ExaminationStatusController extends Controller
 //            ->withFlashSuccess(__('alerts.backend.subjects.deleted_permanently'));
 //    }
 //
-    public function restore(ManageChapterRequest $request, Subject $subject, Chapter $chapter)
-    {
-        $tab_type = Subject::TAB_TYPES['chapters'];
-        $this->chapterRepository->restore($subject, $chapter);
-        return redirect()->route('admin.subject.show', [$subject, $tab_type])
-            ->withFlashSuccess(__('alerts.backend.subjects.chapters.restored'));
-    }
+//    public function restore(ManageChapterRequest $request, Subject $subject, Chapter $chapter)
+//    {
+//        $tab_type = Subject::TAB_TYPES['chapters'];
+//        $this->chapterRepository->restore($subject, $chapter);
+//        return redirect()->route('admin.subject.show', [$subject, $tab_type])
+//            ->withFlashSuccess(__('alerts.backend.subjects.chapters.restored'));
+//    }
 }

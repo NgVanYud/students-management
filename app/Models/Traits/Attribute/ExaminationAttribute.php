@@ -74,7 +74,7 @@ trait ExaminationAttribute
 
     public function getPublishedLabelAttribute()
     {
-        if ($this->isReadyToPublish()) {
+        if ($this->isReadyToPublish() && !$this->isPublished()) {
             return '<a href="' . route('admin.examination.publish',
                     $this
                 ) . '" data-toggle="tooltip" data-placement="top" title="' . __('buttons.backend.examinations.publish') . '" name="confirm_item"><span class="badge badge-danger" style="cursor:pointer">' . __('labels.general.no') . '</span></a>';

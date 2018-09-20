@@ -16,6 +16,8 @@ class Test extends Model
         TestAttribute,
         TestMethod;
 
+    const COMPLETED_CODE = 1;
+
     protected $fillable = [
         'code',
         'num_questions',
@@ -50,7 +52,7 @@ class Test extends Model
             ->as('result')
             ->withTimestamps()
             ->withPivot(
-            'uuid', 'correct_ans', 'is_completed', 'deleted_at'
+            'uuid', 'correct_ans', 'is_completed', 'deleted_at', 'status', 'timeout', 'read_at'
             );
     }
 
