@@ -27,7 +27,7 @@
             @include('includes.partials.logged-in-as')
             @include('frontend.includes.nav')
 
-            <div class="container">
+            <div class="container" style="margin-top: 5rem;">
                 @include('includes.partials.messages')
                 @yield('content')
             </div><!-- container -->

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4 fixed-top">
     <a href="{{ route('frontend.index') }}" class="navbar-brand">{{ app_name() }}</a>
 
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('labels.general.toggle_navigation') }}">
@@ -7,6 +7,11 @@
 
     <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
         <ul class="navbar-nav">
+            <li class="nav-item">
+                <a href="#" class="nav-link font-weight-bold">
+                    <span id="countdown" class="text-dark"></span>
+                </a>
+            </li>
             @if (config('locale.status') && count(config('locale.languages')) > 1)
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownLanguageLink" data-toggle="dropdown"
