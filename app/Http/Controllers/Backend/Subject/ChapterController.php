@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Backend\Subject;
 
+use App\Http\Requests\Backend\Subject\ShowChapterRequest;
+use App\Http\Requests\Backend\Subject\ShowSubjectRequest;
 use App\Http\Requests\Backend\Subject\StoreChapterRequest;
 use App\Http\Requests\Backend\Subject\StoreSubjectRequest;
 use App\Http\Requests\Backend\Subject\ManageChapterRequest;
@@ -28,7 +30,7 @@ class ChapterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(ManageChapterRequest $request, Subject $subject)
+    public function index(ShowChapterRequest $request, Subject $subject)
     {
 //        $tab_type = Subject::TAB_TYPES['chapters'];
 //        return redirect()->route('admin.subject.show', [$subject, $tab_type]);

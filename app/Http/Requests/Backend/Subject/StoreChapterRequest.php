@@ -16,7 +16,8 @@ class StoreChapterRequest extends FormRequest
      */
     public function authorize()
     {
-        return ($this->user()->isAdmin() || $this->user()->isQuizMaker());
+        $subject = $this->subject;
+        return $this->user()->isValidQuizMaker($subject);
     }
 
     /**
@@ -47,5 +48,10 @@ class StoreChapterRequest extends FormRequest
             ];
         }
         throw new GeneralException(__('exceptions.backend.subjects.chapters.validate_error'));
+    }
+
+    protected function failedAuthorization()
+    {
+        throw new GeneralException(__('exceptions.general.not_permission'));
     }
 }

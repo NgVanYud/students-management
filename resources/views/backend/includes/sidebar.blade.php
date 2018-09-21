@@ -14,29 +14,29 @@
             </li>
 
             {{--Giao vien--}}
-            <li class="nav-item nav-dropdown {{ active_class(Active::checkUriPattern('admin/subjects*'), 'open') }}">
-                <a class="nav-link nav-dropdown-toggle {{ active_class(Active::checkUriPattern('admin/subjects*')) }}" href="#">
-                    <i class="icon-user"></i> {{ __('menus.backend.lecturers.title') }}
-                </a>
+            {{--<li class="nav-item nav-dropdown {{ active_class(Active::checkUriPattern('admin/subjects*'), 'open') }}">--}}
+                {{--<a class="nav-link nav-dropdown-toggle {{ active_class(Active::checkUriPattern('admin/subjects*')) }}" href="#">--}}
+                    {{--<i class="icon-user"></i> {{ __('menus.backend.lecturers.title') }}--}}
+                {{--</a>--}}
 
-                <ul class="nav-dropdown-items">
-                    <li class="nav-item">
-                        <a class="nav-link {{ active_class(Active::checkUriPattern('admin/subjects*')) }}" href="{{ route('admin.lecturer.total') }}">
-                            {{ __('labels.backend.lecturers.modify') }}
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ active_class(Active::checkUriPattern('admin/subjects*')) }}" href="{{ route('admin.subject.index') }}">
-                            {{ __('labels.backend.lecturers.all') }}
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ active_class(Active::checkUriPattern('admin/subjects/create*')) }}" href="{{ route('admin.subject.create') }}">
-                            {{ __('labels.backend.lecturers.add') }}
-                        </a>
-                    </li>
-                </ul>
-            </li>
+                {{--<ul class="nav-dropdown-items">--}}
+                    {{--<li class="nav-item">--}}
+                        {{--<a class="nav-link {{ active_class(Active::checkUriPattern('admin/subjects*')) }}" href="{{ route('admin.lecturer.total') }}">--}}
+                            {{--{{ __('labels.backend.lecturers.modify') }}--}}
+                        {{--</a>--}}
+                    {{--</li>--}}
+                    {{--<li class="nav-item">--}}
+                        {{--<a class="nav-link {{ active_class(Active::checkUriPattern('admin/subjects*')) }}" href="{{ route('admin.subject.index') }}">--}}
+                            {{--{{ __('labels.backend.lecturers.all') }}--}}
+                        {{--</a>--}}
+                    {{--</li>--}}
+                    {{--<li class="nav-item">--}}
+                        {{--<a class="nav-link {{ active_class(Active::checkUriPattern('admin/subjects/create*')) }}" href="{{ route('admin.subject.create') }}">--}}
+                            {{--{{ __('labels.backend.lecturers.add') }}--}}
+                        {{--</a>--}}
+                    {{--</li>--}}
+                {{--</ul>--}}
+            {{--</li>--}}
 
             {{--Môn học--}}
             <li class="nav-item nav-dropdown {{ active_class(Active::checkUriPattern('admin/subjects*'), 'open') }}">

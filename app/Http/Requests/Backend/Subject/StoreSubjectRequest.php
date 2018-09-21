@@ -4,6 +4,7 @@ namespace App\Http\Requests\Backend\Subject;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Route;
+use App\Exceptions\GeneralException;
 
 class StoreSubjectRequest extends FormRequest
 {
@@ -38,5 +39,10 @@ class StoreSubjectRequest extends FormRequest
                 'credit' => 'required|numeric|min:1|max:15'
             ];
         }
+    }
+
+    protected function failedAuthorization()
+    {
+        throw new GeneralException(__('exceptions.general.not_permission'));
     }
 }

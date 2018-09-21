@@ -14,10 +14,19 @@ class ShowSubjectRequest extends FormRequest
      */
     public function authorize()
     {
-        $check = $this->user()->isTeacher() &&
-            !$this->user()->isProctor() &&
-            !$this->user()->isCurator() ||
-            $this->user()->isAdmin();
+        $check = false;
+        if(isset($this->subject)) {
+            $subject = $this->subject;
+            $check = $this->user()->isTeacherForSubject($subject) &&
+                !$this->user()->isProctor() &&
+                !$this->user()->isCurator() ||
+                $this->user()->isAdmin();
+        } else {
+            $check = $this->user()->isTeacher() &&
+                !$this->user()->isProctor() &&
+                !$this->user()->isCurator() ||
+                $this->user()->isAdmin();
+        }
         return $check;
     }
 

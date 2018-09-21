@@ -67,12 +67,14 @@ Route::group([
  */
 
 Route::group([
-   'namespace' => 'Subject'
+   'namespace' => 'Subject',
+    'middleware' => 'teacher'
 ], function () {
 
     Route::group([
         'prefix' => 'subject/{subject}/chapter',
-        'as' => 'subject.chapter.'
+        'as' => 'subject.chapter.',
+        'middleware' => 'quiz_maker'
     ], function () {
         Route::get('{chapter}/inactive', 'ChapterStatusController@inactive')->name('inactive');
         Route::get('{chapter}/active', 'ChapterStatusController@active')->name('active');
@@ -84,7 +86,7 @@ Route::group([
     /*
      * CRUD
      */
-    Route::resource('subject.chapter', 'ChapterController')->except(['index']);
+    Route::resource('subject.chapter', 'ChapterController')->except(['index'])->middleware('quiz_maker');
 });
 
 /**

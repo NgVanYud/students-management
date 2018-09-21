@@ -3,9 +3,8 @@
 namespace App\Http\Requests\Backend\Subject;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Exceptions\GeneralException;
 
-class ManageChapterRequest extends FormRequest
+class ShowChapterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -15,7 +14,11 @@ class ManageChapterRequest extends FormRequest
     public function authorize()
     {
         $subject = $this->subject;
-        return $this->user()->isValidQuizMaker($subject);
+        $check = $this->user()->isTeacherForSubject($subject) &&
+            !$this->user()->isProctor() &&
+            !$this->user()->isCurator() ||
+            $this->user()->isAdmin();
+        return $check;
     }
 
     /**
