@@ -46,10 +46,63 @@ class Kernel extends HttpKernel
             'bindings',
         ],
 
-        'admin' => [
+        'managers' => [
+            'auth',
+            'password_expires',
+            'permission:view backend'
+        ],
+
+        'quiz_maker' => [
             'auth',
             'password_expires',
             'permission:view backend',
+            'role:teacher',
+            'role:quiz maker',
+        ],
+        'proctor' => [
+            'auth',
+            'password_expires',
+            'permission:view backend',
+            'role:teacher',
+            'role:protor role',
+
+        ],
+        'curator' => [
+            'auth',
+            'password_expires',
+            'permission:view backend',
+            'role:teacher',
+            'role:curator'
+        ],
+
+        'teacher' => [
+            'auth',
+            'password_expires',
+            'permission:view backend',
+            'role:teacher',
+        ],
+
+        'student' => [
+            'auth',
+            'password_expires',
+            'role:student'
+        ],
+
+        'user' => [
+            'role:user'
+        ],
+
+        'admin' => [
+//            'auth',
+//            'password_expires',
+//            'permission:view backend',
+            'role:administrator',
+            'quiz_maker',
+            'proctor',
+            'curator',
+            'teacher',
+            'student',
+            'user'
         ],
     ];
 
