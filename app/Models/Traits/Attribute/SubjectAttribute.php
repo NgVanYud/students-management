@@ -10,6 +10,7 @@ namespace App\Models\Traits\Attribute;
 
 use App\Models\Auth\User;
 use App\Models\Subject;
+use Illuminate\Support\Facades\Auth;
 use function PHPSTORM_META\type;
 
 trait SubjectAttribute
@@ -87,16 +88,34 @@ trait SubjectAttribute
      */
     public function getActionButtonsAttribute()
     {
-
-        if ($this->trashed()) {
-            return '
+        $user = Auth::user();
+        if(!$user->isAdmin()) {
+            if($user->isValidQuizMaker($this)) {
+                return '<div class="btn-group btn-group-sm" role="group" aria-label="Subject Actions">
+              ' . $this->show_button . '
+			  <div class="btn-group btn-group-sm" role="group">
+                <button id="subjectActions" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  More
+                </button>
+                <div class="dropdown-menu" aria-labelledby="subjectActions">
+                ' . $this->add_chapter_button . '
+                </div>
+              </div>
+			</div>';
+            } else if($user->isTeacherForSubject($this)) {
+                return '<div class="btn-group btn-group-sm" role="group" aria-label="Subject Actions">
+              ' . $this->show_button . '
+			</div>';
+            }
+        } else {
+            if ($this->trashed()) {
+                return '
 				<div class="btn-group" role="group" aria-label="Subject Actions">
 				  ' . $this->restore_button . '
 				  ' . $this->delete_permanently_button . '
 				</div>';
-        }
-
-        return '<div class="btn-group btn-group-sm" role="group" aria-label="Subject Actions">
+            }
+            return '<div class="btn-group btn-group-sm" role="group" aria-label="Subject Actions">
               ' . $this->show_button . '
 			  ' . $this->edit_button . '
 			  <div class="btn-group btn-group-sm" role="group">
@@ -111,5 +130,7 @@ trait SubjectAttribute
                 </div>
               </div>
 			</div>';
+        }
+        return '';
     }
 }

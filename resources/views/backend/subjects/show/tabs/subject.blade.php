@@ -18,14 +18,16 @@
                 <td>{{ $subject->credit }}</td>
             </tr>
 
+            @if($logged_in_user->isAdmin())
+                <tr>
+                    <th>{{ __('labels.backend.subjects.tabs.content.subject.actived') }}</th>
+                    <td>{!! $subject->actived_label !!}</td>
+                </tr>
+            @endif
+
             <tr>
                 <th>{{ __('labels.backend.subjects.tabs.content.subject.status') }}</th>
                 <td>{!! $subject->status_label !!}</td>
-            </tr>
-
-            <tr>
-                <th>{{ __('labels.backend.subjects.tabs.content.subject.actived') }}</th>
-                <td>{!! $subject->actived_label !!}</td>
             </tr>
 
         </table>

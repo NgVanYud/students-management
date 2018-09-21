@@ -17,7 +17,9 @@
                 </div><!--col-->
 
                 <div class="col-sm-7">
-                    @include('backend.subjects.includes.subject-header-buttons')
+                    @if($logged_in_user->isAdmin())
+                        @include('backend.subjects.includes.subject-header-buttons')
+                    @endif
                 </div><!--col-->
             </div><!--row-->
 
@@ -29,7 +31,9 @@
                             <tr>
                                 <th>{{ __('labels.backend.subjects.table.abbreviation') }}</th>
                                 <th>{{ __('labels.backend.subjects.table.name') }}</th>
-                                <th>{{ __('labels.backend.subjects.table.actived') }}</th>
+                                @if($logged_in_user->isAdmin())
+                                    <th>{{ __('labels.backend.subjects.table.actived') }}</th>
+                                @endif
                                 <th>{{ __('labels.backend.subjects.table.credit') }}</th>
                                 {{--<th>{{ __('labels.backend.subjects.users.table.confirmed') }}</th>--}}
                                 <th>{{ __('labels.backend.access.users.table.last_updated') }}</th>
@@ -41,7 +45,9 @@
                                 <tr>
                                     <td>{{ $subject->abbreviation }}</td>
                                     <td>{{ $subject->name }}</td>
-                                    <td>{!! $subject->actived_label !!}</td>
+                                    @if($logged_in_user->isAdmin())
+                                        <td>{!! $subject->actived_label !!}</td>
+                                    @endif
                                     <td>{{ $subject->credit }}</td>
 {{--                                    <td>{!! $subject->confirmed_label !!}</td>--}}
                                     <td>{{ $subject->updated_at->diffForHumans() }}</td>

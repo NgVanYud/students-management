@@ -13,6 +13,10 @@ return [
     |
     */
 
+    'general' => [
+        'not_permission' => 'You are not granted permission.'
+    ],
+
     'backend' => [
         'access' => [
             'roles' => [

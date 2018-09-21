@@ -2,11 +2,10 @@
 
 namespace App\Http\Requests\Backend\Subject;
 
-use App\Exceptions\GeneralException;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Route;
+use App\Exceptions\GeneralException;
 
-class ManageSubjectRequest extends FormRequest
+class ShowSubjectRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -15,7 +14,11 @@ class ManageSubjectRequest extends FormRequest
      */
     public function authorize()
     {
-        return $this->user()->isAdmin();
+        $check = $this->user()->isTeacher() &&
+            !$this->user()->isProctor() &&
+            !$this->user()->isCurator() ||
+            $this->user()->isAdmin();
+        return $check;
     }
 
     /**

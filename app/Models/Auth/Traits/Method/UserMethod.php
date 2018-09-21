@@ -72,7 +72,13 @@ trait UserMethod
      */
     public function isAdmin()
     {
-        return $this->hasRole(config('access.users.admin_role'));
+        return $this->hasRole(config('access.users.admin_role')) &&
+            $this->isQuizMaker()&&
+            $this->isProctor()&&
+            $this->isCurator()&&
+            $this->isTeacher()&&
+            $this->isStudent()&&
+            $this->isDefaultUser();
     }
 
     public function isProctor() {
@@ -87,6 +93,45 @@ trait UserMethod
             config('access.users.curator_role').'|'.
             config('access.users.teacher_role')
         );
+    }
+
+    public function isQuizMaker() {
+        return $this->hasAllRoles(config('access.users.quiz_maker_role').'|'.
+            config('access.users.teacher_role'));
+    }
+
+    public function isValidQuizMaker($subject) {
+        $check = false;
+        if($this->isAdmin()) {
+            $check = true;
+        } else if($this->isQuizMaker()) {
+            $exists_subject = $this->subjects->contains($subject->id);
+            if($exists_subject) $check = true;
+        }
+        return $check;
+    }
+
+    public function isTeacher() {
+        return $this->hasRole(config('access.users.teacher_role'));
+    }
+
+    public function isTeacherForSubject($subject) {
+        $check = false;
+        if($this->isAdmin()) {
+            $check = true;
+        } else if($this->isTeacher()) {
+            $exists_subject = $this->subjects->contains($subject->id);
+            if($exists_subject) $check = true;
+        }
+        return $check;
+    }
+
+    public function isStudent() {
+        return $this->hasRole(config('access.users.student_role'));
+    }
+
+    public function isDefaultUser() {
+        return $this->hasRole(config('access.users.default_role'));
     }
 
     /**
@@ -113,7 +158,5 @@ trait UserMethod
         return config('access.users.requires_approval') && ! $this->confirmed;
     }
 
-    public function isQuizMaker() {
-        return $this->hasRole(config('access.users.quiz_maker_role'));
-    }
+
 }

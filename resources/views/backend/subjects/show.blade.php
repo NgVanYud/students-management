@@ -32,13 +32,17 @@
                             <a class="nav-link {{(isset($tab_type) && ($tab_type == SubjectModel::TAB_TYPES['chapters'])) ? 'active' : ''}}" data-toggle="tab" href="#chapter" role="tab" aria-controls="chapters" aria-expanded="{{(isset($tab_type) && ($tab_type == SubjectModel::TAB_TYPES['chapters']))}}"><i class="fas fa-book"></i> {{ __('labels.backend.subjects.tabs.titles.chapters') }}</a>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link {{(isset($tab_type) && ($tab_type == SubjectModel::TAB_TYPES['deleted_chapters'])) ? 'active' : ''}}" data-toggle="tab" href="#deteled_chapter" role="tab" aria-controls="deleted_chapters" aria-expanded="{{(isset($tab_type) && ($tab_type == SubjectModel::TAB_TYPES['deleted_chapters']))}}"><i class="fas fa-book"></i> {{ __('labels.backend.subjects.tabs.titles.deleted_chapters') }}</a>
-                        </li>
+                        @if($logged_in_user->isValidQuizMaker($subject))
+                            <li class="nav-item">
+                                <a class="nav-link {{(isset($tab_type) && ($tab_type == SubjectModel::TAB_TYPES['deleted_chapters'])) ? 'active' : ''}}" data-toggle="tab" href="#deteled_chapter" role="tab" aria-controls="deleted_chapters" aria-expanded="{{(isset($tab_type) && ($tab_type == SubjectModel::TAB_TYPES['deleted_chapters']))}}"><i class="fas fa-book"></i> {{ __('labels.backend.subjects.tabs.titles.deleted_chapters') }}</a>
+                            </li>
+                        @endif
+                        @if($logged_in_user->isAdmin())
+                            <li class="nav-item">
+                                <a class="nav-link {{(isset($tab_type) && ($tab_type == SubjectModel::TAB_TYPES['lecturers'])) ? 'active' : ''}}" data-toggle="tab" href="#lecturer" role="tab" aria-controls="lecturers" aria-expanded="{{(isset($tab_type) && ($tab_type == SubjectModel::TAB_TYPES['lecturers']))}}"><i class="fas fa-book"></i> {{ __('labels.backend.subjects.tabs.titles.lecturers') }}</a>
+                            </li>
+                        @endif
 
-                        <li class="nav-item">
-                            <a class="nav-link {{(isset($tab_type) && ($tab_type == SubjectModel::TAB_TYPES['lecturers'])) ? 'active' : ''}}" data-toggle="tab" href="#lecturer" role="tab" aria-controls="lecturers" aria-expanded="{{(isset($tab_type) && ($tab_type == SubjectModel::TAB_TYPES['lecturers']))}}"><i class="fas fa-book"></i> {{ __('labels.backend.subjects.tabs.titles.lecturers') }}</a>
-                        </li>
                     </ul>
 
                     <div class="tab-content">
@@ -50,13 +54,18 @@
                             @include('backend.subjects.show.tabs.chapter')
                         </div><!--tab-->
 
-                        <div class="tab-pane {{(isset($tab_type) && ($tab_type == SubjectModel::TAB_TYPES['deleted_chapters'])) ? 'active' : ''}}" id="deteled_chapter" role="tabpanel" aria-expanded="{{(isset($tab_type) && ($tab_type == SubjectModel::TAB_TYPES['deleted_chapters']))}}">
-                            @include('backend.subjects.show.tabs.deleted-chapter')
-                        </div><!--tab-->
+                        @if($logged_in_user->isValidQuizMaker($subject))
+                            <div class="tab-pane {{(isset($tab_type) && ($tab_type == SubjectModel::TAB_TYPES['deleted_chapters'])) ? 'active' : ''}}" id="deteled_chapter" role="tabpanel" aria-expanded="{{(isset($tab_type) && ($tab_type == SubjectModel::TAB_TYPES['deleted_chapters']))}}">
+                                @include('backend.subjects.show.tabs.deleted-chapter')
+                            </div><!--tab-->
+                        @endif
 
-                        <div class="tab-pane {{(isset($tab_type) && ($tab_type == SubjectModel::TAB_TYPES['lecturers'])) ? 'active' : ''}}" id="lecturer" role="tabpanel" aria-expanded="{{(isset($tab_type) && ($tab_type == SubjectModel::TAB_TYPES['lecturers']))}}">
-                            @include('backend.subjects.show.tabs.lecturers')
-                        </div><!--tab-->
+                        @if($logged_in_user->isAdmin())
+                            <div class="tab-pane {{(isset($tab_type) && ($tab_type == SubjectModel::TAB_TYPES['lecturers'])) ? 'active' : ''}}" id="lecturer" role="tabpanel" aria-expanded="{{(isset($tab_type) && ($tab_type == SubjectModel::TAB_TYPES['lecturers']))}}">
+                                @include('backend.subjects.show.tabs.lecturers')
+                            </div><!--tab-->
+                        @endif
+
                     </div><!--tab-content-->
                 </div><!--col-->
             </div><!--row-->

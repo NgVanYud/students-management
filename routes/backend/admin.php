@@ -11,11 +11,13 @@ Route::get('dashboard', 'DashboardController@index')->name('dashboard');
  */
 Route::group([
     'namespace' => 'Subject',
-], function () {
+    'middleware' => 'teacher'
 
+], function () {
     Route::group([
         'prefix' => 'subject',
-        'as' => 'subject.'
+        'as' => 'subject.',
+        'middleware' => 'admin'
     ], function () {
         /*
          * Status subject
@@ -30,9 +32,19 @@ Route::group([
     /*
      * Subject CRUD
      */
+    Route::group([
+        'middleware' => 'admin'
+    ], function() {
+        Route::resource('subject', 'SubjectController', [
+            'parameters' => 'singular'
+        ])->except(['show', 'index']);
+    });
+
+
     Route::resource('subject', 'SubjectController', [
         'parameters' => 'singular'
-    ])->except(['show']);
+    ])->only(['index']);
+
     Route::get('subject/{subject}/{tab_type?}', 'SubjectController@show')
         ->name('subject.show');
 });
@@ -42,7 +54,8 @@ Route::group([
  */
 Route::group([
     'namespace' => 'Subject',
-    'prefix'    => 'lecturer'
+    'prefix'    => 'lecturer',
+    'middleware' => 'admin'
 ], function () {
 
     Route::get('total', 'LecturerController@total')->name('lecturer.total');

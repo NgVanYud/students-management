@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Backend\Subject;
 
+use App\Http\Controllers\Traits\ControllerTrait;
+use App\Http\Requests\Backend\Subject\ShowSubjectRequest;
 use App\Http\Requests\Backend\Subject\StoreSubjectRequest;
 use App\Models\Subject;
 use App\Repositories\Backend\SubjectRepository;
@@ -9,10 +11,14 @@ use App\Repositories\ChapterRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Subject\ManageSubjectRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Pagination\Paginator;
 
 class SubjectController extends Controller
 {
+    use ControllerTrait;
+
     protected $subjectRepository;
     protected $chapterRepository;
 
@@ -22,12 +28,23 @@ class SubjectController extends Controller
         $this->subjectRepository = $subjectRepository;
     }
 
-    public function index()
+    public function index(ShowSubjectRequest $request)
     {
+        $user = Auth::user();
+        /*
+         * $user là giáo viên bộ môn hoặc là nguời ra đề
+         */
+        $subjects = $this->subjectRepository
+            ->orderBy('created_at', 'desc')
+            ->paginate(25);
+
+        if(!$user->isAdmin()) {
+            $subjects = $this->paginate($user->subjects, 25)->setPath(Paginator::resolveCurrentPath());
+        }
         return view('backend.subjects.index')
-            ->withSubjects($this->subjectRepository
-                ->orderBy('name', 'asc')
-                ->paginate(25));
+            ->with([
+                'subjects' => $subjects
+            ]);
     }
 
     public function create(ManageSubjectRequest $request)
@@ -42,7 +59,7 @@ class SubjectController extends Controller
             ->withFlashSuccess(__('alerts.backend.subjects.created'));
     }
 
-    public function show(ManageSubjectRequest $request, Subject $subject, $tab_type = null)
+    public function show(ShowSubjectRequest $request, Subject $subject, $tab_type = null)
     {
         if(!(isset($tab_type) && in_array($tab_type, array_values(Subject::TAB_TYPES)))) {
             $tab_type = Subject::TAB_TYPES['subjects'];
