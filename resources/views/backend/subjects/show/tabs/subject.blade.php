@@ -25,9 +25,23 @@
                 </tr>
             @endif
 
+            {{--<tr>--}}
+                {{--<th>{{ __('labels.backend.subjects.tabs.content.subject.status') }}</th>--}}
+                {{--<td>{!! $subject->status_label !!}</td>--}}
+            {{--</tr>--}}
             <tr>
-                <th>{{ __('labels.backend.subjects.tabs.content.subject.status') }}</th>
-                <td>{!! $subject->status_label !!}</td>
+                <th>{{ __('labels.backend.subjects.tabs.content.subject.lecturers_num') }}</th>
+                <td>{{ count($subject->lecturers) }}</td>
+            </tr>
+
+            <tr>
+                <th>{{ __('labels.backend.subjects.tabs.content.subject.chapters_num') }}</th>
+                <td>{{ count($subject->chapters) }}</td>
+            </tr>
+
+            <tr>
+                <th>{{ __('labels.backend.subjects.tabs.content.subject.questions_num') }}</th>
+                <td>{{ count($subject->questions) }}</td>
             </tr>
 
         </table>

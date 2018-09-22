@@ -161,6 +161,9 @@ return [
                         'name'         => 'Name',
                         'status'       => 'Status',
                         'timezone'     => 'Timezone',
+                        'questions_num' => 'Questions Number',
+                        'lecturers_num' => 'Lecturers Number',
+                        'chapters_num' => 'Chapters Number',
                     ],
 
                     'chapters' => [
