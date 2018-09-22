@@ -80,11 +80,11 @@
                             {{ __('labels.backend.questions.create') }}
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ active_class(Active::checkUriPattern('admin/subjects/deleted*')) }}" href="">
-                            {{ __('labels.backend.questions.deleted') }}
-                        </a>
-                    </li>
+                    {{--<li class="nav-item">--}}
+                        {{--<a class="nav-link {{ active_class(Active::checkUriPattern('admin/subjects/deleted*')) }}" href="{{route('admin.question.deleted')}}">--}}
+                            {{--{{ __('labels.backend.questions.deleted') }}--}}
+                        {{--</a>--}}
+                    {{--</li>--}}
                 </ul>
             </li>
 

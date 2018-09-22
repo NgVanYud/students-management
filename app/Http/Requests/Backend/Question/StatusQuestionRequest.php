@@ -3,9 +3,8 @@
 namespace App\Http\Requests\Backend\Question;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Exceptions\GeneralException;
 
-class ManageQuestionRequest extends FormRequest
+class StatusQuestionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,8 +13,7 @@ class ManageQuestionRequest extends FormRequest
      */
     public function authorize()
     {
-        $chapter = $this->chapter;
-        return $this->user()->isValidQuizMaker($chapter->subject);
+        return $this->user()->isValidQuizMaker($this->question->chapter->subject);
     }
 
     /**

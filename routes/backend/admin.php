@@ -94,7 +94,8 @@ Route::group([
  */
 
 Route::group([
-    'namespace' => 'Question'
+    'namespace' => 'Question',
+    'middleware' => 'quiz_maker'
 ], function(){
     Route::group([
         'as' => 'question.'
@@ -111,7 +112,7 @@ Route::group([
     Route::get('chapter/question', 'QuestionController@index')->name('chapter.question.index');
 //    Route::post('{chapter}/question', 'QuestionController@show')->name('chapter.question.show');
     Route::get('question/create', 'QuestionController@create')->name('chapter.question.create');
-    Route::post('question ', 'QuestionController@store')->name('chapter.question.store');
+    Route::post('question', 'QuestionController@store')->name('chapter.question.store');
 
     Route::resource('chapter.question', 'QuestionController')->except(['index', 'create', 'store', 'show']);
 });

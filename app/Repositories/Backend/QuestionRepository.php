@@ -107,4 +107,12 @@ class QuestionRepository extends BaseRepository
         return $correct_answers;
     }
 
+    public function getBySubjects($subjects) {
+        $questịons = [];
+        foreach ($subjects as $subject) {
+            $questịons = $subject->questions;
+        }
+        return $questịons;
+    }
+
 }

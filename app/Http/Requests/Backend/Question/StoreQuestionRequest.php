@@ -2,8 +2,11 @@
 
 namespace App\Http\Requests\Backend\Question;
 
+use App\Models\Chapter;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Route;
+use App\Exceptions\GeneralException;
+use Illuminate\Validation\Rule;
 
 class StoreQuestionRequest extends FormRequest
 {
@@ -14,7 +17,9 @@ class StoreQuestionRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        $chapter = Chapter::where('slug', '=', $this->chapters)->first();
+        $subject = $chapter->subject;
+        return $this->user()->isValidQuizMaker($subject);
     }
 
     /**
@@ -24,7 +29,7 @@ class StoreQuestionRequest extends FormRequest
      */
     public function rules()
     {
-        $chapter = $this->chapter;
+        $chapter = Chapter::where('slug', '=', $this->chapters)->first();
         $content = $this->content;
         $action = Route::getCurrentRoute()->getActionMethod();
         if($action == "store") {
@@ -55,5 +60,10 @@ class StoreQuestionRequest extends FormRequest
         return [
 
         ];
+    }
+
+    protected function failedAuthorization()
+    {
+        throw new GeneralException(__('exceptions.general.not_permission'));
     }
 }

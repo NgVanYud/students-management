@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers\Backend\Question;
 
+use App\Http\Controllers\Traits\ControllerTrait;
+use App\Http\Requests\Backend\Question\ValidationQuizMakerRequest;
 use App\Http\Requests\Backend\Question\ManageQuestionRequest;
+use App\Http\Requests\Backend\Question\ShowQuestionRequest;
+use App\Http\Requests\Backend\Question\StatusQuestionRequest;
 use App\Http\Requests\Backend\Question\StoreQuestionRequest;
 use App\Models\Answer;
 use App\Models\Auth\User;
@@ -20,9 +24,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\View;
+use Illuminate\Pagination\Paginator;
 
 class QuestionController extends Controller
 {
+    use ControllerTrait;
+
     protected $questionRepository;
     protected $subjectRepository;
     protected $chapterRepository;
@@ -47,10 +54,17 @@ class QuestionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(ManageQuestionRequest $request)
+    public function index(ShowQuestionRequest $request)
     {
-        $questions = $this->questionRepository->getAllPaginated(25, ['*']);
-        $subjects = $this->subjectRepository->getActive(['id', 'name', 'slug'], 'name', 'asc');
+        $user = Auth::user();
+        if($user->isAdmin()) {
+            $questions = $this->questionRepository->getAllPaginated(25, ['*']);
+            $subjects = $this->subjectRepository->getActive(['id', 'name', 'slug'], 'name', 'asc');
+        } else if($user->isQuizMaker()) {
+            $subjects = $this->paginate($user->subjects, 25)->setPath(Paginator::resolveCurrentPath());
+            $questions = $this->paginate($this->questionRepository->getBySubjects($subjects), 25)->setPath(Paginator::resolveCurrentPath());
+        }
+
 //        $chapters = $this->chapterRepository->getActive(['name', 'slug'], 'name', 'asc');
         /**
          * $subject_info
@@ -103,9 +117,14 @@ class QuestionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(ManageQuestionRequest $request)
+    public function create(ValidationQuizMakerRequest $request)
     {
-        $subjects = $this->subjectRepository->getActive(['id', 'name', 'slug'], 'name', 'asc');
+        $user = Auth::user();
+        if($user->isAdmin()) {
+            $subjects = $this->subjectRepository->getActive(['id', 'name', 'slug'], 'name', 'asc');
+        } else if($user->isQuizMaker()) {
+            $subjects = $user->subjects;
+        }
 //        $chapters = $this->chapterRepository->getActive(['name', 'slug'], 'name', 'asc');
         /**
          * $subject_info
@@ -260,26 +279,26 @@ class QuestionController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(ManageQuestionRequest $request, Chapter $chapter, Question $question)
     {
-        //
+
     }
 
-    public function active(ManageQuestionRequest $request, Question $question) {
+    public function active(StatusQuestionRequest $request, Question $question) {
         $this->questionRepository->active($question);
         return redirect()->back()->withFlashSuccess(__('alerts.backend.questions.actived'));
     }
 
-    public function inactive(ManageQuestionRequest $request, Question $question) {
+    public function inactive(StatusQuestionRequest $request, Question $question) {
         $this->questionRepository->inactive($question);
         return redirect()->back()->withFlashSuccess(__('alerts.backend.questions.inactived'));
     }
 
-    public function restore(ManageQuestionRequest $request, Question $question) {
+    public function restore(StatusQuestionRequest $request, Question $question) {
 
     }
 
-    public function getDeleted(ManageQuestionRequest $request) {
+    public function getDeleted(ValidationQuizMakerRequest $request) {
         return view('backend.subjects.deleted')
             ->withSubjects($this->subjectRepository->getDeletedPaginated(25, 'deleted_at', 'desc'));
     }
@@ -290,7 +309,7 @@ class QuestionController extends Controller
      *
      * @return mixed
      */
-    public function getDeactivated(ManageSubjectRequest $request)
+    public function getDeactivated(ShowQuestionRequest $request)
     {
         return view('backend.auth.user.deactivated')
             ->withUsers($this->userRepository->getInactivePaginated(25, 'id', 'asc'));
