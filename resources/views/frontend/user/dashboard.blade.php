@@ -46,10 +46,17 @@
                             </div>
 
                             <div class="card mb-4">
-                                <div class="card-header">Header</div>
+                                <div class="card-header">Information</div>
                                 <div class="card-body">
-                                    <h4 class="card-title">Info card title</h4>
-                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                    <ul class="card-text">
+                                        <li>
+                                            <a href="{{route('frontend.student.get_score', $logged_in_user)}}">
+                                                Score
+                                            </a>
+                                        </li>
+                                        <li>Result</li>
+                                        <li>Result</li>
+                                    </ul>
                                 </div>
                             </div><!--card-->
                         </div><!--col-md-4-->

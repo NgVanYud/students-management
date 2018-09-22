@@ -142,4 +142,11 @@ class StudentController extends Controller
         }
         return $result;
     }
+
+    public function getScore(Request $request, User $user) {
+        $tests = $user->tests()->wherePivot('status', Result::STATUS_CODES['done'])->get();
+        return view('frontend.user.students.score', [
+            'tests' => $tests
+        ]);
+    }
 }

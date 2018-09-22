@@ -57,7 +57,7 @@ class ExamPublish extends Notification implements ShouldQueue
     public function toDatabase($notifiable) {
         $subject = 'New examination: '.$this->examination->subject->name;
         $content = 'Exam '.$this->examination->name .
-            ' last '.$this->examination->timeout .
+            ' last '.$this->examination->timeout . 'minutes'.
             ' with '. $this->examination->question_num. ' questions.';
         return [
             'examination_id' => $this->examination->id,

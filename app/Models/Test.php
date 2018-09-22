@@ -52,7 +52,7 @@ class Test extends Model
             ->as('result')
             ->withTimestamps()
             ->withPivot(
-            'uuid', 'correct_ans', 'is_completed', 'deleted_at', 'status', 'timeout', 'read_at'
+            'correct_ans', 'is_completed', 'deleted_at', 'status', 'timeout', 'read_at'
             );
     }
 

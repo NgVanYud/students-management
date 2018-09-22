@@ -19,7 +19,6 @@ class Result extends Model
 
 
     protected $fillable = [
-        'uuid',
         'test_id',
         'student_id',
         'correct_ans',
