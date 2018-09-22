@@ -112,7 +112,6 @@ trait SubjectAttribute
                 return '
 				<div class="btn-group" role="group" aria-label="Subject Actions">
 				  ' . $this->restore_button . '
-				  ' . $this->delete_permanently_button . '
 				</div>';
             }
             return '<div class="btn-group btn-group-sm" role="group" aria-label="Subject Actions">
