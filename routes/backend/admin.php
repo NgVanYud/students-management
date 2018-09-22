@@ -123,49 +123,85 @@ Route::group([
 
 Route::group([
    'namespace' => 'Examination',
+    'middleware' => 'teacher'
 ], function() {
     Route::group([
         'as' => 'examination.',
-        'prefix' => 'examination'
+        'prefix' => 'examination',
+        'middleware' => 'admin'
     ], function() {
         Route::get('{examination}/inactive', 'ExaminationStatusController@inactive')->name('inactive');
         Route::get('{examination}/active', 'ExaminationStatusController@active')->name('active');
         Route::get('{examination}/restore', 'ExaminationStatusController@restore')->name('restore');
-    });
-    Route::resource('examination', 'ExaminationController')->except([
-        'edit', 'update'
-    ]);
 
-    Route::get('examination/{examination}/edit/{tab_type?}', 'ExaminationController@edit')
-        ->name('examination.edit');
-    Route::post('examination/{examination}/edit/general-info', 'ExaminationController@updateGeneralInfo')
-        ->name('examination.general_info.update');
-    Route::post('examination/{examination}/edit/proctor', 'ExaminationController@updateProctors')
-        ->name('examination.proctor.update');
-    Route::post('examination/{examination}/edit/student', 'ExaminationController@updateStudents')
-        ->name('examination.student.update');
+    });
+    Route::resource('examination', 'ExaminationController')
+        ->except([
+            'edit',
+            'update'
+        ])
+        ->only([
+            'index'
+        ]);
+
+    Route::resource('examination', 'ExaminationController')
+        ->except([
+            'edit',
+            'update'
+        ])
+        ->only([
+            'show', 'destroy', 'store', 'create'
+        ])
+        ->middleware('admin');
+
+    Route::group([
+        'as' => 'examination.',
+        'prefix' => 'examination',
+        'middleware' => 'admin',
+    ], function() {
+        /**
+         * Edit, update
+         */
+        Route::get('{examination}/edit/{tab_type?}', 'ExaminationController@edit')
+            ->name('edit');
+        Route::post('{examination}/edit/general-info', 'ExaminationController@updateGeneralInfo')
+            ->name('general_info.update');
+        Route::post('{examination}/edit/proctor', 'ExaminationController@updateProctors')
+            ->name('proctor.update');
+        Route::post('{examination}/edit/student', 'ExaminationController@updateStudents')
+            ->name('student.update');
+    });
 
     /**
      * Format test
      */
-    Route::get('examination/{examination}/format-test', 'ExaminationController@formatTest')
-        ->name('examination.format_test');
-    Route::post('examination/{examination}/format-test', 'ExaminationController@storeFormatTest')
-        ->name('examination.store_format_test');
+    Route::group([
+        'middleware' => 'quiz_maker'
+    ], function() {
+        Route::get('examination/{examination}/format-test', 'ExaminationController@formatTest')
+            ->name('examination.format_test');
+        Route::post('examination/{examination}/format-test', 'ExaminationController@storeFormatTest')
+            ->name('examination.store_format_test');
+    });
 
     /**
      * Number of tests
      */
-    Route::get('examination/{examination}/test-num', 'ExaminationController@createTestNum')
-        ->name('examination.create_test_num');
-    Route::post('examination/{examination}/test-num', 'ExaminationController@storeTests')
-        ->name('examination.store_test');
+    Route::group([
+        'middleware' => 'curator'
+    ], function() {
+        Route::get('examination/{examination}/test-num', 'ExaminationController@createTestNum')
+            ->name('examination.create_test_num');
+        Route::post('examination/{examination}/test-num', 'ExaminationController@storeTests')
+            ->name('examination.store_test');
+    });
+
 
     /**
      * Publish
      */
     Route::get('examination/{examination}/publish', 'ExaminationStatusController@publish')
-        ->name('examination.publish');
+        ->name('examination.publish')->middleware(['proctor']);
 
 
 //    Route::get('examination/{examination}/student/{student}', 'ExaminationController@deleteStudent');
@@ -175,7 +211,7 @@ Route::group([
  *
  */
 Route::group([
-    'namespace' => 'Examination',
+    'namespace' => 'Examination'
 ], function() {
     Route::group([
         'as' => 'test.',

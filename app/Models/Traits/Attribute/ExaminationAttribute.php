@@ -9,6 +9,8 @@
 namespace App\Models\Traits\Attribute;
 
 
+use Illuminate\Support\Facades\Auth;
+
 trait ExaminationAttribute
 {
     public function getSetTestNumButtonAttribute() {
@@ -81,7 +83,10 @@ trait ExaminationAttribute
 
         }
 
-        return '';
+        if($this->isPublished()) {
+            return '<span class="badge badge-success">' . __('labels.general.yes') . '</span>';
+        }
+        return '<span class="badge badge-warning">' .' Setting'. '</span>';
     }
 
     /**
@@ -89,31 +94,38 @@ trait ExaminationAttribute
      */
     public function getActionButtonsAttribute()
     {
-
-        if ($this->trashed()) {
-            return '
-				<div class="btn-group" role="group" aria-label="Examination Actions">
-				  ' . $this->restore_button . '
-				  ' . $this->delete_permanently_button . '
-				</div>';
-        } else if($this->isFormatTest()) {
-            return '<div class="btn-group btn-group-sm" role="group" aria-label="Examination Actions">
+        $user = Auth::user();
+        if($this->isFormatTest()) {
+            if($user->isAdmin()) {
+                return '<div class="btn-group btn-group-sm" role="group" aria-label="Examination Actions">
               ' . $this->show_button . '
 			  ' . $this->edit_button . '
               ' . $this->format_test_button . '
               ' . $this->set_test_num_button . '
-              ' . $this->delete_button . '
 			</div>';
-        } else {
-            return '<div class="btn-group btn-group-sm" role="group" aria-label="Examination Actions">
+            } else if($user->isValidQuizMaker($this->subject)) {
+                return '<div class="btn-group btn-group-sm" role="group" aria-label="Examination Actions">
+              ' . $this->format_test_button . '
+			</div>';
+            } else if($user->isCurator()) {
+                return '<div class="btn-group btn-group-sm" role="group" aria-label="Examination Actions">
+                          ' . $this->set_test_num_button . '
+                        </div>';
+            }
+        } else { //Chưa được format test
+            if($user->isAdmin()) {
+                return '<div class="btn-group btn-group-sm" role="group" aria-label="Examination Actions">
               ' . $this->show_button . '
 			  ' . $this->edit_button . '
               ' . $this->format_test_button . '
-              ' . $this->delete_button . '
 			</div>';
+            } else if($user->isValidQuizMaker($this->subject)) {
+                return '<div class="btn-group btn-group-sm" role="group" aria-label="Examination Actions">
+              ' . $this->format_test_button . '
+			</div>';
+            }
         }
-
-
+        return '';
     }
 
     public function getNumberProctorsAttribute() {

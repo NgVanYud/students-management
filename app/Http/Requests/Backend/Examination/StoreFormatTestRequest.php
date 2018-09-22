@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Backend\Examination;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Exceptions\GeneralException;
 
 class StoreFormatTestRequest extends FormRequest
 {
@@ -30,5 +31,10 @@ class StoreFormatTestRequest extends FormRequest
         }
         $rules_arr['timeout'] = 'required|numeric|min:15|max:300';
         return $rules_arr;
+    }
+
+    protected function failedAuthorization()
+    {
+        throw new GeneralException(__('exceptions.general.not_permission'));
     }
 }

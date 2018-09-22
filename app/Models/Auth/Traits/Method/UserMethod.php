@@ -88,6 +88,16 @@ trait UserMethod
         );
     }
 
+    public function isProctorForExamination($examination) {
+        $check = false;
+        if($this->isAdmin()) {
+            $check = true;
+        } else if($this->isProctor()) {
+            $check = $this->examinationsProctor->contains($examination->id);
+        }
+        return $check;
+    }
+
     public function isCurator() {
         return $this->hasAllRoles(
             config('access.users.curator_role').'|'.

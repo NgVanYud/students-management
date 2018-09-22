@@ -38,56 +38,87 @@
                 {{--</ul>--}}
             {{--</li>--}}
 
+            @if($logged_in_user->isTeacher() && !$logged_in_user->isCurator() && !$logged_in_user->isProctor() || $logged_in_user->isAdmin())
             {{--Môn học--}}
-            <li class="nav-item nav-dropdown {{ active_class(Active::checkUriPattern('admin/subjects*'), 'open') }}">
-                <a class="nav-link nav-dropdown-toggle {{ active_class(Active::checkUriPattern('admin/subjects*')) }}" href="#">
-                    <i class="icon-user"></i> {{ __('menus.backend.subjects.title') }}
-                </a>
+                <li class="nav-item nav-dropdown {{ active_class(Active::checkUriPattern('admin/subjects*'), 'open') }}">
+                    <a class="nav-link nav-dropdown-toggle {{ active_class(Active::checkUriPattern('admin/subjects*')) }}" href="#">
+                        <i class="icon-user"></i> {{ __('menus.backend.subjects.title') }}
+                    </a>
 
-                <ul class="nav-dropdown-items">
-                    <li class="nav-item">
-                        <a class="nav-link {{ active_class(Active::checkUriPattern('admin/subjects*')) }}" href="{{ route('admin.subject.index') }}">
-                            {{ __('labels.backend.subjects.all') }}
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ active_class(Active::checkUriPattern('admin/subjects/create*')) }}" href="{{ route('admin.subject.create') }}">
-                            {{ __('labels.backend.subjects.create') }}
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ active_class(Active::checkUriPattern('admin/subjects/deleted*')) }}" href="{{ route('admin.subject.deleted') }}">
-                            {{ __('labels.backend.subjects.deleted') }}
-                        </a>
-                    </li>
-                </ul>
-            </li>
+                    <ul class="nav-dropdown-items">
+                        <li class="nav-item">
+                            <a class="nav-link {{ active_class(Active::checkUriPattern('admin/subjects*')) }}" href="{{ route('admin.subject.index') }}">
+                                {{ __('labels.backend.subjects.all') }}
+                            </a>
+                        </li>
+                        @if($logged_in_user->isAdmin())
+                            <li class="nav-item">
+                                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/subjects/create*')) }}" href="{{ route('admin.subject.create') }}">
+                                    {{ __('labels.backend.subjects.create') }}
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/subjects/deleted*')) }}" href="{{ route('admin.subject.deleted') }}">
+                                    {{ __('labels.backend.subjects.deleted') }}
+                                </a>
+                            </li>
+                        @endif
+                    </ul>
+                </li>
+            @endif
 
+            @if($logged_in_user->isQuizMaker())
             {{--Questions--}}
-            <li class="nav-item nav-dropdown {{ active_class(Active::checkUriPattern('admin/subjects*'), 'open') }}">
-                <a class="nav-link nav-dropdown-toggle {{ active_class(Active::checkUriPattern('admin/subjects*')) }}" href="#">
-                    <i class="icon-user"></i> {{ __('menus.backend.questions.title') }}
+                <li class="nav-item nav-dropdown {{ active_class(Active::checkUriPattern('admin/subjects*'), 'open') }}">
+                    <a class="nav-link nav-dropdown-toggle {{ active_class(Active::checkUriPattern('admin/subjects*')) }}" href="#">
+                        <i class="icon-user"></i> {{ __('menus.backend.questions.title') }}
+                    </a>
+
+                    <ul class="nav-dropdown-items">
+                        <li class="nav-item">
+                            <a class="nav-link {{ active_class(Active::checkUriPattern('admin/subjects*')) }}" href="{{ route('admin.chapter.question.index') }}">
+                                {{ __('labels.backend.questions.all') }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ active_class(Active::checkUriPattern('admin/subjects/create*')) }}" href="{{route('admin.chapter.question.create')}}">
+                                {{ __('labels.backend.questions.create') }}
+                            </a>
+                        </li>
+                        {{--<li class="nav-item">--}}
+                            {{--<a class="nav-link {{ active_class(Active::checkUriPattern('admin/subjects/deleted*')) }}" href="{{route('admin.question.deleted')}}">--}}
+                                {{--{{ __('labels.backend.questions.deleted') }}--}}
+                            {{--</a>--}}
+                        {{--</li>--}}
+                    </ul>
+                </li>
+            @endif
+
+            <li class="nav-item nav-dropdown {{ active_class(Active::checkUriPattern('admin/auth*'), 'open') }}">
+                <a class="nav-link nav-dropdown-toggle {{ active_class(Active::checkUriPattern('admin/auth*')) }}" href="#">
+                    <i class="icon-user"></i> {{ __('menus.backend.examinations.title') }}
                 </a>
 
                 <ul class="nav-dropdown-items">
                     <li class="nav-item">
-                        <a class="nav-link {{ active_class(Active::checkUriPattern('admin/subjects*')) }}" href="{{ route('admin.chapter.question.index') }}">
-                            {{ __('labels.backend.questions.all') }}
+                        <a class="nav-link {{ active_class(Active::checkUriPattern('admin/subjects*')) }}" href="{{ route('admin.examination.index') }}">
+                            {{ __('labels.backend.examinations.all') }}
                         </a>
                     </li>
+                    @if($logged_in_user->isAdmin())
                     <li class="nav-item">
-                        <a class="nav-link {{ active_class(Active::checkUriPattern('admin/subjects/create*')) }}" href="{{route('admin.chapter.question.create')}}">
-                            {{ __('labels.backend.questions.create') }}
+                        <a class="nav-link {{ active_class(Active::checkUriPattern('admin/subjects/create*')) }}" href="{{route('admin.examination.create')}}">
+                            {{ __('labels.backend.examinations.create') }}
                         </a>
                     </li>
+                    @endif
                     {{--<li class="nav-item">--}}
-                        {{--<a class="nav-link {{ active_class(Active::checkUriPattern('admin/subjects/deleted*')) }}" href="{{route('admin.question.deleted')}}">--}}
-                            {{--{{ __('labels.backend.questions.deleted') }}--}}
+                        {{--<a class="nav-link {{ active_class(Active::checkUriPattern('admin/subjects/deleted*')) }}" href="">--}}
+                            {{--{{ __('labels.backend.examinations.deleted') }}--}}
                         {{--</a>--}}
                     {{--</li>--}}
                 </ul>
             </li>
-
 
             {{--Access--}}
             @if ($logged_in_user->isAdmin())
@@ -120,48 +151,27 @@
 
             @endif
 
-            <li class="nav-item nav-dropdown {{ active_class(Active::checkUriPattern('admin/auth*'), 'open') }}">
-                <a class="nav-link nav-dropdown-toggle {{ active_class(Active::checkUriPattern('admin/auth*')) }}" href="#">
-                    <i class="icon-user"></i> {{ __('menus.backend.examinations.title') }}
-                </a>
+            @if($logged_in_user->isAdmin())
+                <li class="nav-item nav-dropdown {{ active_class(Active::checkUriPattern('admin/log-viewer*'), 'open') }}">
+                    <a class="nav-link nav-dropdown-toggle {{ active_class(Active::checkUriPattern('admin/log-viewer*')) }}" href="#">
+                        <i class="icon-list"></i> {{ __('menus.backend.log-viewer.main') }}
+                    </a>
 
-                <ul class="nav-dropdown-items">
-                    <li class="nav-item">
-                        <a class="nav-link {{ active_class(Active::checkUriPattern('admin/subjects*')) }}" href="{{ route('admin.examination.index') }}">
-                            {{ __('labels.backend.examinations.all') }}
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ active_class(Active::checkUriPattern('admin/subjects/create*')) }}" href="{{route('admin.examination.create')}}">
-                            {{ __('labels.backend.examinations.create') }}
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ active_class(Active::checkUriPattern('admin/subjects/deleted*')) }}" href="">
-                            {{ __('labels.backend.examinations.deleted') }}
-                        </a>
-                    </li>
-                </ul>
-            </li>
+                    <ul class="nav-dropdown-items">
+                        <li class="nav-item">
+                            <a class="nav-link {{ active_class(Active::checkUriPattern('admin/log-viewer')) }}" href="{{ route('log-viewer::dashboard') }}">
+                                {{ __('menus.backend.log-viewer.dashboard') }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ active_class(Active::checkUriPattern('admin/log-viewer/logs*')) }}" href="{{ route('log-viewer::logs.list') }}">
+                                {{ __('menus.backend.log-viewer.logs') }}
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            @endif
 
-            <li class="nav-item nav-dropdown {{ active_class(Active::checkUriPattern('admin/log-viewer*'), 'open') }}">
-                <a class="nav-link nav-dropdown-toggle {{ active_class(Active::checkUriPattern('admin/log-viewer*')) }}" href="#">
-                    <i class="icon-list"></i> {{ __('menus.backend.log-viewer.main') }}
-                </a>
-
-                <ul class="nav-dropdown-items">
-                    <li class="nav-item">
-                        <a class="nav-link {{ active_class(Active::checkUriPattern('admin/log-viewer')) }}" href="{{ route('log-viewer::dashboard') }}">
-                            {{ __('menus.backend.log-viewer.dashboard') }}
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ active_class(Active::checkUriPattern('admin/log-viewer/logs*')) }}" href="{{ route('log-viewer::logs.list') }}">
-                            {{ __('menus.backend.log-viewer.logs') }}
-                        </a>
-                    </li>
-                </ul>
-            </li>
         </ul>
     </nav>
 </div><!--sidebar-->

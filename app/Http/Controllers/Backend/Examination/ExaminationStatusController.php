@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend\Examination;
 
 use App\Http\Requests\Backend\Examination\ManageExaminationRequest;
+use App\Http\Requests\Backend\Examination\PublishExaminationRequest;
 use App\Models\Examination;
 use App\Repositories\Backend\ExaminationRepository;
 use Illuminate\Http\Request;
@@ -31,7 +32,7 @@ class ExaminationStatusController extends Controller
         return redirect()->back()->withFlashSuccess(__('alerts.backend.examinations.inactived'));
     }
 
-    public function publish(ManageExaminationRequest $request, Examination $examination) {
+    public function publish(PublishExaminationRequest $request, Examination $examination) {
         $examination = $this->examinationRepository->publish($examination);
         if($examination) {
             event(new ExamPublished($examination));

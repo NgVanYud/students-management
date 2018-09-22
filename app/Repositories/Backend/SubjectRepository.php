@@ -109,4 +109,12 @@ class SubjectRepository extends BaseRepository
             ->orderBy($orderBy, $sort)
             ->paginate($paged);
     }
+
+    public function getExaminationBySubjects($subjects) {
+        $examinations = collect([]);
+        foreach ($subjects as $subject) {
+            $examinations = $examinations->concat($subject->examinations);
+        }
+        return $examinations;
+    }
 }

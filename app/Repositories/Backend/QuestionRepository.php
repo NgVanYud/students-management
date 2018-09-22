@@ -89,8 +89,8 @@ class QuestionRepository extends BaseRepository
             $random_questions = $set_questions->random($question_num);
             return $random_questions;
         } catch (\Exception $ex) {
-//            throw new GeneralException('Error in get question in chapter');
-            throw new GeneralException($ex->getMessage());
+            throw new GeneralException('Error in get question in chapter');
+//            throw new GeneralException($ex->getMessage());
         }
     }
 

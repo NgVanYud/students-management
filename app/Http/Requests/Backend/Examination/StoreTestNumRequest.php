@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Backend\Examination;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Exceptions\GeneralException;
 
 class StoreTestNumRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class StoreTestNumRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return $this->user()->isCurator();
     }
 
     /**
@@ -26,5 +27,10 @@ class StoreTestNumRequest extends FormRequest
         return [
             'test_num' => 'required|numeric|min:1|max:100'
         ];
+    }
+
+    protected function failedAuthorization()
+    {
+        throw new GeneralException(__('exceptions.general.not_permission'));
     }
 }

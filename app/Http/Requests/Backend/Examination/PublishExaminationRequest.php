@@ -4,8 +4,9 @@ namespace App\Http\Requests\Backend\Examination;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Exceptions\GeneralException;
+use Illuminate\Support\Facades\Auth;
 
-class ManageExaminationRequest extends FormRequest
+class PublishExaminationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +15,9 @@ class ManageExaminationRequest extends FormRequest
      */
     public function authorize()
     {
-        return $this->user()->isAdmin();
+        $examination = $this->examination;
+        $user = Auth::user();
+        return $user->isProctorForExamination($examination);
     }
 
     /**
@@ -28,7 +31,6 @@ class ManageExaminationRequest extends FormRequest
             //
         ];
     }
-
     protected function failedAuthorization()
     {
         throw new GeneralException(__('exceptions.general.not_permission'));

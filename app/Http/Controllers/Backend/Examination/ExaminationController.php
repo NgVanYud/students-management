@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Backend\Examination;
 
 use App\Events\Backend\Exam\ExamPublished;
 use App\Exceptions\GeneralException;
+use App\Http\Controllers\Traits\ControllerTrait;
 use App\Http\Requests\Backend\Examination\ManageExaminationRequest;
+use App\Http\Requests\Backend\Examination\ManageTestRequest;
+use App\Http\Requests\Backend\Examination\ShowExaminationRequest;
 use App\Http\Requests\Backend\Examination\StoreExaminationRequest;
 use App\Http\Requests\Backend\Examination\StoreFormatTestRequest;
 use App\Http\Requests\Backend\Examination\StoreTestNumRequest;
@@ -22,10 +25,13 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use File;
 use Excel;
-use Torann\GeoIP\Console\Update;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Pagination\Paginator;
 
 class ExaminationController extends Controller
 {
+    use ControllerTrait;
+
     protected $subjectRepository;
     protected $examinationRepository;
     protected $userRepository;
@@ -55,11 +61,24 @@ class ExaminationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(ManageExaminationRequest $request)
+    public function index(ShowExaminationRequest $request)
     {
-        $examinations = $this->examinationRepository
-            ->orderBy('created_at', 'desc')
-            ->paginate(25);
+        $user = Auth::user();
+        if($user->isAdmin() || $user->isCurator()) {
+            $examinations = $this->examinationRepository
+                ->orderBy('created_at', 'desc')
+                ->paginate(25);
+        } else {
+            if($user->isProctor()) {
+                $examinations = $this->paginate($user->examinationsProctor, 25)
+                    ->setPath(Paginator::resolveCurrentPath());
+
+            } else if($user->isQuizMaker()) {
+                $examinations = $this->paginate($this->subjectRepository
+                    ->getExaminationBySubjects($user->subjects), 25)
+                    ->setPath(Paginator::resolveCurrentPath());
+            }
+        }
         return view('backend.examinations.index')
             ->with(['examinations' => $examinations]);
     }
@@ -381,7 +400,7 @@ class ExaminationController extends Controller
             ->withFlashSuccess(__('alerts.backend.examinations.create_format_test'));
     }
 
-    public function createTestNum(ManageExaminationRequest $request, Examination $examination) {
+    public function createTestNum(ManageTestRequest $request, Examination $examination) {
         return view('backend.examinations.tests.test-num', [
             'examination' => $examination
         ]);
@@ -397,7 +416,6 @@ class ExaminationController extends Controller
                 $test_num = $request->test_num;
                 $updated = $examination->update(['test_num' => $test_num]);
                 $subject = $examination->subject;
-
                 $top_exams = $this->examinationRepository
                     ->getTopNearlyExamination(config('examination.previous_terms_num'), $subject);
 
@@ -407,13 +425,16 @@ class ExaminationController extends Controller
                  *  'slug-chapterter1' => array([id_question]),
                  *  'slug-chapterter2' => array([id_question])
                  * ]
+                 *
                  */
+
                 $questions_in_chapter = [];
                 foreach ($top_exams as $exam) {
                     $temp_question = $this->examinationRepository->getQuestionWithChapter($top_exams);
                     $questions_in_chapter = array_merge_recursive($questions_in_chapter, $temp_question);
                 }
                 if($updated) {
+
                     /**
                      * Tạo tất cả test cho exam
                      */
@@ -443,12 +464,16 @@ class ExaminationController extends Controller
                             $test->questions()->attach($random_questions->pluck('id')->toArray());
 
                             /**
-                             * Thêm các question không
+                             * Thêm các question không trùng lặp trong các kỳ thi trk
                              */
+                            if(count($unexisted_question) < $new_questions_num) {
+                                throw new GeneralException('Number of question for test is not valid');
+                            }
                             $random_questions = $this->questionRepository->getRandomQuestions($unexisted_question, $new_questions_num);
                             $test->questions()->attach($random_questions->pluck('id')->toArray());
                         }
                     }
+
                     /*
                      * Phát đề thi cho từng thí sinh
                      */
@@ -458,7 +483,8 @@ class ExaminationController extends Controller
             return redirect()->route('admin.examination.index')
                         ->withFlashSuccess(__('alerts.backend.examinations.create_test_num'));
         } catch (\Exception $ex) {
-            throw new GeneralException('This number of tests was not created successfully because of some errors');
+            throw new GeneralException($ex->getMessage());
+//            throw new GeneralException('This number of tests was not created successfully because of some errors');
         }
         return redirect()->route('admin.examination.index')
             ->withFlashError('This examination is can not edit');

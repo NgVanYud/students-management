@@ -46,9 +46,9 @@ class Examination extends Model
     ];
 
     //dinh dang so cau hoi trong từng chapter
-    protected $appends = [
-        'formatTest'
-    ];
+//    protected $appends = [
+//        'formatTest'
+//    ];
 
     protected $table = 'examinations';
 

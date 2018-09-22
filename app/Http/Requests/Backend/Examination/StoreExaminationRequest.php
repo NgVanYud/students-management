@@ -6,6 +6,7 @@ use App\Models\Examination;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Validation\Rule;
+use App\Exceptions\GeneralException;
 
 class StoreExaminationRequest extends FormRequest
 {
@@ -50,5 +51,10 @@ class StoreExaminationRequest extends FormRequest
                 'students_file' => 'required|max:50000',
             ];
         }
+    }
+
+    protected function failedAuthorization()
+    {
+        throw new GeneralException(__('exceptions.general.not_permission'));
     }
 }

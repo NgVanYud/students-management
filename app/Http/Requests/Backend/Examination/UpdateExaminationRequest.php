@@ -4,6 +4,7 @@ namespace App\Http\Requests\Backend\Examination;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Request;
+use App\Exceptions\GeneralException;
 
 class UpdateExaminationRequest extends FormRequest
 {
@@ -41,5 +42,10 @@ class UpdateExaminationRequest extends FormRequest
                 'students_file' => 'required|max:50000'
             ];
         }
+    }
+
+    protected function failedAuthorization()
+    {
+        throw new GeneralException(__('exceptions.general.not_permission'));
     }
 }

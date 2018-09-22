@@ -17,7 +17,9 @@
                 </div><!--col-->
 
                 <div class="col-sm-7">
-                    @include('backend.examinations.includes.examination-header-buttons')
+                    @if($logged_in_user->isAdmin())
+                        @include('backend.examinations.includes.examination-header-buttons')
+                    @endif
                 </div><!--col-->
             </div><!--row-->
 
@@ -30,27 +32,38 @@
                                 {{--<th>{{ __('labels.backend.examinations.table.code') }}</th>--}}
                                 <th>{{ __('labels.backend.examinations.table.name') }}</th>
                                 <th>{{ __('labels.backend.examinations.table.subject') }}</th>
-                                <th>{{ __('labels.backend.examinations.table.actived') }}</th>
-                                <th>{{ __('labels.backend.examinations.table.published') }}</th>
+                                @if($logged_in_user->isAdmin())
+                                    <th>{{ __('labels.backend.examinations.table.actived') }}</th>
+                                @endif
+                                @if($logged_in_user->isProctor())
+                                    <th>{{ __('labels.backend.examinations.table.published') }}</th>
+                                @endif
                                 <th>{{ __('labels.backend.examinations.table.begin_time') }}</th>
                                 <th>{{ __('labels.backend.examinations.table.proctors_students_tests_questions_time') }}</th>
-                                <th>{{ __('labels.general.actions') }}</th>
+                                @if(!$logged_in_user->isProctor() || $logged_in_user->isAdmin())
+                                    <th>{{ __('labels.general.actions') }}</th>
+                                @endif
                             </tr>
                             </thead>
                             <tbody>
                                 @foreach ($examinations as $examination)
-                                    {{--{{dd($examination->isReadyToPublish())}}--}}
                                     <tr>
                                         {{--<td>{{ $examination->code }}</td>--}}
                                         <td>{{ $examination->name }}</td>
                                         <td>{{ $examination->subject->name }}</td>
-                                        <td>{!! $examination->actived_label !!}</td>
-                                        <td>{!! $examination->published_label !!}</td>
+                                        @if($logged_in_user->isAdmin())
+                                            <td>{!! $examination->actived_label !!}</td>
+                                        @endif
+                                        @if($logged_in_user->isProctorForExamination($examination))
+                                            <td>{!! $examination->published_label !!}</td>
+                                        @endif
                                         <td>{{ $examination->begin_time }}</td>
                                         <td>
                                             {{$examination->number_proctors}}/{{$examination->number_students}}/{{$examination->test_num}}/{{$examination->question_num}}/{{$examination->timeout}}
                                         </td>
-                                        <td>{!! $examination->action_buttons !!}</td>
+                                        @if(!$logged_in_user->isProctor() || $logged_in_user->isAdmin())
+                                            <td>{!! $examination->action_buttons !!}</td>
+                                        @endif
                                     </tr>
                                 @endforeach
                             </tbody>

@@ -5,7 +5,7 @@ namespace App\Http\Requests\Backend\Examination;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Exceptions\GeneralException;
 
-class ManageExaminationRequest extends FormRequest
+class ManageTestRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +14,7 @@ class ManageExaminationRequest extends FormRequest
      */
     public function authorize()
     {
-        return $this->user()->isAdmin();
+        return $this->user()->isCurator();
     }
 
     /**

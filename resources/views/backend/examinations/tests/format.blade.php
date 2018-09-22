@@ -49,16 +49,19 @@
                                 ->class('col-md-7 form-control-label')
                                 ->for($chapter->slug) }}
 
+                            {{--{{dd($format_test)}}--}}
                             <div class="col-md-4">
                                 {{ html()->text($chapter->slug)
                                     ->class('form-control')
                                     ->placeholder($chapter->name)
                                     ->attribute('maxlength', 3)
-                                    ->value(isset($format_test)? $format_test[$chapter->slug] : old($chapter->slug))
+                                    ->value(isset($format_test[$chapter->slug])? $format_test[$chapter->slug] : old($chapter->slug))
                                     ->required() }}
                             </div><!--col-->
+
                         </div><!--form-group-->
                     @endforeach
+
                     <hr>
                     <div class="form-group row">
                         {{ html()->label(__('validation.attributes.backend.examinations.timeout'))
