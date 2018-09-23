@@ -30,7 +30,7 @@ class UserTableSeeder extends Seeder
             'username'         => 'ADMIN_01',
             'code'         => 'ADMIN_01',
             'identity'         => '10000000012',
-            'birthday'         => '02/01/1980',
+            'birthday'         => '1980/02/01',
         ]);
 
         //Giám thị id = 2
@@ -44,7 +44,7 @@ class UserTableSeeder extends Seeder
             'username'          => 'PROCTOR_01',
             'code'          => 'PROCTOR_01',
             'identity'         => '10000000013',
-            'birthday'         => '02/01/1980',
+            'birthday'         => '1980/02/01',
 
         ]);
 
@@ -59,7 +59,7 @@ class UserTableSeeder extends Seeder
             'username'          => 'QUIZ_MAKER_01',
             'code'          => 'QUIZ_MAKER_01',
             'identity'         => '10000000014',
-            'birthday'         => '02/01/1980',
+            'birthday'         => '1980/02/01',
         ]);
 
         //Giáo phụ khoa
@@ -73,7 +73,7 @@ class UserTableSeeder extends Seeder
             'username'          => 'CURATOR_01',
             'code'          => 'CURATOR_01',
             'identity'         => '10000000015',
-            'birthday'         => '02/01/1980',
+            'birthday'         => '1980/02/01',
         ]);
 
         //Giáo viên (chưa có vai trò)
@@ -87,7 +87,7 @@ class UserTableSeeder extends Seeder
             'username'          => 'TEACHER_01',
             'code'          => 'TEACHER_01',
             'identity'         => '10000000016',
-            'birthday'         => '02/01/1980',
+            'birthday'         => '1980/02/01',
 
         ]);
 
@@ -102,7 +102,7 @@ class UserTableSeeder extends Seeder
             'username'          => 'AT110415',
             'code'          => 'AT110415',
             'identity'         => '10000000017',
-            'birthday'         => '02/01/1980',
+            'birthday'         => '1980/02/01',
 
         ]);
 
@@ -117,7 +117,7 @@ class UserTableSeeder extends Seeder
             'username'          => 'USER_01',
             'code'          => 'USER_01',
             'identity'         => '10000000018',
-            'birthday'         => '02/01/1980',
+            'birthday'         => '1980/02/01',
         ]);
 
         $this->enableForeignKeys();
