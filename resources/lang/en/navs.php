@@ -16,6 +16,7 @@ return [
     'general' => [
         'home'   => 'Home',
         'logout' => 'Logout',
+        'group' => 'Group',
     ],
 
     'frontend' => [
