@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend\Examination;
 
+use App\Document\Word\ResultTest;
 use App\Events\Backend\Exam\ExamPublished;
 use App\Exceptions\GeneralException;
 use App\Http\Controllers\Traits\ControllerTrait;
@@ -522,5 +523,8 @@ class ExaminationController extends Controller
     }
 
     public function printResult(PublishExaminationRequest $request, Examination $examination, Test $test, User $user) {
+        $result = new ResultTest($user, $examination, $test);
+        $result_file_path = $result->storeWord();
+        return response()->download($result_file_path);
     }
 }
