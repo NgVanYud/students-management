@@ -40,9 +40,7 @@
                                 @endif
                                 <th>{{ __('labels.backend.examinations.table.begin_time') }}</th>
                                 <th>{{ __('labels.backend.examinations.table.proctors_students_tests_questions_time') }}</th>
-                                @if(!$logged_in_user->isProctor() || $logged_in_user->isAdmin())
-                                    <th>{{ __('labels.general.actions') }}</th>
-                                @endif
+                                <th>{{ __('labels.general.actions') }}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -61,9 +59,9 @@
                                         <td>
                                             {{$examination->number_proctors}}/{{$examination->number_students}}/{{$examination->test_num}}/{{$examination->question_num}}/{{$examination->timeout}}
                                         </td>
-                                        @if(!$logged_in_user->isProctor() || $logged_in_user->isAdmin())
+                                        {{--@if(!$logged_in_user->isProctor() || $logged_in_user->isAdmin())--}}
                                             <td>{!! $examination->action_buttons !!}</td>
-                                        @endif
+                                        {{--@endif--}}
                                     </tr>
                                 @endforeach
                             </tbody>

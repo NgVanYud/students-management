@@ -7,6 +7,7 @@ use App\Exceptions\GeneralException;
 use App\Http\Controllers\Traits\ControllerTrait;
 use App\Http\Requests\Backend\Examination\ManageExaminationRequest;
 use App\Http\Requests\Backend\Examination\ManageTestRequest;
+use App\Http\Requests\Backend\Examination\PublishExaminationRequest;
 use App\Http\Requests\Backend\Examination\ShowExaminationRequest;
 use App\Http\Requests\Backend\Examination\ShowTestsRequest;
 use App\Http\Requests\Backend\Examination\StoreExaminationRequest;
@@ -256,60 +257,6 @@ class ExaminationController extends Controller
             'examination' => $examination,
             'tests_info' => $tests_info
         ]);
-
-//        if($user->isAdmin()) {
-//            $questions = $this->questionRepository->getAllPaginated(25, ['*']);
-//            $subjects = $this->subjectRepository->getActive(['id', 'name', 'slug'], 'name', 'asc');
-//        } else if($user->isQuizMaker()) {
-//            $subjects = $this->paginate($user->subjects, 25)->setPath(Paginator::resolveCurrentPath());
-//            $questions = $this->paginate($this->questionRepository->getBySubjects($subjects), 25)->setPath(Paginator::resolveCurrentPath());
-//        }
-//
-////        $chapters = $this->chapterRepository->getActive(['name', 'slug'], 'name', 'asc');
-//        /**
-//         * $subject_info
-//         *  [
-//         *      'name_subject1' => [
-//         *              'name_chapter1' => 'slug_chapter1'
-//         *              'name_chapter2' => 'slug_chapter2'
-//         *              'name_chapter3' => 'slug_chapter3'
-//         *      ],
-//         *      'name_subject2' => [
-//         *              'name_chapter1' => 'slug_chapter1'
-//         *              'name_chapter2' => 'slug_chapter2'
-//         *      ]
-//         *  ]
-//         */
-//        $subjects_info = [];
-//        foreach ($subjects as $subject) {
-//            $subjects_info[$subject->name] = $subject->chapters->pluck('name', 'slug')->toArray();
-//        }
-//
-//        if ($request->ajax()) {
-//
-//            if(isset($request->chapter_slug)) {
-//                $chapter = $this->chapterRepository->getByColumn($request->chapter_slug, 'slug');
-//                if(isset($request->status_code)) {
-//                    $questions = $chapter->questions()
-//                        ->where('is_actived', $request->status_code)
-//                        ->orderBy('created_at', 'asc')
-//                        ->paginate(25);
-//                } else {
-//                    $questions = $chapter->questions()->orderBy('created_at', 'asc')->paginate(25);
-//                }
-//            } else {
-//                if(isset($request->status_code)) {
-//                    $questions = $this->questionRepository->getIsActivePaginated($request->status_code, ['*'], '25');
-//                }
-//            }
-//            return Response::json(View::make('backend.questions.includes.load-list', array('questions' => $questions))->render());
-//        }
-//
-//        return view('backend.questions.index',
-//            [
-//                'questions' => $questions,
-//                'subjects_info' => $subjects_info
-//            ]);
     }
 
     /**
@@ -560,5 +507,20 @@ class ExaminationController extends Controller
         }
         return redirect()->route('admin.examination.index')
             ->withFlashError('This examination is can not edit');
+    }
+
+
+    public function getResult(PublishExaminationRequest $request, Examination $examination) {
+        if(!$examination->isPublished()) {
+            throw new GeneralException('This examination has not been published.');
+        }
+        $tests = $examination->tests;
+        return view('backend.examinations.result', [
+            'tests' => $tests,
+            'examination' => $examination
+        ]);
+    }
+
+    public function printResult(PublishExaminationRequest $request, Examination $examination, Test $test, User $user) {
     }
 }

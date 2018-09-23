@@ -89,6 +89,13 @@ trait ExaminationAttribute
         return '<span class="badge badge-warning">' .' Setting'. '</span>';
     }
 
+    public function getResultButtonAttribute() {
+        return '<a href="' . route('admin.examination.get_result', $this) .
+            '" data-toggle="tooltip" data-placement="top" title="Result" class="btn btn-warning"><i class="fas fa-id-card"></i></a>';
+
+
+    }
+
     /**
      * @return string
      */
@@ -102,6 +109,8 @@ trait ExaminationAttribute
 			  ' . $this->edit_button . '
               ' . $this->format_test_button . '
               ' . $this->set_test_num_button . '
+              ' . $this->result_button . '
+
 			</div>';
             } else if($user->isValidQuizMaker($this->subject)) {
                 return '<div class="btn-group btn-group-sm" role="group" aria-label="Examination Actions">
@@ -111,6 +120,12 @@ trait ExaminationAttribute
             } else if($user->isCurator()) {
                 return '<div class="btn-group btn-group-sm" role="group" aria-label="Examination Actions">
                           ' . $this->set_test_num_button . '
+                        </div>';
+            }
+
+            if($this->isPublished() && $user->isProctorForExamination($this)) {
+                return '<div class="btn-group btn-group-sm" role="group" aria-label="Examination Actions">
+                          ' . $this->result_button . '
                         </div>';
             }
         } else { //Chưa được format test

@@ -207,8 +207,16 @@ Route::group([
     /**
      * Publish
      */
-    Route::get('examination/{examination}/publish', 'ExaminationStatusController@publish')
-        ->name('examination.publish')->middleware(['proctor']);
+    Route::group([
+        'middleware' => 'proctor'
+    ], function() {
+        Route::get('examination/{examination}/publish', 'ExaminationStatusController@publish')
+            ->name('examination.publish');
+        Route::get('examination/{examination}/result', 'ExaminationController@getResult')
+        ->name('examination.get_result');
+        Route::get('examination/{examination}/{test}/{user}/print-result', 'ExaminationController@printResult')
+            ->name('examination.print_result');
+    });
 
 
 //    Route::get('examination/{examination}/student/{student}', 'ExaminationController@deleteStudent');
