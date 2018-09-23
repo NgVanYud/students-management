@@ -27,7 +27,9 @@ class UserTableSeeder extends Seeder
             'password'          => 'secret',
             'confirmation_code' => md5(uniqid(mt_rand(), true)),
             'confirmed'         => true,
-            'username'         => 'ADMIN_01'
+            'username'         => 'ADMIN_01',
+            'code'         => 'ADMIN_01',
+            'identity'         => '10000000012',
         ]);
 
         //Giám thị id = 2
@@ -38,7 +40,10 @@ class UserTableSeeder extends Seeder
             'password'          => 'secret',
             'confirmation_code' => md5(uniqid(mt_rand(), true)),
             'confirmed'         => true,
-            'username'          => 'PROCTOR_01'
+            'username'          => 'PROCTOR_01',
+            'code'          => 'PROCTOR_01',
+            'identity'         => '10000000013',
+
         ]);
 
         //Người ra đề
@@ -49,7 +54,9 @@ class UserTableSeeder extends Seeder
             'password'          => 'secret',
             'confirmation_code' => md5(uniqid(mt_rand(), true)),
             'confirmed'         => true,
-            'username'          => 'QUIZ_MAKER_01'
+            'username'          => 'QUIZ_MAKER_01',
+            'code'          => 'QUIZ_MAKER_01',
+            'identity'         => '10000000014',
         ]);
 
         //Giáo phụ khoa
@@ -60,7 +67,9 @@ class UserTableSeeder extends Seeder
             'password'          => 'secret',
             'confirmation_code' => md5(uniqid(mt_rand(), true)),
             'confirmed'         => true,
-            'username'          => 'CURATOR_01'
+            'username'          => 'CURATOR_01',
+            'code'          => 'CURATOR_01',
+            'identity'         => '10000000015',
         ]);
 
         //Giáo viên (chưa có vai trò)
@@ -71,7 +80,10 @@ class UserTableSeeder extends Seeder
             'password'          => 'secret',
             'confirmation_code' => md5(uniqid(mt_rand(), true)),
             'confirmed'         => true,
-            'username'          => 'TEACHER_01'
+            'username'          => 'TEACHER_01',
+            'code'          => 'TEACHER_01',
+            'identity'         => '10000000016',
+
         ]);
 
         //Sinh viên
@@ -82,7 +94,10 @@ class UserTableSeeder extends Seeder
             'password'          => 'secret',
             'confirmation_code' => md5(uniqid(mt_rand(), true)),
             'confirmed'         => true,
-            'username'          => 'AT110415'
+            'username'          => 'AT110415',
+            'code'          => 'AT110415',
+            'identity'         => '10000000017',
+
         ]);
 
         //User thông thường
@@ -93,7 +108,9 @@ class UserTableSeeder extends Seeder
             'password'          => 'secret',
             'confirmation_code' => md5(uniqid(mt_rand(), true)),
             'confirmed'         => true,
-            'username'          => 'USER_01'
+            'username'          => 'USER_01',
+            'code'          => 'USER_01',
+            'identity'         => '10000000018',
         ]);
 
         $this->enableForeignKeys();
