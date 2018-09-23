@@ -43,8 +43,14 @@ class PermissionRoleTableSeeder extends Seeder
         // Assign Permissions to other Roles
 //        $executive->givePermissionTo('view backend');
         $proctor->givePermissionTo(config('access.permissions.permissions_list')['export_result']);
+        $proctor->givePermissionTo(config('access.permissions.permissions_list')['view_backend']);
+
         $quiz_maker->givePermissionTo(config('access.permissions.permissions_list')['modify_quizs']);
+        $quiz_maker->givePermissionTo(config('access.permissions.permissions_list')['view_backend']);
+
         $curator->givePermissionTo(config('access.permissions.permissions_list')['set_quiz_num']);
+        $curator->givePermissionTo(config('access.permissions.permissions_list')['view_backend']);
+
         $student->givePermissionTo(config('access.permissions.permissions_list')['join_quizs']);
         $this->enableForeignKeys();
     }
