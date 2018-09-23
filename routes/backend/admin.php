@@ -150,9 +150,16 @@ Route::group([
             'update'
         ])
         ->only([
-            'show', 'destroy', 'store', 'create'
+            'destroy', 'store', 'create'
         ])
         ->middleware('admin');
+
+    Route::resource('examination', 'ExaminationController')
+        ->only([
+            'show'
+        ])
+        ->middleware('quiz_maker');
+
 
     Route::group([
         'as' => 'examination.',

@@ -105,6 +105,7 @@ trait ExaminationAttribute
 			</div>';
             } else if($user->isValidQuizMaker($this->subject)) {
                 return '<div class="btn-group btn-group-sm" role="group" aria-label="Examination Actions">
+              ' . $this->show_button . '
               ' . $this->format_test_button . '
 			</div>';
             } else if($user->isCurator()) {
@@ -121,6 +122,7 @@ trait ExaminationAttribute
 			</div>';
             } else if($user->isValidQuizMaker($this->subject)) {
                 return '<div class="btn-group btn-group-sm" role="group" aria-label="Examination Actions">
+              ' . $this->show_button . '
               ' . $this->format_test_button . '
 			</div>';
             }

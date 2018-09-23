@@ -290,6 +290,12 @@ return [
                     'students'   => 'Students',
                 ],
             ],
+
+            'tests' => [
+                'list'          => 'List Tests',
+                'format_test'   => 'Format Test',
+                'test_num'      => 'Number of Test',
+            ],
         ],
     ],
 

@@ -8,6 +8,7 @@
         </tr>
         </thead>
         <tbody>
+        @if(isset($questions))
         @foreach ($questions as $question)
             @php $count = (($questions->currentPage() - 1 ) * $questions->perPage() ) + $loop->iteration; @endphp
             <tr>
@@ -27,6 +28,7 @@
                 <td>{!! $question->action_buttons !!}</td>
             </tr>
         @endforeach
+            @endif
         </tbody>
     </table>
 </div>
@@ -34,13 +36,17 @@
 <div class="row">
     <div class="col-7">
         <div class="float-left">
-            {!! $questions->total() !!} {{ trans_choice('labels.backend.questions.table.total', $questions->total()) }}
+            @if(isset($questions))
+                {!! $questions->total() !!} {{ trans_choice('labels.backend.questions.table.total', $questions->total()) }}
+            @endif
         </div>
     </div><!--col-->
 
     <div class="col-5">
         <div class="float-right">
-            {!! $questions->render() !!}
+            @if(isset($questions))
+                {!! $questions->render() !!}
+            @endif
         </div>
     </div><!--col-->
 </div><!--row-->

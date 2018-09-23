@@ -8,6 +8,7 @@ use App\Http\Controllers\Traits\ControllerTrait;
 use App\Http\Requests\Backend\Examination\ManageExaminationRequest;
 use App\Http\Requests\Backend\Examination\ManageTestRequest;
 use App\Http\Requests\Backend\Examination\ShowExaminationRequest;
+use App\Http\Requests\Backend\Examination\ShowTestsRequest;
 use App\Http\Requests\Backend\Examination\StoreExaminationRequest;
 use App\Http\Requests\Backend\Examination\StoreFormatTestRequest;
 use App\Http\Requests\Backend\Examination\StoreTestNumRequest;
@@ -27,6 +28,8 @@ use File;
 use Excel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\View;
 
 class ExaminationController extends Controller
 {
@@ -235,9 +238,78 @@ class ExaminationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(ShowTestsRequest $request, Examination $examination)
     {
+        $tests = $examination->tests;
+        $tests_info = $tests->pluck('code', 'uuid')->toArray();
 
+        if ($request->ajax()) {
+
+            if(isset($request->test_uuid)) {
+                $test = $this->testRepository->getByColumn($request->test_uuid, 'uuid');
+                $questions = $test->questions()->orderBy('created_at', 'asc')->paginate(25);
+            }
+            return Response::json(View::make('backend.examinations.tests.includes.questions-list', array('questions' => $questions))->render());
+        }
+
+        return view('backend.examinations.tests.show', [
+            'examination' => $examination,
+            'tests_info' => $tests_info
+        ]);
+
+//        if($user->isAdmin()) {
+//            $questions = $this->questionRepository->getAllPaginated(25, ['*']);
+//            $subjects = $this->subjectRepository->getActive(['id', 'name', 'slug'], 'name', 'asc');
+//        } else if($user->isQuizMaker()) {
+//            $subjects = $this->paginate($user->subjects, 25)->setPath(Paginator::resolveCurrentPath());
+//            $questions = $this->paginate($this->questionRepository->getBySubjects($subjects), 25)->setPath(Paginator::resolveCurrentPath());
+//        }
+//
+////        $chapters = $this->chapterRepository->getActive(['name', 'slug'], 'name', 'asc');
+//        /**
+//         * $subject_info
+//         *  [
+//         *      'name_subject1' => [
+//         *              'name_chapter1' => 'slug_chapter1'
+//         *              'name_chapter2' => 'slug_chapter2'
+//         *              'name_chapter3' => 'slug_chapter3'
+//         *      ],
+//         *      'name_subject2' => [
+//         *              'name_chapter1' => 'slug_chapter1'
+//         *              'name_chapter2' => 'slug_chapter2'
+//         *      ]
+//         *  ]
+//         */
+//        $subjects_info = [];
+//        foreach ($subjects as $subject) {
+//            $subjects_info[$subject->name] = $subject->chapters->pluck('name', 'slug')->toArray();
+//        }
+//
+//        if ($request->ajax()) {
+//
+//            if(isset($request->chapter_slug)) {
+//                $chapter = $this->chapterRepository->getByColumn($request->chapter_slug, 'slug');
+//                if(isset($request->status_code)) {
+//                    $questions = $chapter->questions()
+//                        ->where('is_actived', $request->status_code)
+//                        ->orderBy('created_at', 'asc')
+//                        ->paginate(25);
+//                } else {
+//                    $questions = $chapter->questions()->orderBy('created_at', 'asc')->paginate(25);
+//                }
+//            } else {
+//                if(isset($request->status_code)) {
+//                    $questions = $this->questionRepository->getIsActivePaginated($request->status_code, ['*'], '25');
+//                }
+//            }
+//            return Response::json(View::make('backend.questions.includes.load-list', array('questions' => $questions))->render());
+//        }
+//
+//        return view('backend.questions.index',
+//            [
+//                'questions' => $questions,
+//                'subjects_info' => $subjects_info
+//            ]);
     }
 
     /**
