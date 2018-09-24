@@ -164,7 +164,6 @@ class ExaminationController extends Controller
                                     $this->activeUserWithRoles($current_proctor, [config('access.users.proctor_role'), config('access.users.teacher_role')]);
                                     $proctors_in_exam->push($current_proctor);
                                 } else {
-                                    dd('moi: '.$row);
                                     $roles = [config('access.users.proctor_role'), config('access.users.teacher_role')];
                                     $new_proctor = $this->createUserFromExcel($row, $roles);
 
@@ -197,6 +196,7 @@ class ExaminationController extends Controller
             $data = $this->getExcelData($selected_file);
 
             if (!empty($data) && $data->count()) {
+
                 /*$row tương đương với từng sheet trong excel, có dạng Collection*/
                 try {
                     \DB::transaction(function () use ($data, $examination){
