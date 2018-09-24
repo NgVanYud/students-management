@@ -25,20 +25,29 @@
                     <i class="fas fa-users"></i> {{ __('navs.general.group') }}
                 </div>
                 <div class="card-body">
-                    <h5>
-                        List of member:
-                    </h5>
-                    <ul>
-                        <li><strong>Nguyễn Văn Duy.</strong></li>
-                        <li><strong>Lê Việt Dũng.</strong></li>
-                        <li><strong>Bùi Anh Tuấn.</strong></li>
-                        <li><strong>Bùi Xuân Tài.</strong></li>
-                        <li><strong>Lê Thanh Lĩnh.</strong></li>
-                        <li><strong>Bùi Văn Nguyên.</strong></li>
-                        <li><strong>Vũ Minh Tú.</strong></li>
-                        <li><strong>Đoàn Hương Ly.</strong></li>
-                        <li><strong>Hà Thị Quyên.</strong></li>
-                    </ul>
+                    <h4>
+                        List of members:
+                    </h4>
+                    <div class="row d-flex justify-content-center text-info" style="font-size: 1.5rem;">
+                        <div class="col-md-4">
+                            <ul>
+                                <li>Nguyễn Văn Duy.</li>
+                                <li>Lê Việt Dũng.</li>
+                                <li>Bùi Anh Tuấn.</li>
+                                <li>Bùi Xuân Tài.</li>
+                                <li>Lê Thanh Lĩnh.</li>
+                            </ul>
+                        </div>
+
+                        <div class="col-md-4">
+                            <ul>
+                                <li>Bùi Văn Nguyên.</li>
+                                <li>Vũ Minh Tú.</li>
+                                <li>Đoàn Hương Ly.</li>
+                                <li>Hà Thị Quyên.</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div><!--card-->
         </div><!--col-->
