@@ -7,6 +7,7 @@ use App\Events\Backend\Exam\ExamPublished;
 use App\Exceptions\GeneralException;
 use App\Http\Controllers\Traits\ControllerTrait;
 use App\Http\Requests\Backend\Examination\ManageExaminationRequest;
+use App\Http\Requests\Backend\Examination\ManageFormatTestRequest;
 use App\Http\Requests\Backend\Examination\ManageTestRequest;
 use App\Http\Requests\Backend\Examination\PublishExaminationRequest;
 use App\Http\Requests\Backend\Examination\ShowExaminationRequest;
@@ -400,7 +401,7 @@ class ExaminationController extends Controller
 
     }
 
-    public function formatTest(ManageExaminationRequest $request, Examination $examination) {
+    public function formatTest(ManageFormatTestRequest $request, Examination $examination) {
 //        dd(json_decode($examination->format_test, true));
         return view('backend.examinations.tests.format', [
             'examination' => $examination
